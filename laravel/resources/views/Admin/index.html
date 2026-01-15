@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>ADMIN</h2>
+    <ul>
+      <li class="active">Dashboard</li>
+      <li>Employees</li>
+      <li>Reimbursement</li>
+      <li>Reports</li>
+      <li>Settings</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="header">
+      <input type="text" placeholder="Search...">
+      <span class="profile">Admin</span>
+    </header>
+
+    <!-- Cards -->
+    <section class="cards">
+      <div class="card">
+        <h3>Total PTK</h3>
+        <p id="employee">210</p>
+      </div>
+      <div class="card">
+        <h3>Total Reimbursement</h3>
+        <p id="project">124</p>
+      </div>
+      <div class="card">
+        <h3>Total Nominal</h3>
+        <p id="active">47</p>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="content">
+      <div class="chart">
+        <h3>Reimbursement Tahunan</h3>
+        <canvas id="myChart"></canvas>
+      </div>
+
+      <div class="table">
+        <h3>Pengajuan Terbaru</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Jenis</th>
+              <th>Nominal</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
