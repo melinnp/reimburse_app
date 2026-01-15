@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Users;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 use function Illuminate\Support\now;
 
@@ -21,16 +22,16 @@ class UserSeeder extends Seeder
                 'email' => 'e@company.com',
                 'password' => Hash::make('emp123'),
                 'role' => 'karyawan',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'Agus',
                 'email' => 'a@company.com',
                 'password' => Hash::make('admin123'),
                 'role' => 'admin',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         ]);
     }
