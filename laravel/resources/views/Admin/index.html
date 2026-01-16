@@ -2,57 +2,53 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard SMK</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
-  <!-- Sidebar -->
   <aside class="sidebar">
-    <h2>ADMIN</h2>
+    <div class="sidebar-header">
+      <h2>ADMIN</h2>
+    </div>
     <ul>
-      <li class="active">Dashboard</li>
-      <li>Employees</li>
+      <li class="nav-link active" onclick="showPage('dashboard')">Dashboard</li>
+      <li class="nav-link" onclick="showPage('employees')">Employees</li>
+      <li>Payroll</li>
       <li>Reimbursement</li>
-      <li>Reports</li>
       <li>Settings</li>
     </ul>
   </aside>
 
-  <!-- Main -->
   <main class="main">
-    <header class="header">
-      <input type="text" placeholder="Search...">
-      <span class="profile">Admin</span>
-    </header>
+    <div id="page-dashboard">
+      <header class="header">
+        <h1 class="header-outline">Dashboard SMK wlowwlwow</h1>
+        <div class="profile">Admin</div>
+      </header>
 
-    <!-- Cards -->
-    <section class="cards">
-      <div class="card">
-        <h3>Total PTK</h3>
-        <p id="employee">210</p>
-      </div>
-      <div class="card">
-        <h3>Total Reimbursement</h3>
-        <p id="project">124</p>
-      </div>
-      <div class="card">
-        <h3>Total Nominal</h3>
-        <p id="active">47</p>
-      </div>
-    </section>
+      <section class="cards">
+        <div class="card">
+          <h3>Total PTK</h3>
+          <p id="employee" data-target="210">0</p>
+        </div>
+        <div class="card">
+          <h3>Antrean Reimburse</h3>
+          <p id="project" data-target="3">0</p>
+        </div>
+        <div class="card">
+          <h3>Total Nominal</h3>
+          <p id="active" data-target="4750000">0</p>
+        </div>
+      </section>
 
-    <!-- Content -->
-    <section class="content">
-      <div class="chart">
-        <h3>Reimbursement Tahunan</h3>
-        <canvas id="myChart"></canvas>
-      </div>
-
-      <div class="table">
-        <h3>Pengajuan Terbaru</h3>
-        <table>
+      <div class="table-card">
+        <h3>User Mengantri (Pending Reimbursement)</h3>
+        <table class="styled-table">
           <thead>
             <tr>
               <th>Nama</th>
@@ -61,10 +57,38 @@
               <th>Status</th>
             </tr>
           </thead>
-          <tbody id="tableBody"></tbody>
+          <tbody id="queueTableBody"></tbody>
         </table>
       </div>
-    </section>
+    </div>
+
+    <div id="page-employees" style="display: none;">
+      <header class="header">
+        <h1 class="header-outline">Employee Management</h1>
+        <div class="search-wrapper">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="text" id="employeeSearch" placeholder="Cari nama atau ID..." onkeyup="filterEmployees()">
+</div>
+      </header>
+      
+      <div class="table-card">
+        <div class="table-header-flex">
+          <h3>Employee List</h3>
+        </div>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Job Title</th>
+              <th>Status</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody id="employeeTableBody"></tbody>
+        </table>
+      </div>
+    </div>
   </main>
 </div>
 
