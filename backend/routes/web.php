@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-=======
-
 Route::post('/login', [AuthController::class, 'login']);
 
 // Dummy route dgn implementasi middleware
@@ -18,4 +15,3 @@ Route::post('/login', [AuthController::class, 'login']);
 //         return 'Dashboard Karyawan';
 //     });
 // });
->>>>>>> f8e34fdddeefe4add1e88eaee60fdd412e7ce788
