@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
-
 
 class AuthController extends Controller
 {
@@ -13,7 +11,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (!Auth::attempt($credentials)) {
+        if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Email atau password salah',
@@ -23,7 +21,24 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Login berhasil',
-            'users' => Auth::user(),
+            'token' => $token,
+            'users' => JWTAuth::user(),
+        ]);
+    }
+
+    public function logout()
+    {
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json([
+            'message' => 'Logout berhasil',
+        ]);
+    }
+
+    public function me()
+    {
+        return response()->json([
+            'user' => JWTAuth::user(),
         ]);
     }
 }
