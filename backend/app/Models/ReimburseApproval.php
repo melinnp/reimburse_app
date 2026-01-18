@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class ReimburseApproval extends Model
 {
     protected $fillable = [
-        // Masukkan tabel yang ingin diproteksi, contoh 'reimburse_request_1"
+        'reimburse_request_id',
+        'approved_by',
+        'status',
+        'catatan',
+        'tanggal_approve',
     ];
 
     // Approval untuk 1 request

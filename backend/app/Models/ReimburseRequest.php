@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class ReimburseRequest extends Model
 {
     protected $fillable = [
-        // Masukkan tabel yang ingin diproteksi, contoh 'user_id' dll
+        'user_id',
+        'item',
+        'deskripsi',
+        'jumlah',
+        'tanggal_pengajuan',
+        'status',
     ];
 
     // Request milik 1 user

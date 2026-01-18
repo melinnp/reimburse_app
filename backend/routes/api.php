@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -11,6 +12,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'me']);
 });
 
+Route::middleware(['auth:api', 'role:admin'])->group(function () {
+    Route::get('/admin/reimburse', [AdminController::class, 'index']);
+    Route::post('/admin/reimburse/{id}/approve', [AdminController::class, 'approve']);
+    Route::post('/admin/reimburse/{id}/reject', [AdminController::class, 'reject']);
+});
 // Dummy route dgn implementasi middleware
 // Route::middleware(['auth:api', 'role:admin'])->group(function () {
 //     Route::post('/reimburse', [ReimburseController::class, 'reimburse']); // Untuk submit pengajuan
