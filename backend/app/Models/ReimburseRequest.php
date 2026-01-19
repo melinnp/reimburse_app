@@ -13,6 +13,8 @@ class ReimburseRequest extends Model
         'jumlah',
         'tanggal_pengajuan',
         'status',
+        'approved_by',
+        'approved_at',
     ];
 
     // Request milik 1 user
