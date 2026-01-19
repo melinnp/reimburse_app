@@ -54,3 +54,8 @@ Frontend menggunakan JavaScript murni dan dapat dijalankan langsung melalui brow
 - Project ini dibuat dengan pendekatan minimalis
 - Belum menggunakan refresh token
 - Tidak menggunakan framework frontend
+
+## Flowchart Aplikasi
+
+![Flowchart Reimburse](docs/reimburse-flowchart.png)
+
