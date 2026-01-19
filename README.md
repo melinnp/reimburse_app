@@ -41,9 +41,6 @@ Karyawan dapat mengajukan penggantian uang, admin memverifikasi dan menyetujui p
    php artisan migrate
    php artisan jwt:secret
    php artisan serve
-
-### Kalau FE di folder terpisah, tulis:
-```md
 ### Frontend
 Frontend menggunakan JavaScript murni dan dapat dijalankan langsung melalui browser atau live server.
 
