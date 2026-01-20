@@ -25,7 +25,6 @@
         background-color: rgba(255, 255, 255, 0.2);
         border-left: 4px solid #0dcaf0;
       }
-      /* Menghilangkan garis biru pada input saat diklik */
       .form-control:focus, .form-select:focus {
         box-shadow: none;
         border-color: #0dcaf0;
@@ -57,12 +56,7 @@
     <ul class="list-unstyled m-0">
       <li>
         <a href="#" class="nav-link-custom p-3 nav-active">
-          <i class="bi bi-house-door me-2"></i> Beranda
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link-custom p-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
-          <i class="bi bi-plus-circle me-2"></i> Ajukan Klaim
+          <i class="bi bi-columns-gap me-2"></i> Dashboard
         </a>
       </li>
       <li>
@@ -90,33 +84,32 @@
 
   <div class="row g-4 mb-4">
     <div class="col-md-4">
-      <div class="card stat-card-history border-0 rounded-4">
+      <div class="card border-0 rounded-4 shadow-sm">
         <div class="card-body border-start border-primary border-4 rounded-4">
           <p class="text-muted mb-1 small fw-bold text-uppercase">Total Pengajuan</p>
-          <h3 class="fw-bold text-primary mb-0">15</h3>
+          <h3 class="fw-bold text-primary mb-0" id="statTotal">15</h3>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card stat-card-history border-0 rounded-4">
+      <div class="card border-0 rounded-4 shadow-sm">
         <div class="card-body border-start border-danger border-4 rounded-4">
           <p class="text-muted mb-1 small fw-bold text-uppercase">Sedang Diproses</p>
-          <h3 class="fw-bold text-danger mb-0">2</h3>
+          <h3 class="fw-bold text-danger mb-0" id="statPending">2</h3>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card stat-card-history border-0 rounded-4">
+      <div class="card border-0 rounded-4 shadow-sm">
         <div class="card-body border-start border-success border-4 rounded-4">
           <p class="text-muted mb-1 small fw-bold text-uppercase">Total Selesai</p>
-          <h3 class="fw-bold text-success mb-0">15</h3>
+          <h3 class="fw-bold text-success mb-0">13</h3>
         </div>
       </div>
     </div>
   </div>
-
 
   <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
      <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
@@ -177,7 +170,9 @@
         </div>
         <div class="modal-footer border-0">
           <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn text-white px-4" style="background-color: rgb(4, 4, 70);">Kirim Pengajuan</button>
+          <button type="submit" class="btn text-white px-4" style="background-color: rgb(4, 4, 70);">
+            Kirim Pengajuan
+          </button>
         </div>
       </form>
     </div>
@@ -187,30 +182,31 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Logika Sederhana untuk Tambah Data di Tabel
     const form = document.getElementById('formReimburse');
     const table = document.getElementById('reimburseTable');
-    const statTotal = document.getElementById('stat-total');
-    const statPending = document.getElementById('stat-pending');
+    const statTotal = document.getElementById('statTotal');
+    const statPending = document.getElementById('statPending');
 
-    let count = 1;
+    // Mengambil nilai awal dari card stat agar sinkron saat ditambah
+    let totalCount = parseInt(statTotal.innerText);
+    let pendingCount = parseInt(statPending.innerText);
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Ambil data
+        // 1. Ambil data
         const jenis = document.getElementById('jenis').value;
         const nominal = document.getElementById('nominal').value;
         const tanggal = new Date().toLocaleDateString('id-ID');
 
-        // Format Rupiah
+        // 2. Format Rupiah
         const formattedNominal = new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',
             maximumFractionDigits: 0
         }).format(nominal);
 
-        // Tambah baris baru
+        // 3. Tambah baris baru ke tabel
         const newRow = `
             <tr>
                 <td class="ps-4 fw-medium">${jenis}</td>
@@ -220,18 +216,25 @@
                 <td class="text-center"><button class="btn btn-sm btn-outline-secondary">Detail</button></td>
             </tr>
         `;
-        
-        table.innerHTML += newRow;
+        table.insertAdjacentHTML('beforeend', newRow);
 
-        // Update Stat (Simulasi)
-        count++;
-        statTotal.innerText = count;
-        statPending.innerText = count;
+        // 4. Update Stat (Opsional)
+        totalCount++;
+        pendingCount++;
+        statTotal.innerText = totalCount;
+        statPending.innerText = pendingCount;
 
-        // Tutup Modal dan Reset
-        bootstrap.Modal.getInstance(document.getElementById('modalTambah')).hide();
+        // 5. Tutup Modal Secara Otomatis
+        const modalElement = document.getElementById('modalTambah');
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+            modalInstance.hide();
+        }
+
+        // 6. Reset Form agar kosong saat dibuka kembali
         form.reset();
         
+        // 7. Beri Notifikasi Berhasil
         alert('Pengajuan Anda telah berhasil dikirim ke Admin!');
     });
 </script>
