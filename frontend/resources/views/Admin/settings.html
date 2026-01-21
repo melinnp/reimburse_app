@@ -1,18 +1,47 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"> 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <title>Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-      /* INDIKATOR: Tambahan CSS agar menu sidebar memiliki efek saat diarahkan kursor */
-      .nav-link-custom {
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f6fa;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #e4e6eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar-text {
+      font-size: 48px;
+      font-weight: 600;
+      color: #555;
+    }
+     .nav-link-custom {
         text-decoration: none;
         color: white;
         display: block;
@@ -27,11 +56,11 @@
         background-color: rgba(255, 255, 255, 0.2);
         border-left: 4px solid #0dcaf0;
       }
-    </style>
-  </head>
-  <body style="font-family: 'Poppins', sans-serif;">
+  </style>
+</head>
 
-<nav class="navbar" style="background-color: rgb(4, 4, 70);">
+<body>
+  <nav class="navbar" style="background-color: rgb(4, 4, 70);">
   <div class="d-flex align-items-center px-2">
     <i class="bi bi-list fs-4 me-2 text-white"
        role="button"
@@ -42,6 +71,7 @@
   </div>
 </nav>
 
+ 
 <div class="offcanvas offcanvas-start" style="width: 250px; background-color: rgb(4, 4, 70);" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title text-center text-white fw-bold" id="offcanvasScrollingLabel">ADMIN</h5>
@@ -51,7 +81,7 @@
     <ul class="list-unstyled m-0">
       
       <li>
-        <a href="index2.html" class="nav-link-custom p-3 nav-active">
+        <a href="index.html" class="nav-link-custom p-3 nav-active">
           <i class="bi bi-columns-gap me-2"></i> Dashboard
         </a>
       </li>
@@ -83,73 +113,143 @@
   </div>
 </div>
 
-<!-- HEADER -->
-  <body style="font-family: 'Poppins', sans-serif">
-    <div class="container-fluid">
-      <div class="d-flex justify-content-center align-items-center mt-3">
-        <div class="card shadow" style="width: 400px; height: 450px;">
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-body">
-            <h5 class="fw-semibold mb-4">Profile Settings</h5>
+<!-- SETTINGS CARD -->
+<div class="container mt-4">
+  <div class="card shadow mx-auto" style="max-width:350px">
+    <div class="card-body">
 
-            <!-- FOTO PROFIL -->
-            <div class="text-center mb-4">
-    <img
-        id="previewImage"
-        src="https://via.placeholder.com/150"
-        class="rounded-circle mb-3"
-        width="100"
-        height="100"
-        style="object-fit: cover; border: 3px solid #dee2e6;"
-        alt="Foto Profil">
-    <div class="mb-1">
-    <input type="file" class="form-control form-control-sm" accept="image/*" id="fotoInput">
+      <h5 class="text-center mb-4">Account Settings</h5>
+
+      <!-- AVATAR -->
+      <div class="avatar mb-4" id="displayAvatar">
+        <span class="avatar-text" id="avatarInitial">A</span>
+      </div>
+
+      <div class="mb-3">
+        <strong>Username</strong>
+        <p id="displayUsername">admin</p>
+      </div>
+
+      <div class="mb-3">
+        <strong>Email</strong>
+        <p id="displayEmail">admin@mail.com</p>
+      </div>
+
+      <div class="mb-3">
+        <strong>Password</strong>
+        <p>********</p>
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editModal">
+          Edit Profile
+        </button>
+      </div>
+
     </div>
+  </div>
 </div>
-            <!-- NAMA -->
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" class="form-control form-control-sm" placeholder="Masukkan Username">
-            </div>
 
-            <!-- EMAIL -->
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control form-control-sm" placeholder="Masukkan email">
-            </div>
+<!-- MODAL EDIT -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="width: fit-content; 300px">
 
-            <!-- NO HP -->
-            <div class="mb-4">
-                <label class="form-label">Password</label>
-                <input type="text" class="form-control form-control-sm" placeholder="Masukkan Password">
-            </div>
+      <div class="modal-header">
+        <h5 class="modal-title fs-6">Edit Profile</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-            <!-- BUTTON -->
-            <div class="text-end">
-                <button class="btn btn-sm btn-primary px-4">
-                    Save 
-                </button>
-            </div>
+      <div class="modal-body">
+
+        <!-- PREVIEW FOTO -->
+        <div class="avatar mb-3">
+          <img id="previewImage" style="display:none;">
+          <span class="avatar-text" id="previewInitial">A</span>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control form-control-sm" id="usernameInput" placeholder=" Masukkan Username">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control form-control-sm" placeholder=" Masukkan Email">
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <div class="input-group">
+            <input type="password" class="form-control form-control-sm" id="passwordInput" placeholder="Masukkan password">
+            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+              <i class="bi bi-eye" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Foto Profil</label>
+          <input type="file" class="form-control" accept="image/*" onchange="previewPhoto(event)">
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+        <button class="btn btn-primary btn-sm" onclick="saveProfile()">Simpan</button>
+      </div>
+
     </div>
+  </div>
 </div>
 
-<!-- JAVASCRIPT (DALAM FILE YANG SAMA) -->
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    const inputFoto = document.getElementById('fotoInput');
-    const preview = document.getElementById('previewImage');
+  function previewPhoto(event) {
+    const img = document.getElementById('previewImage');
+    const initial = document.getElementById('previewInitial');
 
-    inputFoto.addEventListener('change', function () {
-        const file = this.files[0];
-        if (!file) return;
+    img.src = URL.createObjectURL(event.target.files[0]);
+    img.style.display = 'block';
+    initial.style.display = 'none';
+  }
 
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            preview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    });
+  function togglePassword() {
+    const input = document.getElementById('passwordInput');
+    const icon = document.getElementById('eyeIcon');
+
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.replace("bi-eye-slash", "bi-eye");
+    }
+  }
+
+  function saveProfile() {
+    const username = document.getElementById('usernameInput').value;
+    const email = document.getElementById('emailInput').value;
+    const previewImg = document.getElementById('previewImage');
+    const displayAvatar = document.getElementById('displayAvatar');
+
+    document.getElementById('displayUsername').innerText = username;
+    document.getElementById('displayEmail').innerText = email;
+    document.getElementById('avatarInitial').innerText = username.charAt(0).toUpperCase();
+
+    if (previewImg.src) {
+      displayAvatar.innerHTML = `<img src="${previewImg.src}">`;
+    }
+
+    bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+  }
 </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  </body>
+
+</body>
 </html>
