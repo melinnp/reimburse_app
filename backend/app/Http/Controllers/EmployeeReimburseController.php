@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReimburseRequest;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -19,10 +20,44 @@ class EmployeeReimburseController extends Controller
             'data' => $data
         ]);
     }
+
+    public function me()
+    {
+        $data = auth('api')->user();
+
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+        ]);
+    }
+
+    public function show($id)
+    {
+        $userId = auth('api')->id();
+
+        $request = ReimburseRequest::where('id', $id)
+        ->where('user_id', $userId)
+        ->first();
+
+        if(!$request) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Request tidak ditemukan',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $request,
+        ]);
+    }
+
     public function create(Request $request)
     {
+        $userId = auth('api')->id();
+
         $data = ReimburseRequest::create([
-            'user_id' => auth('api')->id(),
+            'user_id' => $userId,
             'item' => $request->item,
             'deskripsi' => $request->deskripsi,
             'jumlah' => $request->jumlah,
@@ -34,6 +69,29 @@ class EmployeeReimburseController extends Controller
             'status' => true,
             'message' => 'berhasil',
             'data' => $data,
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $userId = auth('api')->id();
+
+        $request = ReimburseRequest::where('id', $id)
+        ->where('user_id', $userId)
+        ->firstOrFail();
+
+        if(!$request->status !== 'pending') {
+            return response()->json([
+                'status' => false,
+                'message' => 'Request dgn status pending tidak bisa dihapus',
+            ]);
+        }
+
+        $request->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Request berhasil dihapus',
         ]);
     }
 }
