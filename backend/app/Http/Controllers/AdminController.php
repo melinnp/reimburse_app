@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReimburseRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
-
 
 class AdminController extends Controller
 {
@@ -33,7 +29,7 @@ class AdminController extends Controller
 
         $request->update([
             'status' => 'approved',
-            'approved_by' => JWTAuth::id(),
+            'approved_by' => auth('api')->id(),
             'approved_at' => now()
         ]);
 

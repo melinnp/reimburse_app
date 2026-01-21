@@ -10,7 +10,7 @@ class EmployeeReimburseController extends Controller
 {
     public function index()
     {
-        $data = ReimburseRequest::where('user_id', JWTAuth::id())
+        $data = ReimburseRequest::where('user_id', auth('api')->id())
             ->orderBy('created_at', 'desc')
             ->get();
 
