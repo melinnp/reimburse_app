@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap Dashboard</title>
+    <title>Bootstrap Dashboard - Employees</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,7 +12,9 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
-      /* INDIKATOR: Tambahan CSS agar menu sidebar memiliki efek saat diarahkan kursor */
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
       .nav-link-custom {
         text-decoration: none;
         color: white;
@@ -23,7 +25,6 @@
         background-color: rgba(255, 255, 255, 0.1);
         color: #0dcaf0;
       }
-      /* Indikator halaman aktif */
       .nav-active {
         background-color: rgba(255, 255, 255, 0.2);
         border-left: 4px solid #0dcaf0;
@@ -34,9 +35,12 @@
         padding: 20px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       }
+      #main-content {
+        transition: margin-left 0.3s ease;
+      }
     </style>
   </head>
-  <body style="font-family: 'Poppins', sans-serif">
+  <body>
     <div class="offcanvas offcanvas-start" style="width: 250px; background-color: rgb(4, 4, 70)" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title text-center text-white fw-bold" id="offcanvasScrollingLabel">ADMIN</h5>
@@ -44,24 +48,14 @@
       </div>
       <div class="offcanvas-body p-0">
         <ul class="list-unstyled m-0">
-          <li>
-            <a href="index2.html" class="nav-link-custom p-3"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a>
-          </li>
-
-          <li>
-            <a href="employees.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-person me-2"></i> Employees </a>
-          </li>
-
-          <li>
-            <a href="approval.html" class="nav-link-custom p-3"> <i class="bi bi-bookmark-check"></i> Approval </a>
-          </li>
-
-          <li>
-            <a href="account.html" class="nav-link-custom p-3"> <i class="bi bi-person-bounding-box me-2"></i> Account </a>
-          </li>
+          <li><a href="index2.html" class="nav-link-custom p-3"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a></li>
+          <li><a href="employees.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-person me-2"></i> Employees </a></li>
+          <li><a href="approval.html" class="nav-link-custom p-3"> <i class="bi bi-bookmark-check me-2"></i> Approval </a></li>
+          <li><a href="account.html" class="nav-link-custom p-3"> <i class="bi bi-person-bounding-box me-2"></i> Account </a></li>
         </ul>
       </div>
     </div>
+
     <div id="main-content">
       <nav class="navbar" style="background-color: rgb(4, 4, 70)">
         <div class="d-flex align-items-center px-2">
@@ -69,20 +63,15 @@
           <span class="navbar-brand mb-0 text-white h1">Employees Management</span>
         </div>
       </nav>
-      <!-- HEADER -->
+
       <div class="d-flex justify-content-between mt-4 mx-4">
         <div class="input-group" style="width: 300px">
-          <span class="input-group-text bg-white">
-            <i class="bi bi-search"></i>
-          </span>
+          <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
           <input type="text" class="form-control" placeholder="Cari nama atau ID..." />
         </div>
-
-        <!-- modal -->
-        <button type="button" style="background-color: rgb(4, 4, 70)" class="btn text-white ms-4 px-3" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Create</button>
+        <button type="button" style="background-color: rgb(4, 4, 70)" class="btn text-white px-3" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Create</button>
       </div>
 
-      <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -91,41 +80,27 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="row">
-                <div class="col-3 mb-3">
-                  <label for="nama" class="form-label mb">Nama</label>
-                </div>
-                <div class="col-9 mb-3">
-                  <input type="text" id="nama" class="form-control form-control-sm" placeholder="Ketik Disini.." />
-                </div>
+              <div class="row mb-3">
+                <div class="col-3"><label class="form-label">Nama</label></div>
+                <div class="col-9"><input type="text" class="form-control form-control-sm" placeholder="Ketik Disini.." /></div>
               </div>
-              <div class="row">
-                <div class="col-3 mb-3">
-                  <label for="nama" class="form-label mb">Gmail</label>
-                </div>
-                <div class="col-9 mb-3">
-                  <input type="email" class="form-control form-control-sm" id="nama" placeholder="Ketik Disini.." />
-                </div>
+              <div class="row mb-3">
+                <div class="col-3"><label class="form-label">Gmail</label></div>
+                <div class="col-9"><input type="email" class="form-control form-control-sm" placeholder="Ketik Disini.." /></div>
               </div>
-              <div class="row">
-                <div class="col-3 mb-3">
-                  <label for="nama" class="form-label mb">Jam Kerja</label>
-                </div>
-                <div class="col-9 mb-3">
+              <div class="row mb-3">
+                <div class="col-3"><label class="form-label">Jam Kerja</label></div>
+                <div class="col-9">
                   <select class="form-select form-select-sm">
                     <option value="">Pilih Disini..</option>
-                    <option value="">Full-Time</option>
-                    <option value="">Part-Time</option>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Part-Time">Part-Time</option>
                   </select>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-3 mb-3">
-                  <label for="nama" class="form-label mb">Kota</label>
-                </div>
-                <div class="col-9">
-                  <input type="text" id="nama" class="form-control form-control-sm" placeholder="Ketik Disini.." />
-                </div>
+              <div class="row mb-3">
+                <div class="col-3"><label class="form-label">Kota</label></div>
+                <div class="col-9"><input type="text" class="form-control form-control-sm" placeholder="Ketik Disini.." /></div>
               </div>
             </div>
             <div class="modal-footer">
@@ -134,116 +109,41 @@
           </div>
         </div>
       </div>
-      <!-- akhir modal -->
-      <!-- CARD -->
-      <!-- <div class="container mt-4"></div>
-      <div class="card mx-4">
-        <div class="card-body">
-          <div class="d-flex justify-content-center mt-3">
-            <div class="input-group me-3" style="width: 610px">
-              <span class="input-group-text bg-white">
-                <i class="bi bi-funnel"></i>
-              </span>
-              <select class="form-select" id="filterJob">
-                <option value="all">Semua Job Title</option>
-                <option value="Borongan">Borongan</option>
-                <option value="Staff">Staff</option>
-                <option value="Manager">Manager</option>
-              </select>
-            </div> -->
 
-            <!-- <div class="input-group" style="width: 610px">
-              <span class="input-group-text bg-white"><i class="bi bi-funnel"></i></span>
-              <select class="form-select" id="filterStatus">
-                <option value="all">Semua Status</option>
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
-                <option value="Bebas">Bebas</option>
-              </select>
-            </div> -->
-          </div>
-          <div class="mx-4 mt-4">
-            <table class="table table-light rounded shadow-sm">
-              <thead class="table-secondary">
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Nama</th>
-                  <th scope="col">Gmail</th>
-                  <th scope="col">Jam Kerja</th>
-                  <th scope="col">Kota</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1046</td>
-                  <td class="fw-bold">Andi Wijaya</td>
-                  <td>Staff</td>
-                  <td><span class="badge bg-success-subtle text-success border border-success px-3">Full-Time</span></td>
-                  <td>Jakarta</td>
-                </tr>
-                <tr>
-                  <td>1047</td>
-                  <td class="fw-bold">Santi Melani</td>
-                  <td>Borongan</td>
-                  <td><span class="badge bg-warning-subtle text-warning border border-warning px-3">Part-Time</span></td>
-                  <td>Bandung</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div class="mx-4 mt-4">
+        <div class="table-responsive">
+          <table class="table table-light rounded shadow-sm overflow-hidden">
+            <thead class="table-secondary">
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Gmail</th>
+                <th>Jam Kerja</th>
+                <th>Kota</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1046</td>
+                <td class="fw-bold">Andi Wijaya</td>
+                <td>Staff</td>
+                <td><span class="badge bg-success-subtle text-success border border-success px-3">Full-Time</span></td>
+                <td>Jakarta</td>
+              </tr>
+              <tr>
+                <td>1047</td>
+                <td class="fw-bold">Santi Melani</td>
+                <td>Borongan</td>
+                <td><span class="badge bg-warning-subtle text-warning border border-warning px-3">Part-Time</span></td>
+                <td>Bandung</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="employees1.js"></script>
   </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-  // document.addEventListener('DOMContentLoaded', function () {
-  //   const searchInput = document.getElementById('searchInput');
-  //   const filterJob = document.getElementById('filterJob');
-  //   const filterStatus = document.getElementById('filterStatus');
-  //   const tableRows = document.querySelectorAll('#employeeTable tbody tr');
-
-  //   function filterTable() {
-  //     const query = searchInput.value.toLowerCase();
-  //     const selectedJob = filterJob.value.toLowerCase();
-  //     const selectedStatus = filterStatus.value.toLowerCase();
-
-  //     tableRows.forEach((row) => {
-  //       const id = row.cells[0].innerText.toLowerCase();
-  //       const name = row.cells[1].innerText.toLowerCase();
-  //       const job = row.cells[2].innerText.toLowerCase();
-  //       const status = row.cells[3].innerText.toLowerCase();
-
-  //       // Cek Pencarian (ID atau Nama)
-  //       const matchesSearch = name.includes(query) || id.includes(query);
-
-  //       // Cek Filter Job
-  //       const matchesJob = selectedJob === 'all' || job === selectedJob;
-
-  //       // Cek Filter Status
-  //       const matchesStatus = selectedStatus === 'all' || status.includes(selectedStatus);
-
-  //       // Logika Tampilkan/Sembunyikan
-  //       if (matchesSearch && matchesJob && matchesStatus) {
-  //         row.style.display = '';
-  //       } else {
-  //         row.style.display = 'none';
-  //       }
-  //     });
-  //   }
-  //   // Jalankan fungsi filter saat ada input atau perubahan dropdown
-  //   searchInput.addEventListener('keyup', filterTable);
-  //   filterJob.addEventListener('change', filterTable);
-  //   filterStatus.addEventListener('change', filterTable);
-  const offcanvasEl = document.getElementById('offcanvasScrolling');
-
-  offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
-    $('#main-content').css('margin-left', '250px');
-  });
-
-  offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
-    $('#main-content').css('margin-left', '0');
-  });
-</script>

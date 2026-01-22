@@ -1,15 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Bootstrap Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
 
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
@@ -77,15 +75,12 @@
             <li>
               <a href="index2.html" class="nav-link-custom p-3"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a>
             </li>
-
             <li>
               <a href="employees.html" class="nav-link-custom p-3"> <i class="bi bi-person me-2"></i> Employees </a>
             </li>
-
             <li>
               <a href="approval.html" class="nav-link-custom p-3"> <i class="bi bi-bookmark-check me-2"></i> Approval </a>
             </li>
-
             <li>
               <a href="account.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-person-bounding-box me-2"></i> Account </a>
             </li>
@@ -93,13 +88,11 @@
         </div>
       </div>
 
-      <!-- SETTINGS CARD -->
       <div class="container mt-4">
         <div class="card shadow mx-auto" style="max-width: 350px">
           <div class="card-body">
             <h5 class="text-center mb-4">Account Settings</h5>
 
-            <!-- AVATAR -->
             <div class="avatar mb-4" id="displayAvatar">
               <span class="avatar-text" id="avatarInitial">A</span>
             </div>
@@ -126,7 +119,6 @@
         </div>
       </div>
 
-      <!-- MODAL EDIT -->
       <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content" style="width: 450px">
@@ -136,7 +128,6 @@
             </div>
 
             <div class="modal-body">
-              <!-- PREVIEW FOTO -->
               <div class="avatar mb-3">
                 <img id="previewImage" style="display: none" />
                 <span class="avatar-text" id="previewInitial">A</span>
@@ -149,10 +140,9 @@
 
               <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control form-control-sm" placeholder=" Masukkan Email" />
+                <input type="email" class="form-control form-control-sm" id="emailInput" placeholder=" Masukkan Email" />
               </div>
 
-              <!-- PASSWORD -->
               <div class="mb-3">
                 <label class="form-label">Password</label>
                 <div class="input-group">
@@ -177,59 +167,8 @@
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="account1.js"></script>
   </body>
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    function previewPhoto(event) {
-      const img = document.getElementById('previewImage');
-      const initial = document.getElementById('previewInitial');
-
-      img.src = URL.createObjectURL(event.target.files[0]);
-      img.style.display = 'block';
-      initial.style.display = 'none';
-    }
-
-    function togglePassword() {
-      const input = document.getElementById('passwordInput');
-      const icon = document.getElementById('eyeIcon');
-
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('bi-eye', 'bi-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.replace('bi-eye-slash', 'bi-eye');
-      }
-    }
-
-    function saveProfile() {
-      const username = document.getElementById('usernameInput').value;
-      const email = document.getElementById('emailInput').value;
-      const previewImg = document.getElementById('previewImage');
-      const displayAvatar = document.getElementById('displayAvatar');
-
-      document.getElementById('displayUsername').innerText = username;
-      document.getElementById('displayEmail').innerText = email;
-      document.getElementById('avatarInitial').innerText = username.charAt(0).toUpperCase();
-
-      if (previewImg.src) {
-        displayAvatar.innerHTML = `<img src="${previewImg.src}">`;
-      }
-
-      bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
-    }
-    const offcanvasEl = document.getElementById('offcanvasScrolling');
-    const mainContent = document.getElementById('mainContent');
-
-    offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
-      mainContent.style.marginLeft = '250px';
-      mainContent.style.transition = '0.3s';
-    });
-
-    offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
-      mainContent.style.marginLeft = '0';
-    });
-  </script>
 </html>
