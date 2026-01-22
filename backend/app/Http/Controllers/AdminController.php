@@ -31,6 +31,13 @@ class AdminController extends Controller
     {
         $data = ReimburseRequest::findOrFail($id);
 
+        if(!$data) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Request tidak ada'
+            ]);
+        }
+
         return response()->json([
             'status' => true,
             'data' => $data,

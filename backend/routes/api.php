@@ -24,7 +24,7 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
 Route::middleware('auth:api', 'role:karyawan')->group(function () {
     Route::get('/employee/reimburse', [EmployeeReimburseController::class, 'index']); // Untuk mengambil data data riwayat pengajuan yg sudah dibuat user
     Route::get('/employee/me', [EmployeeReimburseController::class, 'me']); // Untuk melihat data user yg sudah dilogin
-    Route::get('/employee/reimburse/{$id}', [EmployeeReimburseController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan yg sudah dibuat
+    Route::get('/employee/reimburse/{id}', [EmployeeReimburseController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan yg sudah dibuat
     Route::post('/employee/reimburse/create', [EmployeeReimburseController::class, 'create']); // Untuk membuat sebuah form pengajuan
     Route::delete('/employee/reimburse/{id}/delete', [EmployeeReimburseController::class, 'delete']); // Untuk menghapus sebuah pengajuan
 });
