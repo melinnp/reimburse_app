@@ -56,7 +56,7 @@ class AdminController extends Controller
         }
 
         $request->update([
-            'status' => 'approved',
+            'status' => 'paid',
             'approved_by' => auth('api')->id(),
             'approved_at' => now()
         ]);
