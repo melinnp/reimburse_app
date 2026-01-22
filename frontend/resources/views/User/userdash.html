@@ -11,6 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+      }
       .nav-link-custom {
         text-decoration: none;
         color: white;
@@ -33,9 +37,22 @@
       #main-content {
         transition: margin-left 0.3s ease;
       }
+
+      /* CSS Tambahan untuk Profil di Bawah Sidebar */
+      .offcanvas-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .user-profile-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .dropdown-toggle::after {
+        display: none;
+      }
     </style>
   </head>
-  <body style="font-family: 'Poppins', sans-serif; background-color: #f8f9fa">
+  <body>
     <div class="offcanvas offcanvas-start" style="width: 250px; background-color: rgb(4, 4, 70)" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
       <div class="offcanvas-header border-bottom border-secondary">
         <h5 class="offcanvas-title text-white fw-bold" id="offcanvasScrollingLabel">USER MENU</h5>
@@ -43,16 +60,33 @@
       </div>
       <div class="offcanvas-body p-0">
         <ul class="list-unstyled m-0">
-          <li>
-            <a href="userdash.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a>
-          </li>
-          <li>
-            <a href="riwyatuser.html" class="nav-link-custom p-3"> <i class="bi bi-file-earmark-text me-2"></i> Riwayat Saya </a>
-          </li>
-          <li>
-            <a href="#" class="nav-link-custom p-3"> <i class="bi bi-gear me-2"></i> Pengaturan </a>
-          </li>
+          <li><a href="userdash.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a></li>
+          <li><a href="riwyatuser.html" class="nav-link-custom p-3"> <i class="bi bi-file-earmark-text me-2"></i> Riwayat Saya </a></li>
+          <li><a href="pengajuan.html" class="nav-link-custom p-3"> <i class="bi bi-cloud-upload me-2"></i> Pengajuan </a></li>
+          <li><a href="#" class="nav-link-custom p-3"> <i class="bi bi-gear me-2"></i> Pengaturan </a></li>
         </ul>
+
+        <div class="user-profile-section p-3 mt-auto d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                <i class="bi bi-person-fill text-white"></i>
+            </div>
+            <div class="ms-2 text-white">
+              <div class="fw-bold small">Nama User</div>
+              <div style="font-size: 0.7rem; opacity: 0.7;">user@edu.id</div>
+            </div>
+          </div>
+          <div class="dropdown">
+            <a href="#" class="text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots-vertical"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary">
+              <li><a class="dropdown-item small" href="#"><i class="bi bi-person-badge me-2"></i>Lihat Profil</a></li>
+              <li><hr class="dropdown-divider border-secondary"></li>
+              <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -63,7 +97,7 @@
             <i class="bi bi-list fs-4 me-3 text-white" role="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"></i>
             <span class="navbar-brand mb-0 text-white h1">EduReimburse</span>
           </div>
-          <div class="text-white small">Halo, Raphael <i class="bi bi-person-circle ms-1"></i></div>
+          <div class="text-white small">Halo, Teman <i class="bi bi-person-circle ms-1"></i></div>
         </div>
       </nav>
 
