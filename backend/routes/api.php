@@ -13,20 +13,22 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::middleware(['auth:api', 'role:admin'])->group(function () {
-    Route::get('/admin/reimburse', [AdminController::class, 'index']); // Untuk ambil seluruh data pengajuan yg ada
-    Route::get('/admin/employee', [AdminController::class, 'users']); // Untuk mengambil seluruh data karyawan yg sudah terdaftar
-    Route::get('/admin/reimburse/{id}', [AdminController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan
-    Route::post('/admin/reimburse/{id}/approve', [AdminController::class, 'approve']); // Untuk melakukan approve terhadap sebuah pengajuan
-    Route::post('/admin/reimburse/{id}/reject', [AdminController::class, 'reject']); // Untuk melakukan reject terhadap sebuah pengajuan
+// Route Admin
+Route::middleware(['auth:api', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/reimburse', [AdminController::class, 'index']); // Untuk ambil seluruh data pengajuan yg ada
+    Route::get('/employee', [AdminController::class, 'users']); // Untuk mengambil seluruh data karyawan yg sudah terdaftar
+    Route::get('/reimburse/{id}', [AdminController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan
+    Route::post('/reimburse/{id}/approve', [AdminController::class, 'approve']); // Untuk melakukan approve terhadap sebuah pengajuan
+    Route::post('/reimburse/{id}/reject', [AdminController::class, 'reject']); // Untuk melakukan reject terhadap sebuah pengajuan
 });
 
-Route::middleware('auth:api', 'role:karyawan')->group(function () {
-    Route::get('/employee/reimburse', [EmployeeReimburseController::class, 'index']); // Untuk mengambil data data riwayat pengajuan yg sudah dibuat user
-    Route::get('/employee/me', [EmployeeReimburseController::class, 'me']); // Untuk melihat data user yg sudah dilogin
-    Route::get('/employee/reimburse/{$id}', [EmployeeReimburseController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan yg sudah dibuat
-    Route::post('/employee/reimburse/create', [EmployeeReimburseController::class, 'create']); // Untuk membuat sebuah form pengajuan
-    Route::delete('/employee/reimburse/{id}/delete', [EmployeeReimburseController::class, 'delete']); // Untuk menghapus sebuah pengajuan
+// Route Karyawan
+Route::middleware(['auth:api', 'role:karyawan'])->prefix('employee')->group(function () {
+    Route::get('/reimburse', [EmployeeReimburseController::class, 'index']); // Untuk mengambil data data riwayat pengajuan yg sudah dibuat user
+    Route::get('/me', [EmployeeReimburseController::class, 'me']); // Untuk melihat data user yg sudah dilogin
+    Route::get('/reimburse/{id}', [EmployeeReimburseController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan yg sudah dibuat
+    Route::post('/reimburse/create', [EmployeeReimburseController::class, 'create']); // Untuk membuat sebuah form pengajuan
+    Route::delete('/reimburse/{id}/delete', [EmployeeReimburseController::class, 'delete']); // Untuk menghapus sebuah pengajuan
 });
 
 // Dummy route dgn implementasi middleware

@@ -15,7 +15,10 @@ class Users extends Authenticatable implements JWTSubject
         'role',
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     public function getJWTIdentifier()
     {

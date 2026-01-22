@@ -31,6 +31,13 @@ class AdminController extends Controller
     {
         $data = ReimburseRequest::findOrFail($id);
 
+        if(!$data) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Request tidak ada'
+            ]);
+        }
+
         return response()->json([
             'status' => true,
             'data' => $data,
@@ -49,7 +56,7 @@ class AdminController extends Controller
         }
 
         $request->update([
-            'status' => 'approved',
+            'status' => 'paid',
             'approved_by' => auth('api')->id(),
             'approved_at' => now()
         ]);
