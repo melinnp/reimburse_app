@@ -7,7 +7,7 @@ use App\Http\Controllers\EmployeeReimburseController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
-// Dibungkus middleware krn harus memakai token, berbeda dgn login krn generate token (token blm ada)
+// Dibungkus middleware krn harus memakai token/melewati middleware, berbeda dgn login krn generate token (token blm ada)
 Route::middleware('auth:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
