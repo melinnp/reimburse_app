@@ -1,42 +1,44 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // 1. Logika Sidebar (Offcanvas)
+// 1. Logika Sidebar (Offcanvas)
+function initOffcanvas() {
   const offcanvasEl = document.getElementById('offcanvasScrolling');
   const mainContent = document.getElementById('main-content');
 
-  if (offcanvasEl && mainContent) {
-    offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
-      mainContent.style.marginLeft = '250px';
-    });
+  if (!offcanvasEl || !mainContent) return;
 
-    offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
-      mainContent.style.marginLeft = '0';
-    });
-  }
+  offcanvasEl.addEventListener('shown.bs.offcanvas', () => {
+    mainContent.style.marginLeft = '250px';
+  });
 
-  // 2. Logika Form Pengajuan Baru
-  const form = document.getElementById('formReimburse');
-  const table = document.getElementById('reimburseTable');
-  const statTotal = document.getElementById('statTotal');
-  const statPending = document.getElementById('statPending');
+  // PINDAH KE hide (sebelum animasi nutup)
+  offcanvasEl.addEventListener('hide.bs.offcanvas', () => {
+    mainContent.style.marginLeft = '0';
+  });
+}
 
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+// 2. Logika Form Pengajuan Baru
+const form = document.getElementById('formReimburse');
+const table = document.getElementById('reimburseTable');
+const statTotal = document.getElementById('statTotal');
+const statPending = document.getElementById('statPending');
 
-      // Ambil data dari form
-      const jenis = document.getElementById('jenis').value;
-      const nominalValue = document.getElementById('nominal').value;
-      const tanggal = new Date().toLocaleDateString('id-ID');
+if (form) {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-      // Format Rupiah
-      const formattedNominal = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        maximumFractionDigits: 0,
-      }).format(nominalValue);
+    // Ambil data dari form
+    const jenis = document.getElementById('jenis').value;
+    const nominalValue = document.getElementById('nominal').value;
+    const tanggal = new Date().toLocaleDateString('id-ID');
 
-      // Tambah baris baru ke tabel
-      const newRow = `
+    // Format Rupiah
+    const formattedNominal = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0,
+    }).format(nominalValue);
+
+    // Tambah baris baru ke tabel
+    const newRow = `
                 <tr>
                     <td class="ps-4 fw-medium">${jenis}</td>
                     <td class="text-muted small">${tanggal}</td>
@@ -45,27 +47,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td class="text-center"><button class="btn btn-sm btn-outline-secondary">Detail</button></td>
                 </tr>
             `;
-      table.insertAdjacentHTML('beforeend', newRow);
+    table.insertAdjacentHTML('beforeend', newRow);
 
-      // Update Statistik pada Card
-      let totalCount = parseInt(statTotal.innerText);
-      let pendingCount = parseInt(statPending.innerText);
+    // Update Statistik pada Card
+    let totalCount = parseInt(statTotal.innerText);
+    let pendingCount = parseInt(statPending.innerText);
 
-      statTotal.innerText = totalCount + 1;
-      statPending.innerText = pendingCount + 1;
+    statTotal.innerText = totalCount + 1;
+    statPending.innerText = pendingCount + 1;
 
-      // Tutup Modal
-      const modalElement = document.getElementById('modalTambah');
-      const modalInstance = bootstrap.Modal.getInstance(modalElement);
-      if (modalInstance) {
-        modalInstance.hide();
-      }
+    // Tutup Modal
+    const modalElement = document.getElementById('modalTambah');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+      modalInstance.hide();
+    }
 
-      // Reset Form
-      form.reset();
+    // Reset Form
+    form.reset();
 
-      // Notifikasi
-      alert('Pengajuan Anda telah berhasil dikirim ke Admin!');
-    });
-  }
-});
+    // Notifikasi
+    alert('Pengajuan Anda telah berhasil dikirim ke Admin!');
+  });
+}

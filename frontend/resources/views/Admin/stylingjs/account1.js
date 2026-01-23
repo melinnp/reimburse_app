@@ -32,7 +32,7 @@ function saveProfile() {
     document.getElementById('displayUsername').innerText = username;
     document.getElementById('avatarInitial').innerText = username.charAt(0).toUpperCase();
   }
-  
+
   if (email) {
     document.getElementById('displayEmail').innerText = email;
   }
@@ -50,16 +50,20 @@ function saveProfile() {
 }
 
 // Logika Offcanvas Margin
-const offcanvasEl = document.getElementById('offcanvasScrolling');
-const mainContent = document.getElementById('mainContent');
+function initOffcanvas() {
+  const offcanvasEl = document.getElementById('offcanvasScrolling');
+  const mainContent = document.getElementById('main-content');
+  const navbar = document.querySelector('.navbar');
 
-if (offcanvasEl && mainContent) {
-  offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
+  if (!offcanvasEl || !mainContent || !navbar) return;
+
+  offcanvasEl.addEventListener('shown.bs.offcanvas', () => {
     mainContent.style.marginLeft = '250px';
-    mainContent.style.transition = '0.3s';
+    navbar.style.marginLeft = '250px';
   });
 
-  offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
+  offcanvasEl.addEventListener('hide.bs.offcanvas', () => {
     mainContent.style.marginLeft = '0';
+    navbar.style.marginLeft = '0';
   });
 }

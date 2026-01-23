@@ -1,16 +1,17 @@
-$(document).ready(function () {
+function initOffcanvas() {
   const offcanvasEl = document.getElementById('offcanvasScrolling');
-  const mainContent = $('#main-content');
+  const mainContent = document.getElementById('main-content');
+  const navbar = document.querySelector('.navbar');
 
-  if (offcanvasEl) {
-    // buka
-    offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
-      mainContent.css('margin-left', '250px');
-    });
+  if (!offcanvasEl || !mainContent || !navbar) return;
 
-    //tutup
-    offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
-      mainContent.css('margin-left', '0');
-    });
-  }
-});
+  offcanvasEl.addEventListener('shown.bs.offcanvas', () => {
+    mainContent.style.marginLeft = '250px';
+    navbar.style.marginLeft = '250px';
+  });
+
+  offcanvasEl.addEventListener('hide.bs.offcanvas', () => {
+    mainContent.style.marginLeft = '0';
+    navbar.style.marginLeft = '0';
+  });
+}
