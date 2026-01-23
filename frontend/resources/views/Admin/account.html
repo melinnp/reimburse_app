@@ -1,16 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Bootstrap Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap Dashboard - Account</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-
-    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
       body {
@@ -41,25 +41,42 @@
         font-weight: 600;
         color: #555;
       }
+
       .nav-link-custom {
         text-decoration: none;
         color: white;
         display: block;
         transition: 0.3s;
       }
+
       .nav-link-custom:hover {
         background-color: rgba(255, 255, 255, 0.1);
         color: #0dcaf0;
       }
-      /* Indikator halaman aktif */
+
       .nav-active {
         background-color: rgba(255, 255, 255, 0.2);
         border-left: 4px solid #0dcaf0;
       }
+
+      /* CSS Tambahan agar profil berada di bawah sidebar */
+      .offcanvas-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .user-profile-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .dropdown-toggle::after {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <div class="main-content" id="mainContent">
+    <div id="mainContent">
       <nav class="navbar" style="background-color: rgb(4, 4, 70)">
         <div class="d-flex align-items-center px-2">
           <i class="bi bi-list fs-4 me-2 text-white" role="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"></i>
@@ -68,38 +85,47 @@
       </nav>
 
       <div class="offcanvas offcanvas-start" style="width: 250px; background-color: rgb(4, 4, 70)" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-        <div class="offcanvas-header">
+        <div class="offcanvas-header border-bottom border-secondary">
           <h5 class="offcanvas-title text-center text-white fw-bold" id="offcanvasScrollingLabel">ADMIN</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0">
           <ul class="list-unstyled m-0">
-            <li>
-              <a href="index2.html" class="nav-link-custom p-3"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a>
-            </li>
-
-            <li>
-              <a href="employees.html" class="nav-link-custom p-3"> <i class="bi bi-person me-2"></i> Employees </a>
-            </li>
-
-            <li>
-              <a href="approval.html" class="nav-link-custom p-3"> <i class="bi bi-bookmark-check me-2"></i> Approval </a>
-            </li>
-
-            <li>
-              <a href="account.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-person-bounding-box me-2"></i> Account </a>
-            </li>
+            <li><a href="index2.html" class="nav-link-custom p-3"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a></li>
+            <li><a href="employees.html" class="nav-link-custom p-3"> <i class="bi bi-person me-2"></i> Employees </a></li>
+            <li><a href="approval.html" class="nav-link-custom p-3"> <i class="bi bi-bookmark-check me-2"></i> Approval </a></li>
+            <li><a href="account.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-person-bounding-box me-2"></i> Account </a></li>
           </ul>
+
+          <div class="user-profile-section p-3 mt-auto d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                <i class="bi bi-person-fill text-white"></i>
+              </div>
+              <div class="ms-2 text-white">
+                <div class="fw-bold small">Admin Name</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">admin@edu.id</div>
+              </div>
+            </div>
+            <div class="dropdown">
+              <a href="#" class="text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary">
+                <li><a class="dropdown-item small" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                <li><hr class="dropdown-divider border-secondary"></li>
+                <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- SETTINGS CARD -->
       <div class="container mt-4">
         <div class="card shadow mx-auto" style="max-width: 350px">
           <div class="card-body">
             <h5 class="text-center mb-4">Account Settings</h5>
 
-            <!-- AVATAR -->
             <div class="avatar mb-4" id="displayAvatar">
               <span class="avatar-text" id="avatarInitial">A</span>
             </div>
@@ -126,7 +152,6 @@
         </div>
       </div>
 
-      <!-- MODAL EDIT -->
       <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content" style="width: 450px">
@@ -136,7 +161,6 @@
             </div>
 
             <div class="modal-body">
-              <!-- PREVIEW FOTO -->
               <div class="avatar mb-3">
                 <img id="previewImage" style="display: none" />
                 <span class="avatar-text" id="previewInitial">A</span>
@@ -149,10 +173,9 @@
 
               <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control form-control-sm" placeholder=" Masukkan Email" />
+                <input type="email" class="form-control form-control-sm" id="emailInput" placeholder=" Masukkan Email" />
               </div>
 
-              <!-- PASSWORD -->
               <div class="mb-3">
                 <label class="form-label">Password</label>
                 <div class="input-group">
@@ -177,59 +200,8 @@
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="account1.js"></script>
   </body>
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    function previewPhoto(event) {
-      const img = document.getElementById('previewImage');
-      const initial = document.getElementById('previewInitial');
-
-      img.src = URL.createObjectURL(event.target.files[0]);
-      img.style.display = 'block';
-      initial.style.display = 'none';
-    }
-
-    function togglePassword() {
-      const input = document.getElementById('passwordInput');
-      const icon = document.getElementById('eyeIcon');
-
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('bi-eye', 'bi-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.replace('bi-eye-slash', 'bi-eye');
-      }
-    }
-
-    function saveProfile() {
-      const username = document.getElementById('usernameInput').value;
-      const email = document.getElementById('emailInput').value;
-      const previewImg = document.getElementById('previewImage');
-      const displayAvatar = document.getElementById('displayAvatar');
-
-      document.getElementById('displayUsername').innerText = username;
-      document.getElementById('displayEmail').innerText = email;
-      document.getElementById('avatarInitial').innerText = username.charAt(0).toUpperCase();
-
-      if (previewImg.src) {
-        displayAvatar.innerHTML = `<img src="${previewImg.src}">`;
-      }
-
-      bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
-    }
-    const offcanvasEl = document.getElementById('offcanvasScrolling');
-    const mainContent = document.getElementById('mainContent');
-
-    offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
-      mainContent.style.marginLeft = '250px';
-      mainContent.style.transition = '0.3s';
-    });
-
-    offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
-      mainContent.style.marginLeft = '0';
-    });
-  </script>
 </html>
