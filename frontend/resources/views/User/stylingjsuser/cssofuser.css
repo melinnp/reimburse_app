@@ -1,0 +1,46 @@
+.nav-link-custom {
+  text-decoration: none;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+.nav-link-custom:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #0dcaf0;
+}
+.nav-active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #0dcaf0;
+}
+
+.offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.user-profile-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.dropdown-toggle::after {
+  display: none;
+}
+
+.card-form {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none;
+  border-color: #0dcaf0;
+}
+.stat-card-history {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: 0.3s;
+}
+.stat-card-history:hover {
+  transform: translateY(-5px);
+}
