@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -10,28 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <style>
-      body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; }
-      .nav-link-custom { text-decoration: none; color: white; display: block; transition: 0.3s; }
-      .nav-link-custom:hover { background-color: rgba(255, 255, 255, 0.1); color: #0dcaf0; }
-      .nav-active { background-color: rgba(255, 255, 255, 0.2); border-left: 4px solid #0dcaf0; }
-      #main-content { transition: margin-left 0.3s ease; }
-      .table-card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-
-      /* CSS Tambahan untuk Profil di Bawah Sidebar */
-      .offcanvas-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .user-profile-section {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .dropdown-toggle::after {
-        display: none;
-      }
-    </style>
+    <link rel="stylesheet" href="stylingjs/cssoffcanvas.css" />
   </head>
   <body>
     <div class="offcanvas offcanvas-start" style="width: 250px; background-color: rgb(4, 4, 70)" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling">
@@ -41,20 +20,28 @@
       </div>
       <div class="offcanvas-body p-0">
         <ul class="list-unstyled m-0">
-          <li><a href="index2.html" class="nav-link-custom p-3"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a></li>
-          <li><a href="employees.html" class="nav-link-custom p-3"> <i class="bi bi-person me-2"></i> Employees </a></li>
-          <li><a href="approval.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-bookmark-check me-2"></i> Approval </a></li>
-          <li><a href="account.html" class="nav-link-custom p-3"> <i class="bi bi-person-bounding-box me-2"></i> Account </a></li>
+          <li>
+            <a href="index2.html" class="nav-link-custom p-3"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a>
+          </li>
+          <li>
+            <a href="employees.html" class="nav-link-custom p-3"> <i class="bi bi-person me-2"></i> Employees </a>
+          </li>
+          <li>
+            <a href="approval.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-bookmark-check me-2"></i> Approval </a>
+          </li>
+          <li>
+            <a href="account.html" class="nav-link-custom p-3"> <i class="bi bi-person-bounding-box me-2"></i> Account </a>
+          </li>
         </ul>
 
         <div class="user-profile-section p-3 mt-auto d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
-            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
-                <i class="bi bi-person-fill text-white"></i>
+            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px">
+              <i class="bi bi-person-fill text-white"></i>
             </div>
             <div class="ms-2 text-white">
               <div class="fw-bold small">Admin Name</div>
-              <div style="font-size: 0.7rem; opacity: 0.7;">admin@edu.id</div>
+              <div style="font-size: 0.7rem; opacity: 0.7">admin@edu.id</div>
             </div>
           </div>
           <div class="dropdown">
@@ -62,9 +49,13 @@
               <i class="bi bi-three-dots-vertical"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary">
-              <li><a class="dropdown-item small" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-              <li><hr class="dropdown-divider border-secondary"></li>
-              <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+              <li>
+                <a class="dropdown-item small" href="#"><i class="bi bi-gear me-2"></i>Settings</a>
+              </li>
+              <li><hr class="dropdown-divider border-secondary" /></li>
+              <li>
+                <a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -85,7 +76,7 @@
       <div class="container-fluid px-4 py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h4 class="fw-bold m-0">Antrean Persetujuan</h4>
-          
+
           <div class="input-group" style="width: 300px">
             <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
             <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Cari nama karyawan..." />
@@ -114,7 +105,9 @@
                   </td>
                   <td><span class="badge bg-info-subtle text-info border border-info px-3">Transport</span></td>
                   <td class="fw-bold">Rp 450.000</td>
-                  <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i> Lihat</button></td>
+                  <td>
+                    <button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i> Lihat</button>
+                  </td>
                   <td class="text-center">
                     <button class="btn btn-sm btn-success px-3 me-2" onclick="approveRequest('REF-1092')"><i class="bi bi-check-lg"></i> Approve</button>
                     <button class="btn btn-sm btn-danger px-3" onclick="openRejectModal('REF-1092', 'dangcanelo')"><i class="bi bi-x-lg"></i> Reject</button>
@@ -128,7 +121,9 @@
                   </td>
                   <td><span class="badge bg-warning-subtle text-warning border border-warning px-3">Kesehatan</span></td>
                   <td class="fw-bold">Rp 1.200.000</td>
-                  <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i> Lihat</button></td>
+                  <td>
+                    <button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i> Lihat</button>
+                  </td>
                   <td class="text-center">
                     <button class="btn btn-sm btn-success px-3 me-2" onclick="approveRequest('REF-1093')"><i class="bi bi-check-lg"></i> Approve</button>
                     <button class="btn btn-sm btn-danger px-3" onclick="openRejectModal('REF-1093', 'Andi Wijaya')"><i class="bi bi-x-lg"></i> Reject</button>

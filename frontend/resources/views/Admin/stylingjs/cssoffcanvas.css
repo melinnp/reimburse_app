@@ -1,27 +1,60 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f6fa;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #e4e6eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: auto;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-text {
+  font-size: 48px;
+  font-weight: 600;
+  color: #555;
+}
+
 .nav-link-custom {
   text-decoration: none;
   color: white;
   display: block;
   transition: 0.3s;
 }
+
 .nav-link-custom:hover {
   background-color: rgba(255, 255, 255, 0.1);
   color: #0dcaf0;
 }
+
 .nav-active {
   background-color: rgba(255, 255, 255, 0.2);
   border-left: 4px solid #0dcaf0;
 }
 
-/* Tambahan CSS untuk posisi profil di bawah sidebar */
+/* CSS Tambahan agar profil berada di bawah sidebar */
 .offcanvas-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 .user-profile-section {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .dropdown-toggle::after {
   display: none;
 }

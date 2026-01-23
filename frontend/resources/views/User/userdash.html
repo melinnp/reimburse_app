@@ -9,48 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-    <style>
-      body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #f8f9fa;
-      }
-      .nav-link-custom {
-        text-decoration: none;
-        color: white;
-        display: block;
-        transition: 0.3s;
-      }
-      .nav-link-custom:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: #0dcaf0;
-      }
-      .nav-active {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-left: 4px solid #0dcaf0;
-      }
-      .form-control:focus,
-      .form-select:focus {
-        box-shadow: none;
-        border-color: #0dcaf0;
-      }
-      #main-content {
-        transition: margin-left 0.3s ease;
-      }
-
-      /* CSS Tambahan untuk Profil di Bawah Sidebar */
-      .offcanvas-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .user-profile-section {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .dropdown-toggle::after {
-        display: none;
-      }
-    </style>
+    <link rel="stylesheet" href="stylingjsuser/cssofuser.css" />
   </head>
   <body>
     <div class="offcanvas offcanvas-start" style="width: 250px; background-color: rgb(4, 4, 70)" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -126,7 +85,6 @@
       <div class="container-fluid px-4 py-3">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h4 class="fw-bold text-dark">Ringkasan Klaim</h4>
-          <button class="btn btn-primary rounded-pill px-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTambah"><i class="bi bi-plus-lg me-1"></i> Pengajuan Baru</button>
         </div>
 
         <div class="row g-4 mb-4">
@@ -156,6 +114,7 @@
           </div>
         </div>
 
+<<<<<<< HEAD
   <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
      <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
         <h6 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Antrean Reimbursement Saya</h6>
@@ -216,6 +175,33 @@
                 <button type="submit" class="btn text-white px-4" style="background-color: rgb(4, 4, 70)">Kirim Pengajuan</button>
               </div>
             </form>
+=======
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+          <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+            <h6 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Antrean Reimbursement Saya</h6>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="ps-4">Kategori</th>
+                  <th>Tanggal</th>
+                  <th>Nominal</th>
+                  <th>Status</th>
+                  <th class="text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="reimburseTable">
+                <tr>
+                  <td class="ps-4 fw-medium">Kesehatan</td>
+                  <td class="text-muted small">15/01/2026</td>
+                  <td class="fw-bold">Rp 500.000</td>
+                  <td><span class="badge rounded-pill bg-warning text-dark">Queue</span></td>
+                  <td class="text-center"><button class="btn btn-sm btn-outline-secondary">Detail</button></td>
+                </tr>
+              </tbody>
+            </table>
+>>>>>>> 70947d73235cc810896d2437b171e259330d1f6d
           </div>
         </div>
       </div>
