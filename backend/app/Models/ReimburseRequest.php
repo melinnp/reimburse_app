@@ -8,13 +8,13 @@ class ReimburseRequest extends Model
 {
     protected $fillable = [
         'user_id',
-        'item',
-        'deskripsi',
-        'jumlah',
-        'tanggal_pengajuan',
-        'status',
-        'approved_by',
-        'approved_at',
+        'kategori',
+        'tanggal_nota',
+        'mata_uang',
+        'nominal',
+        'keterangan',
+        'nota_path',
+        'status'
     ];
 
     // Request milik 1 user

@@ -34,10 +34,10 @@ class EmployeeReimburseController extends Controller
         $userId = auth('api')->id();
 
         $request = ReimburseRequest::where('id', $id)
-        ->where('user_id', $userId)
-        ->first();
+            ->where('user_id', $userId)
+            ->first();
 
-        if(!$request) {
+        if (!$request) {
             return response()->json([
                 'status' => false,
                 'message' => 'Request tidak ditemukan',
@@ -50,24 +50,35 @@ class EmployeeReimburseController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        $userId = auth('api')->id();
+        $request->validate([
+            'kategori' => 'required|string',
+            'tanggal' => 'required|date',
+            'mata_uang' => 'required|in:IDR,USD',
+            'nominal' => 'required|numeric|min:1',
+            'keterangan' => 'required|string',
+            'nota' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
 
-        $data = ReimburseRequest::create([
-            'user_id' => $userId,
-            'item' => $request->item,
-            'deskripsi' => $request->deskripsi,
-            'jumlah' => $request->jumlah,
-            'tanggal_pengajuan' => now(),
-            'status' => 'pending',
+        // simpan file
+        $notaPath = $request->file('nota')->store('nota', 'public');
+
+        $pengajuan = ReimburseRequest::create([
+            'user_id' => auth('api')->id(), // 🔥 DARI TOKEN
+            'kategori' => $request->kategori,
+            'tanggal_nota' => $request->tanggal,
+            'mata_uang' => $request->mata_uang,
+            'nominal' => $request->nominal,
+            'keterangan' => $request->keterangan,
+            'nota_path' => $notaPath,
+            'status' => 'pending'
         ]);
 
         return response()->json([
-            'status' => true,
-            'message' => 'berhasil',
-            'data' => $data,
-        ]);
+            'message' => 'Pengajuan berhasil dikirim',
+            'data' => $pengajuan
+        ], 201);
     }
 
     public function delete($id)
@@ -75,8 +86,8 @@ class EmployeeReimburseController extends Controller
         $userId = auth('api')->id();
 
         $request = ReimburseRequest::where('id', $id)
-        ->where('user_id', $userId)
-        ->firstOrFail();
+            ->where('user_id', $userId)
+            ->firstOrFail();
 
         $request->delete();
 
