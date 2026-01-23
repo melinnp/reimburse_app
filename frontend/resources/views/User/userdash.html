@@ -22,14 +22,24 @@
           <li>
             <a href="userdash.html" class="nav-link-custom p-3 nav-active"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a>
           </li>
+          
           <li>
             <a href="riwyatuser.html" class="nav-link-custom p-3"> <i class="bi bi-file-earmark-text me-2"></i> Riwayat Saya </a>
           </li>
+
           <li>
+<<<<<<< HEAD
+          <li>
+            <a href="pengajuan.html" class="nav-link-custom p-3"> <i class="bi bi-send-arrow-down me-2"></i> Pengajuan </a>
+          </li>
+          <li>
+            <a href="profil.html" class="nav-link-custom p-3"> <i class="bi bi-person-fill-add"></i> </i> Profil </a>
+=======
             <a href="pengajuan.html" class="nav-link-custom p-3"> <i class="bi bi-cloud-upload me-2"></i> Pengajuan </a>
           </li>
           <li>
             <a href="#" class="nav-link-custom p-3"> <i class="bi bi-gear me-2"></i> Pengaturan </a>
+>>>>>>> 1a90f0f021b3ac08eb58b690d73b2d7e4d9d61b5
           </li>
         </ul>
 
@@ -104,6 +114,68 @@
           </div>
         </div>
 
+<<<<<<< HEAD
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+     <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+        <h6 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Antrean Reimbursement Saya</h6>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-4">Kategori</th>
+            <th>Tanggal</th>
+            <th>Nominal</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="reimburseTable">
+          <tr>
+            <td class="ps-4 fw-medium">Kesehatan</td>
+            <td class="text-muted small">15/01/2026</td>
+            <td class="fw-bold">Rp 500.000</td>
+            <td><span class="badge rounded-pill bg-warning text-dark">Queue</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+      <div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 shadow">
+            <div class="modal-header" style="background-color: rgb(4, 4, 70)">
+              <h5 class="modal-title text-white fw-bold">Form Pengajuan</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formReimburse">
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Jenis Pengeluaran</label>
+                  <select class="form-select" id="jenis" required>
+                    <option value="">Pilih Jenis...</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Kesehatan">Kesehatan</option>
+                    <option value="Dinas">Perjalanan Dinas</option>
+                    <option value="Alat Tulis">Alat Tulis Kantor</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Nominal (Rp)</label>
+                  <input type="number" class="form-control" id="nominal" placeholder="Contoh: 150000" required />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Upload Nota (Gambar)</label>
+                  <input type="file" class="form-control" id="nota" accept="image/*" required />
+                </div>
+              </div>
+              <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn text-white px-4" style="background-color: rgb(4, 4, 70)">Kirim Pengajuan</button>
+              </div>
+            </form>
+=======
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
           <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
             <h6 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Antrean Reimbursement Saya</h6>
@@ -129,6 +201,7 @@
                 </tr>
               </tbody>
             </table>
+>>>>>>> 70947d73235cc810896d2437b171e259330d1f6d
           </div>
         </div>
       </div>
