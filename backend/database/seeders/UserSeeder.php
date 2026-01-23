@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-use function Illuminate\Support\now;
 
 class UserSeeder extends Seeder
 {
