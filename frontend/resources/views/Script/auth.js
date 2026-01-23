@@ -1,6 +1,5 @@
 document.getElementById('loginForm').addEventListener('submit', async function (e) {
   e.preventDefault();
-  console.log('submit masuk');
 
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
@@ -17,10 +16,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
       }),
     });
 
-    console.log('response status:', response.status);
-
     const result = await response.json();
-    console.log('result:', result);
 
     if (!response.ok) {
       //   document.getElementById('errorMsg').innerText = result.message;

@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('reimburse_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('item');
-            $table->text('deskripsi')->nullable();
-            $table->integer('jumlah');
-            $table->date('tanggal_pengajuan');
-            $table->string('status')->default('pending');
+            $table->string('kategori');
+            $table->date('tanggal_nota');
+            $table->string('mata_uang', 3);
+            $table->decimal('nominal', 15, 2);
+            $table->text('keterangan');
+            $table->string('nota_path');
+            $table->enum('status', ['pending', 'approved', 'rejected'])
+                ->default('pending');
             $table->timestamps();
         });
     }
