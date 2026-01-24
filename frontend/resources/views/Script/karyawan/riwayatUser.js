@@ -2,14 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchRiwayat();
 });
 
+function fetchRiwayat() {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Silahkan login ulang");
     window.location.href = "../../auth/login.html";
     return;
   }
-
-function fetchRiwayat() {
+  
   fetch("http://localhost:8000/api/employee/reimburse", {
     headers: {
       "Authorization": "Bearer " + token,
