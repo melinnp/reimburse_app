@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="stylingjsuser/cssofuser.css" />
   </head>
   <body>
-   <div class="layout" id="layout"></div> 
+    <div class="layout" id="layout"></div>
     <div class="main-content" id="main-content">
       <div class="container-fluid px-4 py-3">
         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -25,29 +25,74 @@
             <h6 class="m-0 fw-bold text-dark"><i class="bi bi-clipboard-data me-2"></i>Database Klaim</h6>
             <div class="d-flex gap-2">
               <input type="text" id="searchInput" class="form-control form-control-sm rounded-pill px-3" placeholder="Cari klaim..." />
-              <select id="statusFilter" class="form-select form-select-sm  bg-light rounded-pill px-3" style="width: 160px">
+              <select id="statusFilter" class="form-select form-select-sm bg-light rounded-pill px-3" style="width: 160px">
                 <option value="all">Semua</option>
                 <option value="Sudah Cair">Sudah Cair</option>
                 <option value="Queue">Queue</option>
                 <option value="Ditolak">Ditolak</option>
-            </select>
-        </div>
-    </div>
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0 text-nowrap" id="claimTable">
-        <thead class="table-light text-uppercase small">
-          <tr>
-            <th class="ps-4">ID Transaksi</th>
-            <th>Tanggal</th>
-            <th>Nominal</th>
-            <th>Status Akhir</th>
-            <th class="text-center">Aksi</th>
-          </tr>
-        </thead>
-       <tbody id="claimTableBody"></tbody>
-      </table>
-    </div>
-          
+              </select>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-nowrap" id="claimTable">
+              <thead class="table-light text-uppercase small">
+                <tr>
+                  <th class="ps-4">ID Transaksi</th>
+                  <th>Tanggal</th>
+                  <th>Nominal</th>
+                  <th>Status Akhir</th>
+                  <th class="text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="claimTableBody">
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">DETAIL</button>
+                  <button type="button" class="btn btn-outline-danger btn-sm">HAPUS</button>
+                </td>
+              </tbody>
+            </table>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Pengajuan</h1>
+                </div>
+                <div class="modal-body">
+                  <div class="card rounded-0">
+                    <img src="../Admin/Gambar/bg1.jpeg" class="card-img-top" style="object-fit: cover; height: 200px" />
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <label class="form-label form-label-sm">Jenis Pengeluaran</label>
+                      <input type="text" class="form-control form-control-sm" id="jenis" />
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-md-12">
+                      <label class="form-label form-label-sm">Nominal Pengeluaran</label>
+                      <input type="text" class="form-control form-control-sm" id="nominal" />
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-md-12">
+                      <label class="form-label form-label-sm">Keterangan</label>
+                      <input type="text" class="form-control form-control-sm" id="ket" />
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="card-footer bg-white py-3 border-0">
             <nav>
               <ul class="pagination pagination-sm justify-content-end mb-0">
