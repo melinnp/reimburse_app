@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
-  if (!token) return;
+  if (!token) {
+    alert("Silahkan login ulang");
+    window.location.href = "../../auth/login.html";
+    return;
+  }
 
   fetch("http://localhost:8000/api/employee/me", {
     headers: {
