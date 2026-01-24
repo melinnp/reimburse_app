@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('nota_path');
             $table->enum('status', ['pending', 'approved', 'rejected'])
                 ->default('pending');
+            $table->text('admin_note')->nullable();
             $table->timestamps();
         });
     }

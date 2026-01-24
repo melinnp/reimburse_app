@@ -73,19 +73,20 @@ class AdminController extends Controller
         ]);
     }
 
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
-        $request = ReimburseRequest::findOrFail($id);
+        $reimburse = ReimburseRequest::findOrFail($id);
 
-        if ($request->status !== 'pending') {
+        if ($reimburse->status !== 'pending') {
             return response()->json([
                 'status' => false,
                 'message' => 'Request sudah diproses'
             ], 400);
         }
 
-        $request->update([
-            'status' => 'paid',
+        $reimburse->update([
+            'status' => 'approved', // jangan paid dulu
+            'admin_note' => $request->input('reason', 'Disetujui oleh admin'),
             'approved_by' => auth('api')->id(),
             'approved_at' => now()
         ]);
@@ -96,25 +97,34 @@ class AdminController extends Controller
         ], 200);
     }
 
-    public function reject($id)
+    public function reject(Request $request, $id)
     {
-        $request = ReimburseRequest::findOrFail($id);
-        if ($request->status !== 'pending') {
+        $reimburse = ReimburseRequest::findOrFail($id);
+
+        if ($reimburse->status !== 'pending') {
             return response()->json([
                 'status' => false,
                 'message' => 'Request sudah diproses'
             ], 400);
         }
 
-        $request->update([
+        if (!$request->reason) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Alasan penolakan wajib diisi'
+            ], 422);
+        }
+
+        $reimburse->update([
             'status' => 'rejected',
+            'admin_note' => $request->reason,
             'approved_by' => auth('api')->id(),
             'approved_at' => now()
         ]);
 
         return response()->json([
             'status' => true,
-            'message' => 'Request Rejected'
+            'message' => 'Request rejected'
         ], 200);
     }
 }

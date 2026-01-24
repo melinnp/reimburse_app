@@ -8,41 +8,57 @@ function initOffcanvas() {
     mainContent.style.marginLeft = '250px';
   });
 
-  // PINDAH KE hide (sebelum animasi nutup)
   offcanvasEl.addEventListener('hide.bs.offcanvas', () => {
     mainContent.style.marginLeft = '0';
   });
 }
 
-// 2. Logika Filter & Pencarian Tabel
-const statusFilter = document.getElementById('statusFilter');
-const searchInput = document.getElementById('searchInput');
-const tableRows = document.querySelectorAll('#claimTable tbody tr');
-
+// Filter & Pencarian
 function filterData() {
+  const statusFilter = document.getElementById('statusFilter');
+  const searchInput = document.getElementById('searchInput');
+  const tableBody = document.getElementById('claimTableBody');
+  
+  if (!statusFilter || !searchInput || !tableBody) return;
+
   const selectedStatus = statusFilter.value.toLowerCase();
   const searchText = searchInput.value.toLowerCase();
+  const rows = tableBody.getElementsByTagName('tr');
 
-  tableRows.forEach((row) => {
-    // Kolom status adalah kolom ke-5 (index 4)
-    const statusValue = row.cells[4].innerText.toLowerCase();
-    // Gabungkan teks seluruh baris untuk pencarian global
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    
+    // Skip jika row kosong atau "Belum ada riwayat"
+    if (row.cells.length < 5) continue;
+
+    // Ambil text dari kolom status (index 3)
+    const statusCell = row.cells[3];
+    const statusText = statusCell.innerText.toLowerCase();
+    
+    // Ambil text dari seluruh row untuk search
     const rowText = row.innerText.toLowerCase();
 
-    const matchesStatus = selectedStatus === 'all' || statusValue.includes(selectedStatus);
+    const matchesStatus = selectedStatus === 'all' || statusText.includes(selectedStatus);
     const matchesSearch = rowText.includes(searchText);
 
-    // Baris ditampilkan hanya jika memenuhi kedua kriteria
     if (matchesStatus && matchesSearch) {
       row.style.display = '';
     } else {
       row.style.display = 'none';
     }
-  });
+  }
 }
 
-// Jalankan fungsi saat ada perubahan pada select maupun input
-if (statusFilter && searchInput) {
-  statusFilter.addEventListener('change', filterData);
-  searchInput.addEventListener('input', filterData);
-}
+// Event listeners untuk filter
+document.addEventListener('DOMContentLoaded', () => {
+  const statusFilter = document.getElementById('statusFilter');
+  const searchInput = document.getElementById('searchInput');
+
+  if (statusFilter) {
+    statusFilter.addEventListener('change', filterData);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', filterData);
+  }
+});
