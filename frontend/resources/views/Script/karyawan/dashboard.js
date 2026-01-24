@@ -4,7 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadDashboard() {
   const token = localStorage.getItem("token");
-  if (!token) return;
+  if (!token) {
+    alert("Silahkan login ulang");
+    window.location.href = "../../auth/login.html";
+    return;
+  }
 
   try {
     const res = await fetch("http://localhost:8000/api/employee/reimburse", {
