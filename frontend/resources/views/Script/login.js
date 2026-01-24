@@ -26,6 +26,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     // simpan token
     localStorage.setItem('token', result.token);
+    localStorage.setItem("user", JSON.stringify(result.user));
 
     // ambil role
     const role = result.users.role;

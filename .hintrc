@@ -3,6 +3,8 @@
     "development"
   ],
   "hints": {
-    "meta-viewport": "off"
+    "meta-viewport": "off",
+    "axe/forms": "off",
+    "axe/name-role-value": "off"
   }
 }

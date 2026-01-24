@@ -17,6 +17,8 @@ class ReimburseRequest extends Model
         'status'
     ];
 
+    protected $appends = ['tanggal_format', 'nominal_format'];
+
     // Request milik 1 user
     public function user()
     {
@@ -27,5 +29,19 @@ class ReimburseRequest extends Model
     public function approval()
     {
         return $this->hasOne(ReimburseApproval::class);
+    }
+
+    protected $casts = [
+        'tanggal_nota' => 'date',
+    ];
+
+    public function getTanggalFormatAttribute()
+    {
+        return $this->tanggal_nota->format('d/m/Y');
+    }
+
+    public function getNominalFormatAttribute()
+    {
+        return number_format($this->nominal, 0, ',', '.');
     }
 }

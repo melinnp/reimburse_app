@@ -22,23 +22,24 @@
           <div class="card-body">
             <h5 class="text-center mb-4">Account Settings</h5>
 
-            <div class="avatar mb-4" id="displayAvatar">
+            <div class="avatar mb-4">
+              <img id="displayAvatarImg" style="display:none" />
               <span class="avatar-text" id="avatarInitial">U</span>
             </div>
 
             <div class="mb-3">
               <strong>Username</strong>
-              <p id="displayUsername">User</p>
+              <p id="displayUsername"></p>
             </div>
 
             <div class="mb-3">
               <strong>Email</strong>
-              <p id="displayEmail">User@mail.com</p>
+              <p id="displayEmail"></p>
             </div>
 
             <div class="mb-3">
-              <strong>Password</strong>
-              <p>********</p>
+              <strong>Role</strong>
+              <p id="displayRole"></p>
             </div>
 
             <div class="text-center">
@@ -58,8 +59,8 @@
 
             <div class="modal-body">
               <div class="avatar mb-3">
-                <img id="previewImage" style="display: none" />
-                <span class="avatar-text" id="previewInitial">A</span>
+                <img id="previewImage" style="display:none" />
+                <span class="avatar-text" id="previewInitial"></span>
               </div>
 
               <div class="mb-3">
@@ -84,7 +85,7 @@
 
               <div class="mb-3">
                 <label class="form-label">Foto Profil</label>
-                <input type="file" class="form-control" accept="image/*" onchange="previewPhoto(event)" />
+                <input type="file" id="photoInput" class="form-control" accept="image/*" onchange="previewPhoto(event)" />
               </div>
             </div>
 
@@ -100,5 +101,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="stylingjsuser/account.js"></script>
     <script src="../User/stylingjsuser/partials.js"></script>
+    <script src="../Script/karyawan/accountUser.js"></script>
   </body>
 </html>

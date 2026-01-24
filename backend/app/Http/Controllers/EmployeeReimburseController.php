@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ReimburseRequest;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 class EmployeeReimburseController extends Controller
 {
     public function index()
@@ -27,6 +28,54 @@ class EmployeeReimburseController extends Controller
             'status' => true,
             'data' => $data,
         ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth('api')->user();
+
+        // \Log::info('User authenticated:', ['user_id' => $user->id]);
+        // \Log::info('Request data:', $request->all());
+
+        $request->validate([
+            'username' => 'sometimes|required|string|unique:users,username,' . $user->id,
+            'email'    => 'sometimes|required|email|unique:users,email,' . $user->id,
+            'password' => 'sometimes|nullable|min:6',
+            'photo'    => 'sometimes|image|max:2048',
+        ]);
+
+        if ($request->has('username')) {
+            $user->username = $request->username;
+            $user->name = $request->username;
+        }
+
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::delete('profile/' . $user->photo);
+            }
+
+            $filename = time() . '.' . $request->photo->extension();
+            $request->photo->storeAs('profile', $filename);
+            $user->photo = $filename;
+        }
+
+        $user->save();
+
+        // \Log::info('User after save:', $user->toArray());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Profile berhasil diupdate',
+            'data' => $user,
+        ], 200);
     }
 
     public function show($id)
@@ -54,7 +103,7 @@ class EmployeeReimburseController extends Controller
     {
         $request->validate([
             'kategori' => 'required|string',
-            'tanggal' => 'required|date',
+            'tanggal_nota' => 'required|date',
             'mata_uang' => 'required|in:IDR,USD',
             'nominal' => 'required|numeric|min:1',
             'keterangan' => 'required|string',
@@ -62,16 +111,17 @@ class EmployeeReimburseController extends Controller
         ]);
 
         // simpan file
-        $notaPath = $request->file('nota')->store('nota', 'public');
+        $filename = time() . '_nota.' . $request->file('nota')->extension();
+        $request->file('nota')->storeAs('nota', $filename);
 
         $pengajuan = ReimburseRequest::create([
-            'user_id' => auth('api')->id(), // 🔥 DARI TOKEN
+            'user_id' => auth('api')->id(),
             'kategori' => $request->kategori,
-            'tanggal_nota' => $request->tanggal,
+            'tanggal_nota' => $request->tanggal_nota,
             'mata_uang' => $request->mata_uang,
             'nominal' => $request->nominal,
             'keterangan' => $request->keterangan,
-            'nota_path' => $notaPath,
+            'nota_path' => $filename,
             'status' => 'pending'
         ]);
 
