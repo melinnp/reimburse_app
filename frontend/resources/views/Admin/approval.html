@@ -40,22 +40,6 @@
               </thead>
               <tbody id="approvalTable">
                 <tr>
-                  <td>#REF-1092</td>
-                  <td>
-                    <div class="fw-bold">dangcanelo</div>
-                    <small class="text-muted">dangcanelo@school.id</small>
-                  </td>
-                  <td><span class="badge bg-info-subtle text-info border border-info px-3">Transport</span></td>
-                  <td class="fw-bold">Rp 450.000</td>
-                  <td>
-                    <button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i> Lihat</button>
-                  </td>
-                  <td class="text-center">
-                    <button class="btn btn-sm btn-success px-3 me-2" onclick="approveRequest('REF-1092')"><i class="bi bi-check-lg"></i> Approve</button>
-                    <button class="btn btn-sm btn-danger px-3" onclick="openRejectModal('REF-1092', 'dangcanelo')"><i class="bi bi-x-lg"></i> Reject</button>
-                  </td>
-                </tr>
-                <tr>
                   <td>#REF-1093</td>
                   <td>
                     <div class="fw-bold">Andi Wijaya</div>
@@ -64,7 +48,7 @@
                   <td><span class="badge bg-warning-subtle text-warning border border-warning px-3">Kesehatan</span></td>
                   <td class="fw-bold">Rp 1.200.000</td>
                   <td>
-                    <button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i> Lihat</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-eye"></i> Lihat</button>
                   </td>
                   <td class="text-center">
                     <button class="btn btn-sm btn-success px-3 me-2" onclick="approveRequest('REF-1093')"><i class="bi bi-check-lg"></i> Approve</button>
@@ -96,6 +80,25 @@
           <div class="modal-footer border-0">
             <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Batal</button>
             <button type="button" class="btn btn-danger px-4" id="btnConfirmReject">Kirim Penolakan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal lihat -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Bukti Pengajuan</h1>
+          </div>
+          <div class="modal-body">
+            <div class="card rounded-0">
+              <img src="../Admin/Gambar/bg1.jpeg" class="card-img-top" style="object-fit: cover; height: 200px" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
