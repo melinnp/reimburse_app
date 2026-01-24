@@ -52,7 +52,7 @@ async function loadPendingApproval() {
           </td>
           <td>
             <button class="btn btn-sm btn-light border"
-              onclick="viewNota('${item.nota_path}')">
+              onclick="openNotaModal('${item.nota_path}')">
               <i class="bi bi-eye"></i> Lihat
             </button>
           </td>

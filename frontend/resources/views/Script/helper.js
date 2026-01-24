@@ -20,13 +20,22 @@ window.getStatusBadge = function (status) {
   }
 };
 
-function viewNota(path) {
-  if (!path) return alert("Nota tidak tersedia");
-  window.open(
-    `http://localhost:8000/storage/nota/${path}`,
-    "_blank"
-  );
+function openNotaModal(path) {
+  const img = document.getElementById("notaImage");
+  img.src = "";
+  img.alt = "Loading...";
+
+  img.onerror = () => {
+    img.alt = "Gagal memuat gambar";
+  };
+
+  img.src = `http://localhost:8000/storage/nota/${path}`;
+
+  new bootstrap.Modal(
+    document.getElementById("notaModal")
+  ).show();
 }
+
 
 function approveRequest(id) {
   console.log("Approve:", id);
