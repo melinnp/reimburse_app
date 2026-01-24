@@ -19,3 +19,39 @@ window.getStatusBadge = function (status) {
       return status;
   }
 };
+
+function viewNota(path) {
+  if (!path) return alert("Nota tidak tersedia");
+  window.open(
+    `http://localhost:8000/storage/nota/${path}`,
+    "_blank"
+  );
+}
+
+function approveRequest(id) {
+  console.log("Approve:", id);
+  // nanti POST ke /approve
+}
+
+function openRejectModal(id, name) {
+  document.getElementById("rejectTargetName").innerText = name;
+  document.getElementById("rejectTargetID").innerText = `REQ-${id}`;
+
+  document.getElementById("btnConfirmReject").onclick = () =>
+    rejectRequest(id);
+
+  new bootstrap.Modal(
+    document.getElementById("rejectModal")
+  ).show();
+}
+
+function rejectRequest(id) {
+  const reason = document.getElementById("rejectReason").value;
+  if (!reason) {
+    document.getElementById("rejectReason").classList.add("is-invalid");
+    return;
+  }
+
+  console.log("Reject:", id, reason);
+  // nanti POST ke /reject
+}

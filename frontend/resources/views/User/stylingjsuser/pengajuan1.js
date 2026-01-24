@@ -17,7 +17,7 @@ function initOffcanvas() {
 const nominalInput = document.getElementById('nominalInput');
 const currencySelect = document.getElementById('currency');
 const curSymbolPreview = document.getElementById('curSymbol');
-const form = document.getElementById('formReimburseLaman');
+const form = document.getElementById('pengajuanForm');
 
 // Map simbol mata uang
 const currencyMap = {

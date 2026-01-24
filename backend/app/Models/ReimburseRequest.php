@@ -22,7 +22,7 @@ class ReimburseRequest extends Model
     // Request milik 1 user
     public function user()
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsTo(Users::class, 'user_id');
     }
 
     // Request punya 1 approval
