@@ -1,24 +1,26 @@
-//    searchbar
+//    searchbar (debounced to reduce reflows on fast typing)
 const searchInput = document.querySelector('input[placeholder="Cari nama atau ID..."]');
 const tableBody = document.getElementById('approvalTable');
 
-if (searchInput) {
-  searchInput.addEventListener('keyup', function () {
-    const filter = searchInput.value.toLowerCase();
-    const rows = tableBody.getElementsByTagName('tr');
-
-    for (let i = 0; i < rows.length; i++) {
-      const nameColumn = rows[i].getElementsByTagName('td')[1];
-      if (nameColumn) {
-        const nameText = nameColumn.querySelector('.fw-bold').textContent || nameColumn.querySelector('.fw-bold').innerText;
-
-        if (nameText.toLowerCase().indexOf(filter) > -1) {
-          rows[i].style.display = '';
-        } else {
-          rows[i].style.display = 'none';
-        }
-      }
+function runApprovalFilter() {
+  if (!searchInput || !tableBody) return;
+  const filter = searchInput.value.toLowerCase();
+  const rows = tableBody.getElementsByTagName('tr');
+  for (let i = 0; i < rows.length; i++) {
+    const nameColumn = rows[i].getElementsByTagName('td')[1];
+    if (nameColumn) {
+      const el = nameColumn.querySelector('.fw-bold');
+      const nameText = el ? (el.textContent || el.innerText || '').toLowerCase() : '';
+      rows[i].style.display = nameText.indexOf(filter) > -1 ? '' : 'none';
     }
+  }
+}
+
+if (searchInput && tableBody) {
+  let debounceTimer;
+  searchInput.addEventListener('keyup', function () {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runApprovalFilter, 150);
   });
 }
 

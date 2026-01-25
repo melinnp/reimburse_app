@@ -11,6 +11,7 @@ class EmployeeReimburseController extends Controller
     public function index()
     {
         $data = ReimburseRequest::where('user_id', auth('api')->id())
+            ->select('id', 'kategori', 'tanggal_nota', 'nominal', 'status')
             ->orderBy('created_at', 'desc')
             ->get();
 

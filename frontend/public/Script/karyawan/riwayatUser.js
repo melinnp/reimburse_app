@@ -33,10 +33,9 @@ async function loadRiwayat() {
       return;
     }
 
-    result.data.forEach((item) => {
+    const rows = result.data.map((item) => {
       const statusBadge = getStatusBadge(item.status);
-      
-      tbody.innerHTML += `
+      return `
         <tr>
           <td class="ps-4">#REQ-${item.id}</td>
           <td>${item.tanggal_format}</td>
@@ -59,7 +58,8 @@ async function loadRiwayat() {
           </td>
         </tr>
       `;
-    });
+    }).join("");
+    tbody.innerHTML = rows;
 
   } catch (err) {
     console.error("Load riwayat error:", err);
@@ -114,11 +114,7 @@ async function showDetail(id) {
     // Tampilkan catatan admin jika status rejected DAN admin_note ada
     const adminNoteWrapper = document.getElementById("adminNoteWrapper");
     const adminNoteTextarea = document.getElementById("adminNote");
-    
-    console.log("URL:", data.nota_path);
-    console.log("Status:", data.status); // Debug
-    console.log("Admin Note:", data.admin_note); // Debug
-    
+
     if (data.status === 'rejected' && data.admin_note) {
       adminNoteWrapper.style.display = "block";
       adminNoteTextarea.value = data.admin_note;

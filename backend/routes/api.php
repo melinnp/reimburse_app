@@ -15,6 +15,9 @@ Route::middleware('auth:api')->group(function () {
 
 // Route Admin
 Route::middleware(['auth:api', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/me', [AdminController::class, 'me']); // Untuk melihat data admin yg sudah dilogin
+    Route::put('/me', [AdminController::class, 'updateProfile']); // Untuk mengupdate profile admin yg sudah dilogin
+    Route::get('/dashboard', [AdminController::class, 'dashboard']); // Untuk melihat dashboard admin
     Route::get('/reimburse', [AdminController::class, 'index']); // Untuk ambil seluruh data pengajuan yg ada
     Route::get('/employee', [AdminController::class, 'users']); // Untuk mengambil seluruh data karyawan yg sudah terdaftar
     Route::post('/employee/create', [AdminController::class, 'createUser']); // Untuk membuat user karyawan baru

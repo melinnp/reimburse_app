@@ -36,43 +36,42 @@ async function loadPendingApproval() {
       return;
     }
 
-    result.data.forEach(item => {
-      tbody.innerHTML += `
-        <tr>
-          <td>#REQ-${item.id}</td>
-          <td>
-            <div class="fw-bold">${item.user.name}</div>
-            <small class="text-muted">${item.user.email}</small>
-          </td>
-          <td>
-            <span class="badge bg-info-subtle text-info border px-3">
-              ${item.kategori}
-            </span>
-          </td>
-          <td class="fw-bold">
-            Rp ${item.nominal_format}
-          </td>
-          <td>
-            <button class="btn btn-sm btn-light border"
-              onclick="openNotaModal('${item.nota_path}')">
-              <i class="bi bi-eye"></i> Lihat
-            </button>
-          </td>
-          <td class="text-center">
-            <button
-              class="btn btn-sm btn-success px-3 me-2"
-              onclick="approveRequest(${item.id})">
-              <i class="bi bi-check-lg"></i> Approve
-            </button>
-            <button
-              class="btn btn-sm btn-danger px-3"
-              onclick="openRejectModal(${item.id}, '${item.user.name}')">
-              <i class="bi bi-x-lg"></i> Reject
-            </button>
-          </td>
-        </tr>
-      `;
-    });
+    const rows = result.data.map(item => `
+      <tr>
+        <td>#REQ-${item.id}</td>
+        <td>
+          <div class="fw-bold">${item.user.name}</div>
+          <small class="text-muted">${item.user.email}</small>
+        </td>
+        <td>
+          <span class="badge bg-info-subtle text-info border px-3">
+            ${item.kategori}
+          </span>
+        </td>
+        <td class="fw-bold">
+          Rp ${item.nominal_format}
+        </td>
+        <td>
+          <button class="btn btn-sm btn-light border"
+            onclick="openNotaModal('${item.nota_path}')">
+            <i class="bi bi-eye"></i> Lihat
+          </button>
+        </td>
+        <td class="text-center">
+          <button
+            class="btn btn-sm btn-success px-3 me-2"
+            onclick="approveRequest(${item.id})">
+            <i class="bi bi-check-lg"></i> Approve
+          </button>
+          <button
+            class="btn btn-sm btn-danger px-3"
+            onclick="openRejectModal(${item.id}, '${item.user.name}')">
+            <i class="bi bi-x-lg"></i> Reject
+          </button>
+        </td>
+      </tr>
+    `).join("");
+    tbody.innerHTML = rows;
 
   } catch (err) {
     console.error("Load approval error:", err);

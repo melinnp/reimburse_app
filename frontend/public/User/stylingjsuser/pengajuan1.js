@@ -57,32 +57,6 @@ currencySelect.addEventListener('change', function () {
   curSymbolPreview.innerText = currencyMap[selected] || selected;
 });
 
-// 4. Handle Submit Form
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  // Ambil data asli (bersihkan titik pemisah ribuan)
-  const rawNominal = nominalInput.value.replace(/\./g, '');
-  const currency = currencySelect.value;
-  const jenis = document.getElementById('jenis').value;
-
-  if (!rawNominal || rawNominal === '0') {
-    alert('Harap masukkan nominal yang valid.');
-    return;
-  }
-
-  // Simulasi pengiriman data
-  console.log('Data Pengajuan Terkirim:', {
-    jenis: jenis,
-    mataUang: currency,
-    nominal: rawNominal,
-    tanggal: document.getElementById('tanggal').value,
-    keterangan: document.getElementById('keterangan').value,
-  });
-
-  alert(`Berhasil!\nPengajuan ${jenis} sebesar ${currencyMap[currency]} ${nominalInput.value} telah dikirim.`);
-
-  // Reset form
-  form.reset();
-  curSymbolPreview.innerText = 'Rp';
-});
+// 4. Submit form ditangani oleh reimburse.js (API nyata)
+// Handler simulasi di bawah ini dinonaktifkan agar tidak bentrok dengan reimburse.js
+// form.addEventListener('submit', function (e) { ... });

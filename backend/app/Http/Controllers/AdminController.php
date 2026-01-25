@@ -11,7 +11,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $data = ReimburseRequest::with('user')
+        $data = ReimburseRequest::with('user:id,name,email')
+            ->select('id', 'user_id', 'kategori', 'tanggal_nota', 'nominal', 'nota_path', 'status')
             ->where('status', 'pending')
             ->get();
 
@@ -21,9 +22,73 @@ class AdminController extends Controller
         ]);
     }
 
+    public function me()
+    {
+        $data = auth('api')->user();
+
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth('api')->user();
+
+        // \Log::info('User authenticated:', ['user_id' => $user->id]);
+        // \Log::info('Request data:', $request->all());
+
+        $request->validate([
+            'username' => 'sometimes|required|string|unique:users,username,' . $user->id,
+            'email'    => 'sometimes|required|email|unique:users,email,' . $user->id,
+            'password' => 'sometimes|nullable|min:6',
+            'photo'    => 'sometimes|image|max:2048',
+        ]);
+
+        if ($request->has('username')) {
+            $user->username = $request->username;
+            $user->name = $request->username;
+        }
+
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::disk('local')->delete('profile/' . $user->photo);
+            }
+
+            $filename = time() . '.' . $request->photo->extension();
+            $request->photo->storeAs(
+                'profile',
+                $filename,
+                'local'
+            );
+            $user->photo = $filename;
+        }
+
+        $user->save();
+
+        // \Log::info('User after save:', $user->toArray());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Profile berhasil diupdate',
+            'data' => $user,
+        ], 200);
+    }
+
     public function users()
     {
-        $data = Users::where('role', 'karyawan')->get();
+        $data = Users::where('role', 'karyawan')
+            ->select('id', 'name', 'username', 'email', 'role')
+            ->get();
 
         return response()->json([
             'status' => true,
@@ -59,13 +124,6 @@ class AdminController extends Controller
     public function show($id)
     {
         $data = ReimburseRequest::findOrFail($id);
-
-        if(!$data) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Request tidak ada'
-            ]);
-        }
 
         return response()->json([
             'status' => true,
@@ -126,5 +184,30 @@ class AdminController extends Controller
             'status' => true,
             'message' => 'Request rejected'
         ], 200);
+    }
+
+    public function dashboard()
+    {
+        // total karyawan
+        $totalKaryawan = Users::where('role', 'karyawan')->count();
+
+        // total pengajuan (semua reimburse)
+        $totalPengajuan = ReimburseRequest::count();
+
+        // total nominal reimburse
+        $totalNominal = ReimburseRequest::sum('nominal');
+
+        // antrian (pending)
+        $pendingReimburse = ReimburseRequest::where('status', 'pending')->count();
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'total_karyawan' => $totalKaryawan,
+                'total_pengajuan' => $totalPengajuan,
+                'total_nominal' => $totalNominal,
+                'pending' => $pendingReimburse
+            ]
+        ]);
     }
 }

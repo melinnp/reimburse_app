@@ -20,8 +20,8 @@
           <div class="col-md-4">
             <div class="card shadow border-0 rounded-4 mt-3">
               <div class="card-body">
-                <p class="text-muted mb-1">Total PTK</p>
-                <h3 class="fw-bold text-primary mb-0">210</h3>
+                <p class="text-muted mb-1">Total Karyawan</p>
+                <h3 class="fw-bold text-primary mb-0" id="totalKaryawan">0</h3>
               </div>
             </div>
           </div>
@@ -30,7 +30,7 @@
             <div class="card shadow border-0 rounded-4 mt-3">
               <div class="card-body">
                 <p class="text-muted mb-1">Antrian Reimburse</p>
-                <h3 class="fw-bold text-warning mb-0">3</h3>
+                <h3 class="fw-bold text-warning mb-0" id="pendingReimburse">0</h3>
               </div>
             </div>
           </div>
@@ -38,8 +38,8 @@
           <div class="col-md-4">
             <div class="card shadow border-0 mt-3 rounded-4">
               <div class="card-body">
-                <p class="text-muted mb-1">Total Nominal</p>
-                <h3 class="fw-bold text-dark mb-0">Rp 4.750.000</h3>
+                <p class="text-muted mb-1">Total Pengajuan</p>
+                <h3 class="fw-bold text-dark mb-0" id="totalPengajuan">0</h3>
               </div>
             </div>
           </div>
@@ -57,12 +57,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Budi Santoso</td>
-              <td>Kesehatan</td>
-              <td>Rp 500.000</td>
-              <td><span class="badge bg-warning text-dark">Queue</span></td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -70,5 +64,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="stylingjs/index1.js"></script>
     <script src="../Admin/stylingjs/partials.js"></script>
+    <script src="../Script/logout.js"></script>
+    <script src="../Script/admin/dashboard.js"></script>
   </body>
 </html>

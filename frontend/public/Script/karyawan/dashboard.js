@@ -24,23 +24,25 @@ async function loadDashboard() {
     const data = result.data;
 
     // =====================
-    // STAT CARD
+    // STAT CARD (single pass)
     // =====================
+    let pending = 0;
+    let approved = 0;
+    for (let i = 0; i < data.length; i++) {
+      const s = data[i].status;
+      if (s === "pending") pending++;
+      else if (s === "approved") approved++;
+    }
     const total = data.length;
-    const pending = data.filter(item => item.status === "pending").length;
-    const approved = data.filter(item => item.status === "approved").length;
 
     document.getElementById("statTotal").innerText = total;
     document.getElementById("statPending").innerText = pending;
     document.getElementById("statApproved").innerText = approved;
-    // kalau mau isi "Total Selesai", tinggal tambahin id di HTML
 
     // =====================
-    // TABLE
+    // TABLE (single DOM write)
     // =====================
     const tbody = document.getElementById("reimburseTable");
-    tbody.innerHTML = "";
-
     if (data.length === 0) {
       tbody.innerHTML = `
         <tr>
@@ -52,16 +54,15 @@ async function loadDashboard() {
       return;
     }
 
-    data.forEach(item => {
-      tbody.innerHTML += `
-        <tr>
-          <td class="ps-4 fw-medium">${item.kategori}</td>
-          <td class="text-muted small">${item.tanggal_format}</td>
-          <td class="fw-bold">Rp ${item.nominal_format}</td>
-          <td>${getStatusBadge(item.status)}</td>
-        </tr>
-      `;
-    });
+    const rows = data.map(item => `
+      <tr>
+        <td class="ps-4 fw-medium">${item.kategori}</td>
+        <td class="text-muted small">${item.tanggal_format}</td>
+        <td class="fw-bold">Rp ${item.nominal_format}</td>
+        <td>${getStatusBadge(item.status)}</td>
+      </tr>
+    `).join("");
+    tbody.innerHTML = rows;
 
   } catch (err) {
     console.error("Dashboard error:", err);

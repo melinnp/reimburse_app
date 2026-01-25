@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json([
-            'user' => JWTAuth::user(),
+            'user' => auth('api')->user(),
         ]);
     }
 }

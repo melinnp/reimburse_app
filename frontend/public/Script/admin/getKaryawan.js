@@ -15,12 +15,9 @@ async function loadEmployees() {
     });
 
     const result = await res.json();
-    console.log("Employees loaded:", result);
     if (!result.status) return;
 
     const tbody = document.getElementById("employeeTable");
-    tbody.innerHTML = "";
-
     if (result.data.length === 0) {
       tbody.innerHTML = `
         <tr>
@@ -32,25 +29,24 @@ async function loadEmployees() {
       return;
     }
 
-    result.data.forEach((user, index) => {
-      tbody.innerHTML += `
-        <tr>
-          <td class="ps-3">${index + 1}</td>
-          <td class="fw-bold">${user.name}</td>
-          <td>${user.username}</td>
-          <td>
-            <span class="text-primary fw-semibold">
-              ${user.email}
-            </span>
-          </td>
-          <td>
-            <span class="badge bg-success-subtle text-success border border-success px-3">
-              Karyawan
-            </span>
-          </td>
-        </tr>
-      `;
-    });
+    const rows = result.data.map((user, index) => `
+      <tr>
+        <td class="ps-3">${index + 1}</td>
+        <td class="fw-bold">${user.name}</td>
+        <td>${user.username}</td>
+        <td>
+          <span class="text-primary fw-semibold">
+            ${user.email}
+          </span>
+        </td>
+        <td>
+          <span class="badge bg-success-subtle text-success border border-success px-3">
+            Karyawan
+          </span>
+        </td>
+      </tr>
+    `).join("");
+    tbody.innerHTML = rows;
 
   } catch (error) {
     console.error("Gagal load employees:", error);

@@ -13,12 +13,12 @@ function initOffcanvas() {
   });
 }
 
-// Filter & Pencarian
+// Filter & Pencarian (debounce on search input to reduce reflows)
 function filterData() {
   const statusFilter = document.getElementById('statusFilter');
   const searchInput = document.getElementById('searchInput');
   const tableBody = document.getElementById('claimTableBody');
-  
+
   if (!statusFilter || !searchInput || !tableBody) return;
 
   const selectedStatus = statusFilter.value.toLowerCase();
@@ -27,38 +27,28 @@ function filterData() {
 
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    
-    // Skip jika row kosong atau "Belum ada riwayat"
     if (row.cells.length < 5) continue;
 
-    // Ambil text dari kolom status (index 3)
-    const statusCell = row.cells[3];
-    const statusText = statusCell.innerText.toLowerCase();
-    
-    // Ambil text dari seluruh row untuk search
+    const statusText = row.cells[3].innerText.toLowerCase();
     const rowText = row.innerText.toLowerCase();
-
     const matchesStatus = selectedStatus === 'all' || statusText.includes(selectedStatus);
     const matchesSearch = rowText.includes(searchText);
-
-    if (matchesStatus && matchesSearch) {
-      row.style.display = '';
-    } else {
-      row.style.display = 'none';
-    }
+    row.style.display = matchesStatus && matchesSearch ? '' : 'none';
   }
 }
 
-// Event listeners untuk filter
 document.addEventListener('DOMContentLoaded', () => {
   const statusFilter = document.getElementById('statusFilter');
   const searchInput = document.getElementById('searchInput');
+  let searchDebounce;
 
   if (statusFilter) {
     statusFilter.addEventListener('change', filterData);
   }
-
   if (searchInput) {
-    searchInput.addEventListener('input', filterData);
+    searchInput.addEventListener('input', function () {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(filterData, 150);
+    });
   }
 });
