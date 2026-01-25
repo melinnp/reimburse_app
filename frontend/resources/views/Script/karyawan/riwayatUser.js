@@ -115,6 +115,7 @@ async function showDetail(id) {
     const adminNoteWrapper = document.getElementById("adminNoteWrapper");
     const adminNoteTextarea = document.getElementById("adminNote");
     
+    console.log("URL:", data.nota_path);
     console.log("Status:", data.status); // Debug
     console.log("Admin Note:", data.admin_note); // Debug
     

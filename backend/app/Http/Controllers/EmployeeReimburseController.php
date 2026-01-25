@@ -59,11 +59,15 @@ class EmployeeReimburseController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($user->photo) {
-                Storage::delete('profile/' . $user->photo);
+                Storage::disk('local')->delete('profile/' . $user->photo);
             }
 
             $filename = time() . '.' . $request->photo->extension();
-            $request->photo->storeAs('profile', $filename);
+            $request->photo->storeAs(
+                'profile',
+                $filename,
+                'local'
+            );
             $user->photo = $filename;
         }
 
@@ -112,7 +116,11 @@ class EmployeeReimburseController extends Controller
 
         // simpan file
         $filename = time() . '_nota.' . $request->file('nota')->extension();
-        $request->file('nota')->storeAs('nota', $filename);
+        $request->file('nota')->storeAs(
+            'nota',
+            $filename,
+            'local'
+        );
 
         $pengajuan = ReimburseRequest::create([
             'user_id' => auth('api')->id(),
