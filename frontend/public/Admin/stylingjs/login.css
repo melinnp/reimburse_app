@@ -1,12 +1,12 @@
 body {
   min-height: 100vh;
-  background-color: rgb(3, 3, 53);
+  background-color: rgb(70, 4, 4);
   background-size: cover;
 }
 
 /* CARD TRANSPARAN */
 .card {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgb(230, 210, 181);
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
