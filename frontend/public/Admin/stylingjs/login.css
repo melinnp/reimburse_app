@@ -1,6 +1,6 @@
 body {
   min-height: 100vh;
-  background-color: rgb(70, 4, 4);
+  background: url('../Gambar/logo5.jpg');
   background-size: cover;
 }
 
@@ -21,17 +21,14 @@ body {
   font-family: 'DM Serif Display', cursive;
 }
 
-.card-title {
-  font-family: 'Dancing Script', cursive;
-}
 .card {
   max-width: 700px;
   height: 330px;
   width: 100%;
 }
 .logo-claimly {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 }
 .logo {
   font-family: 'Dancing Script', cursive;

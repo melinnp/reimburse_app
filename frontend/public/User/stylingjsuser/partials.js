@@ -1,10 +1,11 @@
 async function loadLayout() {
-  const layout = await fetch('../User/partials.html').then((res) => res.text());
+  const layout = await fetch('../User/sidebar.html').then((res) => res.text());
+  const layout2 = await fetch('../User/navbar.html').then((res) => res.text());
   document.getElementById('layout').innerHTML = layout;
+  document.getElementById('layout2').innerHTML = layout2;
 
   initOffcanvas();
-  
-  // ✅ Dispatch event 'partials-loaded'
+
   document.dispatchEvent(new Event('partials-loaded'));
 }
 
