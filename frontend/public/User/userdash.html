@@ -21,61 +21,65 @@
         <div id="layout2"></div>
 
         <main class="main-content flex-grow-1" id="main-content">
-          <div class="container-fluid px-4 py-3">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h4 class="fw-bold text-dark">Ringkasan Klaim</h4>
-            </div>
+          <div class="cream card rounded-4 mx-1">
+            <div class="card-body">
+              <div class="container-fluid px-4 py-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h4 class="fw-bold text-dark">Ringkasan Klaim</h4>
+                </div>
 
-            <div class="row g-4 mb-4">
-              <div class="col-md-4">
-                <div class="card border-0 rounded-4 shadow-sm">
-                  <div class="card-body border-start border-primary border-4 rounded-4">
-                    <p class="text-muted mb-1 small fw-bold text-uppercase">Total Pengajuan</p>
-                    <h3 class="fw-bold text-primary mb-0" id="statTotal">15</h3>
+                <div class="row g-4 mb-4">
+                  <div class="col-md-4">
+                    <div class="card border-0 rounded-4 shadow-sm">
+                      <div class="card-body border-start border-primary border-4 rounded-4">
+                        <p class="text-muted mb-1 small fw-bold text-uppercase">Total Pengajuan</p>
+                        <h3 class="fw-bold text-primary mb-0" id="statTotal">15</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card border-0 rounded-4 shadow-sm">
+                      <div class="card-body border-start border-danger border-4 rounded-4">
+                        <p class="text-muted mb-1 small fw-bold text-uppercase">Sedang Diproses</p>
+                        <h3 class="fw-bold text-danger mb-0" id="statPending"></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card border-0 rounded-4 shadow-sm">
+                      <div class="card-body border-start border-success border-4 rounded-4">
+                        <p class="text-muted mb-1 small fw-bold text-uppercase">Total Selesai</p>
+                        <h3 class="fw-bold text-success mb-0" id="statApproved"></h3>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card border-0 rounded-4 shadow-sm">
-                  <div class="card-body border-start border-danger border-4 rounded-4">
-                    <p class="text-muted mb-1 small fw-bold text-uppercase">Sedang Diproses</p>
-                    <h3 class="fw-bold text-danger mb-0" id="statPending"></h3>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card border-0 rounded-4 shadow-sm">
-                  <div class="card-body border-start border-success border-4 rounded-4">
-                    <p class="text-muted mb-1 small fw-bold text-uppercase">Total Selesai</p>
-                    <h3 class="fw-bold text-success mb-0" id="statApproved"></h3>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-              <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-                <h6 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Antrean Reimbursement Saya</h6>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                  <thead class="table-light">
-                    <tr>
-                      <th class="ps-4">Kategori</th>
-                      <th>Tanggal</th>
-                      <th>Nominal</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody id="reimburseTable">
-                    <tr>
-                      <td class="ps-4 fw-medium">Kesehatan</td>
-                      <td class="text-muted small">15/01/2026</td>
-                      <td class="fw-bold">Rp 500.000</td>
-                      <td><span class="badge rounded-pill bg-warning text-dark">Queue</span></td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                  <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Antrean Reimbursement Saya</h6>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                      <thead class="table-light">
+                        <tr>
+                          <th class="ps-4">Kategori</th>
+                          <th>Tanggal</th>
+                          <th>Nominal</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="reimburseTable">
+                        <tr>
+                          <td class="ps-4 fw-medium">Kesehatan</td>
+                          <td class="text-muted small">15/01/2026</td>
+                          <td class="fw-bold">Rp 500.000</td>
+                          <td><span class="badge rounded-pill bg-warning text-dark">Queue</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -89,5 +93,6 @@
     <script src="../Script/logout.js"></script>
     <script src="../Script/helper.js"></script>
     <script src="../Script/karyawan/dashboard.js"></script>
+    <link rel="stylesheet" href="../User/stylingjsuser/warna.css" />
   </body>
 </html>

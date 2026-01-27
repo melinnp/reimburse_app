@@ -1,47 +1,49 @@
-<div class="merah d-flex flex-column min-vh-100" style="width: 250px">
-  <div class="border-bottom p-3 d-flex justify-content-start">
-    <img src="../Admin/Gambar/logoh.png" alt="Logo Claimly" class="logo-claimly rounded-circle" style="width: 40px; height: 40px" />
-    <h5 class="header text-white fw-bold fs-3 ms-2">Claimly</h5>
-  </div>
+<div class="container">
+  <div class="merah d-flex flex-column min-vh-100 rounded-4 my-3" style="width: 220px">
+    <div class="border-bottom p-2 d-flex justify-content-start align-items-center gap-2">
+      <img src="../Admin/Gambar/CK.png" class="logoc rounded-circle" />
+      <h5 class="header text-white fw-bold fs-3">Claimly</h5>
+    </div>
 
-  <ul class="list-unstyled m-0 flex-grow-1">
-    <li>
-      <a href="userdash.html" class="nav-link-custom nav-active p-3 d-block text-decoration-none"> <i class="bi bi-columns-gap me-2"></i> Dashboard </a>
-    </li>
-    <li>
-      <a href="riwyatuser.html" class="nav-link-custom p-3 d-block text-decoration-none"> <i class="bi bi-file-earmark-text me-2"></i> Riwayat Saya </a>
-    </li>
-    <li>
-      <a href="pengajuan.html" class="nav-link-custom p-3 d-block text-decoration-none"> <i class="bi bi-cloud-upload me-2"></i> Pengajuan </a>
-    </li>
-    <li>
-      <a href="account.html" class="nav-link-custom p-3 d-block text-decoration-none"> <i class="bi bi-person-bounding-box me-2"></i> Account </a>
-    </li>
-  </ul>
+    <ul class="list-unstyled m-0 flex-grow-1">
+      <li>
+        <a href="userdash.html" class="p-3 d-block text-decoration-none text-white"> <i class="bi bi-columns-gap me-2 text-white"></i> Dashboard </a>
+      </li>
+      <li>
+        <a href="riwyatuser.html" class="p-3 d-block text-decoration-none text-white"> <i class="bi bi-file-earmark-text me-2 text-white"></i> Riwayat Saya </a>
+      </li>
+      <li>
+        <a href="pengajuan.html" class="p-3 d-block text-decoration-none text-white"> <i class="bi bi-cloud-upload me-2 text-white"></i> Pengajuan </a>
+      </li>
+      <li>
+        <a href="account.html" class="p-3 d-block text-decoration-none text-white"> <i class="bi bi-person-bounding-box me-2 text-white"></i> Account </a>
+      </li>
+    </ul>
 
-  <div class="p-3 border-top text-white d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center">
-      <img id="userPhoto" src="" class="rounded-circle" style="width: 35px; height: 35px; object-fit: cover" />
-      <div class="ms-2">
-        <div class="fw-bold small" id="profileUsername">dangcanelo</div>
-        <div style="font-size: 0.7rem; opacity: 0.7" id="profileEmail">dangcanelo@edu.id</div>
+    <div class="p-3 border-top text-white d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <img id="userPhoto" src="" class="rounded-circle" style="width: 35px; height: 35px; object-fit: cover" />
+        <div class="ms-2">
+          <div class="fw-bold small" id="profileUsername">dangcanelo</div>
+          <div style="font-size: 0.7rem; opacity: 0.7" id="profileEmail">dangcanelo@edu.id</div>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a href="#" class="text-white" data-bs-toggle="dropdown">
+          <i class="bi bi-three-dots-vertical"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li>
+            <a class="dropdown-item small" id="btnLogout" style="cursor: pointer"> <i class="bi bi-box-arrow-right me-2"></i>Logout </a>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <div class="dropdown">
-      <a href="#" class="text-white" data-bs-toggle="dropdown">
-        <i class="bi bi-three-dots-vertical"></i>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark">
-        <li>
-          <a class="dropdown-item small" id="btnLogout" style="cursor: pointer"> <i class="bi bi-box-arrow-right me-2"></i>Logout </a>
-        </li>
-      </ul>
-    </div>
+    <script src="../Script/karyawan/infoUser.js"></script>
+    <script src="../Script/logout.js"></script>
+    <link rel="stylesheet" href="../Admin/stylingjs/cssoffcanvas.css" />
+    <link rel="stylesheet" href="../User/stylingjsuser/warna.css" />
   </div>
 </div>
-
-<script src="../Script/karyawan/infoUser.js"></script>
-<script src="../Script/logout.js"></script>
-<link rel="stylesheet" href="../Admin/stylingjs/cssoffcanvas.css" />
-<link rel="stylesheet" href="../User/stylingjsuser/warna.css" />
