@@ -26,14 +26,14 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     // simpan token
     localStorage.setItem('token', result.token);
-    localStorage.setItem("user", JSON.stringify(result.user));
+    localStorage.setItem('user', JSON.stringify(result.user));
 
     // ambil role
     const role = result.users.role;
 
     // redirect berdasarkan role
     if (role === 'admin') {
-      window.location.href = '../admin/index.html';
+      window.location.href = '../admin/admindash.html';
     } else if (role === 'karyawan') {
       window.location.href = '../user/userdash.html';
     } else {
