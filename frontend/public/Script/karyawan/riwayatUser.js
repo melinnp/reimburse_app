@@ -1,25 +1,12 @@
-<<<<<<< HEAD
 // Tambahkan di riwayatUser.js
 
 document.addEventListener('DOMContentLoaded', () => {
-=======
-document.addEventListener("DOMContentLoaded", () => {
->>>>>>> origin
   loadRiwayat();
 });
 
 async function loadRiwayat() {
-<<<<<<< HEAD
   const token = localStorage.getItem('token');
   if (!token) return;
-=======
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Silahkan login ulang");
-    window.location.href = "/public/auth/login.html";
-    return;
-  }
->>>>>>> origin
 
   try {
     const res = await fetch('http://localhost:8000/api/employee/reimburse', {
