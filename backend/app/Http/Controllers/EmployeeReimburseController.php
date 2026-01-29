@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReimburseRequest;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +34,14 @@ class EmployeeReimburseController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $user = auth('api')->user();
+        $user = Users::find(auth('api')->id());
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User tidak ditemukan',
+            ], 404);
+        }
 
         // \Log::info('User authenticated:', ['user_id' => $user->id]);
         // \Log::info('Request data:', $request->all());
@@ -63,7 +71,7 @@ class EmployeeReimburseController extends Controller
                 Storage::disk('local')->delete('profile/' . $user->photo);
             }
 
-            $filename = time() . '.' . $request->photo->extension();
+            $filename = time() . '_profile.' . $request->photo->extension();
             $request->photo->storeAs(
                 'profile',
                 $filename,
@@ -153,6 +161,51 @@ class EmployeeReimburseController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Request berhasil dihapus',
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        \Log::info('Request update reimburse', [
+            'request' => $request->all(),
+            'files' => $request->file()
+        ]);
+
+        $data = ReimburseRequest::where('id', $id)
+            ->where('user_id', auth('api')->id())
+            ->firstOrFail();
+
+        $validated = $request->validate([
+            'kategori'      => 'sometimes|string',
+            'tanggal_nota'  => 'sometimes|date',
+            'mata_uang'     => 'sometimes|in:IDR,USD',
+            'nominal'       => 'sometimes|numeric|min:1',
+            'keterangan'    => 'sometimes|string',
+            'nota'          => 'sometimes|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        $updatedData = $validated;
+
+        if ($request->hasFile('nota')) {
+            $file = $request->file('nota');
+
+            $filename = time() . '_nota.' . $file->extension();
+            $file->storeAs('nota', $filename, 'local');
+
+            $updatedData['nota'] = $filename;
+        }
+
+        if (empty($updatedData)) {
+            return response()->json([
+                'message' => 'Tidak ada data yang valid untuk diupdate'
+            ], 422);
+        }
+
+        $data->update($updatedData);
+
+        return response()->json([
+            'message' => 'Data berhasil diupdate',
+            'data' => $data
         ]);
     }
 }

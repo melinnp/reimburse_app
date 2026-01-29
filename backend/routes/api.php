@@ -34,6 +34,7 @@ Route::middleware(['auth:api', 'role:karyawan'])->prefix('employee')->group(func
     Route::get('/reimburse/{id}', [EmployeeReimburseController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan yg sudah dibuat
     Route::post('/reimburse/create', [EmployeeReimburseController::class, 'store']); // Untuk membuat sebuah form pengajuan
     Route::delete('/reimburse/{id}/delete', [EmployeeReimburseController::class, 'delete']); // Untuk menghapus sebuah pengajuan
+    Route::post('/reimburse/{id}/update', [EmployeeReimburseController::class, 'update']); // Untuk update pengajuan
 });
 
 // Dummy route dgn implementasi middleware

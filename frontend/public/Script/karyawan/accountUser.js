@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (newPassword) {
             alert("Password berhasil diubah. Silakan login kembali.");
             localStorage.removeItem("token");
-            window.location.href = "../auth/login.html";
+            window.location.href = "public/auth/login.html";
         } else {
             bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
             window.location.reload();
