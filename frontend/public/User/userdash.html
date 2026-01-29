@@ -7,7 +7,7 @@
     <title>User Dashboard - Reimbursement Sekolah</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -27,15 +27,7 @@
                 <div class="col-md-3">
                   <div class="card border-0 rounded-4 shadow-sm">
                     <div class="card-body rounded-4">
-                      <p class="mb-1 small fw-bold text-center">TOTAL PENGAJUAN</p>
-                      <h3 class="fw-bold text-center mb-0" id="statTotal">0</h3>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card border-0 rounded-4 shadow-sm">
-                    <div class="card-body rounded-4">
-                      <p class="mb-1 small fw-bold text-center">SEDANG DI PROSES</p>
+                      <p class="mb-1 small fw-bold text-center"><i class="bi bi- hourglass-split"></i>SEDANG DI PROSES</p>
                       <h3 class="fw-bold text-center mb-0" id="statPending">0</h3>
                     </div>
                   </div>
@@ -43,33 +35,49 @@
                 <div class="col-md-3">
                   <div class="card border-0 rounded-4 shadow-sm">
                     <div class="card-body rounded-4">
+                      <p class="mb-1 small fw-bold text-center">APPROVED</p>
+                      <h3 class="fw-bold text-center mb-0" id="statApproved">0</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body rounded-4">
+                      <p class="mb-1 small text-center fw-bold">REJECT</p>
+                      <h3 class="fw-bold mb-0 text-center" id="statReject">0</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body rounded-4">
                       <p class="mb-1 small text-center fw-bold">TOTAL SELESAI</p>
-                      <h3 class="fw-bold mb-0 text-center" id="statApproved">0</h3>
+                      <h3 class="fw-bold mb-0 text-center" id="statSelesai">0</h3>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-header py-3 bg-white d-flex justify-content-between align-items-center">
-                  <h6 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Antrean Reimbursement Saya</h6>
+              <div class="card shadow-sm rounded-4 overflow-hidden">
+                <div class="py-3 bg-white d-flex justify-content-between align-items-center">
+                  <h6 class="ms-4 fw-bold">Antrean Reimbursement Saya</h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table table-hover align-middle mb-0">
+                  <table class="table table-bordered align-middle mb-0">
                     <thead>
-                      <tr>
-                        <th class=" ps-4">Kategori</th>
+                      <tr class="text-center">
+                        <th>Kategori</th>
                         <th>Tanggal</th>
                         <th>Nominal</th>
                         <th>Status</th>
                       </tr>
                     </thead>
                     <tbody id="reimburseTable">
-                      <tr>
-                        <td class="ps-4 fw-medium">Kesehatan</td>
+                      <tr class="text-center">
+                        <td>Kesehatan</td>
                         <td class="text-muted small">15/01/2026</td>
-                        <td class="fw-bold">Rp 500.000</td>
-                        <td><span class="badge rounded-pill bg-warning text-dark">Queue</span></td>
+                        <td>Rp 500.000</td>
+                        <td><span class="badge rounded-pill text-dark cream">Queue</span></td>
                       </tr>
                     </tbody>
                   </table>
