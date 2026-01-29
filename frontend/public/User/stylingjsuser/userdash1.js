@@ -70,3 +70,34 @@ if (form) {
     alert('Pengajuan Anda telah berhasil dikirim ke Admin!');
   });
 }
+// Helper: Format Tanggal
+function formatTanggal(dateString) {
+  if (!dateString) return '-';
+  
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  
+  return `${day}/${month}/${year}`;
+}
+
+// Helper: Format Rupiah
+function formatRupiah(number) {
+  return new Intl.NumberFormat('id-ID').format(number);
+}
+
+// Helper: Status Badge
+function getStatusBadge(status) {
+  const s = status.toLowerCase();
+  
+  if (s === "pending" || s === "queue") {
+    return '<span class="badge rounded-pill text-dark cream">Queue</span>';
+  } else if (s === "approved") {
+    return '<span class="badge rounded-pill text-white bg-success">Approved</span>';
+  } else if (s === "rejected" || s === "reject") {
+    return '<span class="badge rounded-pill text-white bg-danger">Rejected</span>';
+  }
+  
+  return '<span class="badge rounded-pill bg-secondary text-white">' + status + '</span>';
+}

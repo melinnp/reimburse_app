@@ -2,11 +2,13 @@ document.getElementById('pengajuanForm').addEventListener('submit', async functi
   e.preventDefault();
   e.stopImmediatePropagation();
 
+  console.log(window.location.pathname);
+
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Silahkan login ulang");
-      window.location.href = "../auth/login.html";
-      return;
+    window.location.replace("/public/auth/login.html");
+    return;
   }
 
   try {
@@ -32,7 +34,7 @@ document.getElementById('pengajuanForm').addEventListener('submit', async functi
 
     if (response.ok) {
       alert('Pengajuan berhasil');
-      window.location.replace(window.location.pathname.replace(/\/[^/]*$/, '') + '/userdash.html');
+      window.location.replace('/public/user/userdash.html');
       return;
     }
 

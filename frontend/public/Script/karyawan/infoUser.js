@@ -1,4 +1,3 @@
-// ✅ Listen ke event 'partials-loaded' instead of DOMContentLoaded
 document.addEventListener("partials-loaded", function () {
   const token = localStorage.getItem("token");
   if (!token) {
