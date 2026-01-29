@@ -5,13 +5,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>User Dashboard - Reimbursement Sekolah</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="stylingjsuser/cssofuser.css" />
+    <link rel="stylesheet" href="../Admin/stylingjs/cssoffcanvas.css" />
   </head>
   <body>
     <div class="app-layout d-flex min-vh-100">
@@ -27,8 +27,11 @@
                 <div class="col-md-3">
                   <div class="card border-0 rounded-4 shadow-sm">
                     <div class="card-body rounded-4">
-                      <p class="mb-1 small fw-bold text-center"><i class="bi bi- hourglass-split"></i>SEDANG DI PROSES</p>
-                      <h3 class="fw-bold text-center mb-0" id="statPending">0</h3>
+                      <p class="mb-1 small fw-bold text-center">SEDANG DI PROSES</p>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-hourglass-split fs-4 me-3"></i>
+                        <h3 class="fw-bold text-center mb-0" id="statPending">0</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -36,7 +39,10 @@
                   <div class="card border-0 rounded-4 shadow-sm">
                     <div class="card-body rounded-4">
                       <p class="mb-1 small fw-bold text-center">APPROVED</p>
-                      <h3 class="fw-bold text-center mb-0" id="statApproved">0</h3>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-check-circle fs-4 me-3"></i>
+                        <h3 class="fw-bold text-center mb-0" id="statApproved">0</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -44,7 +50,10 @@
                   <div class="card border-0 rounded-4 shadow-sm">
                     <div class="card-body rounded-4">
                       <p class="mb-1 small text-center fw-bold">REJECT</p>
-                      <h3 class="fw-bold mb-0 text-center" id="statReject">0</h3>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-x-circle 9 fs-4 me-3"></i>
+                        <h3 class="fw-bold mb-0 text-center" id="statReject">0</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -52,13 +61,15 @@
                   <div class="card border-0 rounded-4 shadow-sm">
                     <div class="card-body rounded-4">
                       <p class="mb-1 small text-center fw-bold">TOTAL SELESAI</p>
-                      <h3 class="fw-bold mb-0 text-center" id="statSelesai">0</h3>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-hourglass-bottom fs-4 me-3"></i>
+                        <h3 class="fw-bold mb-0 text-center" id="statSelesai">0</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="card shadow-sm rounded-4 overflow-hidden">
+              <div class="card rounded-4">
                 <div class="py-3 bg-white d-flex justify-content-between align-items-center">
                   <h6 class="ms-4 fw-bold">Antrean Reimbursement Saya</h6>
                 </div>
@@ -88,7 +99,7 @@
         </main>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
     <script src="stylingjsuser/userdash1.js"></script>
     <script src="../User/stylingjsuser/partials.js"></script>
     <script src="../Script/karyawan/infoUser.js"></script>
