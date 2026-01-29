@@ -6,7 +6,7 @@ async function loadDashboard() {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Silahkan login ulang");
-    window.location.href = "../../auth/login.html";
+    window.location.href = "/public/auth/login.html";
     return;
   }
 
@@ -19,30 +19,40 @@ async function loadDashboard() {
     });
 
     const result = await res.json();
-    if (!result.status) return;
+    
+    if (!result.status) {
+      console.error("API Error:", result.message);
+      return;
+    }
 
     const data = result.data;
 
     // =====================
-    // STAT CARD (single pass)
+    // STAT CARD
     // =====================
     let pending = 0;
     let approved = 0;
-    for (let i = 0; i < data.length; i++) {
-      const s = data[i].status;
-      if (s === "pending") pending++;
-      else if (s === "approved") approved++;
-    }
-    const total = data.length;
+    let reject = 0;
 
-    document.getElementById("statTotal").innerText = total;
+    for (let i = 0; i < data.length; i++) {
+      const s = data[i].status.toLowerCase();
+      if (s === "pending" || s === "queue") pending++;
+      else if (s === "approved") approved++;
+      else if (s === "rejected" || s === "reject") reject++;
+    }
+
+    const selesai = approved + reject;
+
     document.getElementById("statPending").innerText = pending;
     document.getElementById("statApproved").innerText = approved;
+    document.getElementById("statReject").innerText = reject;
+    document.getElementById("statSelesai").innerText = selesai;
 
     // =====================
-    // TABLE (single DOM write)
+    // TABLE
     // =====================
     const tbody = document.getElementById("reimburseTable");
+    
     if (data.length === 0) {
       tbody.innerHTML = `
         <tr>
@@ -55,16 +65,18 @@ async function loadDashboard() {
     }
 
     const rows = data.map(item => `
-      <tr>
-        <td class="ps-4 fw-medium">${item.kategori}</td>
-        <td class="text-muted small">${item.tanggal_format}</td>
-        <td class="fw-bold">Rp ${item.nominal_format}</td>
+      <tr class="text-center">
+        <td>${item.kategori || item.category || '-'}</td>
+        <td class="text-muted small">${formatTanggal(item.tanggal_nota || item.date || item.created_at)}</td>
+        <td>Rp ${formatRupiah(item.nominal || item.amount || 0)}</td>
         <td>${getStatusBadge(item.status)}</td>
       </tr>
     `).join("");
+
     tbody.innerHTML = rows;
 
   } catch (err) {
     console.error("Dashboard error:", err);
+    alert("Gagal memuat data. Silakan coba lagi.");
   }
 }

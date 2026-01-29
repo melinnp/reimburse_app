@@ -1,12 +1,14 @@
-// Tambahkan di riwayatUser.js
-
 document.addEventListener("DOMContentLoaded", () => {
   loadRiwayat();
 });
 
 async function loadRiwayat() {
   const token = localStorage.getItem("token");
-  if (!token) return;
+  if (!token) {
+    alert("Silahkan login ulang");
+    window.location.href = "/public/auth/login.html";
+    return;
+  }
 
   try {
     const res = await fetch("http://localhost:8000/api/employee/reimburse", {
