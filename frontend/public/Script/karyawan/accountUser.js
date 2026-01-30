@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(() => {
       alert("Session habis, silakan login ulang");
       localStorage.removeItem("token");
-      window.location.href = "login.html";
+      window.location.href = "/public/auth/login.html";
     });
 
   /* =====================
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (newPassword) {
             alert("Password berhasil diubah. Silakan login kembali.");
             localStorage.removeItem("token");
-            window.location.replace = "../../auth/login.html";
+            window.location.replace("/public/auth/login.html");
         } else {
             bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
             window.location.reload();
