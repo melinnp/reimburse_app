@@ -1,9 +1,12 @@
 async function loadLayout() {
-  const layout = await fetch('partials.html').then((res) => res.text());
+  const layout = await fetch('Adsidebar.html').then((res) => res.text());
+  const layout2 = await fetch('../User/navbar.html').then((res) => res.text());
   document.getElementById('layout').innerHTML = layout;
+  document.getElementById('layout2').innerHTML = layout2;
 
-  // PENTING: baru jalanin ini SETELAH partials masuk
   initOffcanvas();
+
+  document.dispatchEvent(new Event('partials-loaded'));
 }
 
 document.addEventListener('DOMContentLoaded', loadLayout);
