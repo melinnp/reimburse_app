@@ -1,0 +1,131 @@
+/* body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    animation: fadeIn 0.6s ease-in-out forwards;
+    overflow-x: hidden; 
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-card {
+    max-width: 450px;
+    background: #fff;
+    border: none;
+    border-radius: 20px;
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-header-bg {
+    height: 100px;
+    background: linear-gradient(135deg, #800000 0%, #b30000 100%);
+    width: 100%;
+}
+
+.avatar-wrapper {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 50%;
+    margin: -60px auto 15px; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 5; 
+    overflow: hidden; 
+    border: 5px solid #fff;
+}
+
+#displayAvatarImg, #previewImage {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover; 
+    object-position: center;
+    border: none;
+    display: block;
+}
+
+.avatar-text {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #800000;
+    user-select: none;
+}
+
+.account-info-box {
+    background: #fdfdfd;
+    border: 1px solid #f1f1f1;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin: 0 15px 12px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.account-info-box:hover {
+    border-color: #800000;
+    background: #ffffff;
+    transform: translateX(8px);
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.03);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.info-value {
+    font-size: 0.95rem;
+    color: #212529;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.btn-claimly {
+    background: #800000;
+    color: #ffffff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.btn-claimly:hover {
+    background: #a00000;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(128, 0, 0, 0.25);
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.form-control:focus {
+    border-color: #800000;
+    box-shadow: 0 0 0 0.25rem rgba(128, 0, 0, 0.1);
+} */
