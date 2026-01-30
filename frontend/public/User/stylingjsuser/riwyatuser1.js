@@ -13,42 +13,37 @@ function initOffcanvas() {
   });
 }
 
-// Filter & Pencarian (debounce on search input to reduce reflows)
-function filterData() {
-  const statusFilter = document.getElementById('statusFilter');
-  const searchInput = document.getElementById('searchInput');
-  const tableBody = document.getElementById('claimTableBody');
-
-  if (!statusFilter || !searchInput || !tableBody) return;
-
-  const selectedStatus = statusFilter.value.toLowerCase();
-  const searchText = searchInput.value.toLowerCase();
-  const rows = tableBody.getElementsByTagName('tr');
-
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    if (row.cells.length < 5) continue;
-
-    const statusText = row.cells[3].innerText.toLowerCase();
-    const rowText = row.innerText.toLowerCase();
-    const matchesStatus = selectedStatus === 'all' || statusText.includes(selectedStatus);
-    const matchesSearch = rowText.includes(searchText);
-    row.style.display = matchesStatus && matchesSearch ? '' : 'none';
-  }
+// Format angka dengan pemisah ribuan (titik)
+function formatNumber(n) {
+  return n.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const statusFilter = document.getElementById('statusFilter');
-  const searchInput = document.getElementById('searchInput');
-  let searchDebounce;
+// ✅ TAMBAHKAN FUNGSI INI - Parse nominal untuk dikirim ke API
+function parseNominalValue(value) {
+  // Hapus titik pemisah ribuan, lalu hapus semua karakter non-angka
+  return (value || '').replace(/\./g, '').replace(/[^0-9]/g, '');
+}
 
-  if (statusFilter) {
-    statusFilter.addEventListener('change', filterData);
-  }
-  if (searchInput) {
-    searchInput.addEventListener('input', function () {
-      clearTimeout(searchDebounce);
-      searchDebounce = setTimeout(filterData, 150);
+// Auto format nominal input
+document.addEventListener('DOMContentLoaded', function () {
+  const nominalInput = document.getElementById('nominalInput');
+
+  if (nominalInput) {
+    nominalInput.addEventListener('input', function (e) {
+      let value = e.target.value;
+      let cursorPosition = e.target.selectionStart;
+      let oldLength = value.length;
+
+      // Format dengan pemisah ribuan
+      e.target.value = formatNumber(value);
+
+      // Pertahankan posisi cursor
+      let newLength = e.target.value.length;
+      cursorPosition = cursorPosition + (newLength - oldLength);
+      e.target.setSelectionRange(cursorPosition, cursorPosition);
     });
   }
+
+  // Initialize offcanvas jika ada
+  initOffcanvas();
 });

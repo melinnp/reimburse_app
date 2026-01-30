@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
-
     <link rel="stylesheet" href="stylingjsuser/cssofuser.css" />
   </head>
 
@@ -26,43 +25,45 @@
             <div class="card w-100 mx-1">
               <div class="card-body cream">
                 <div class="card w-75 mx-auto">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label for="tanggal" class="form-label">Tanggal Pengajuan</label>
-                        <input type="date" class="form-control" id="tanggal" name="tanggal" />
+                  <form id="pengajuanForm">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for="tanggal" class="form-label">Tanggal Pengajuan</label>
+                          <input type="date" class="form-control" id="tanggal" name="tanggal" required />
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label small fw-bold">Jenis Pengeluaran</label>
+                          <select class="form-select form-selecet-sm" id="kategori" required>
+                            <option value="">Pilih Jenis...</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Kesehatan">Kesehatan</option>
+                            <option value="Dinas">Perjalanan Dinas</option>
+                            <option value="Alat Tulis">Alat Tulis Kantor</option>
+                          </select>
+                        </div>
                       </div>
-                      <div class="col-md-6">
-                        <label class="form-label small fw-bold">Jenis Pengeluaran</label>
-                        <select class="form-select form-selecet-sm" id="kategori" required>
-                          <option value="">Pilih Jenis...</option>
-                          <option value="Transport">Transport</option>
-                          <option value="Kesehatan">Kesehatan</option>
-                          <option value="Dinas">Perjalanan Dinas</option>
-                          <option value="Alat Tulis">Alat Tulis Kantor</option>
-                        </select>
+                      <div class="mb-3">
+                        <label class="form-label small fw-bold">Nominal Pengeluaran</label>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light fw-bold">IDR</span>
+                          <input type="text" class="form-control form-selecet-sm" id="nominalInput" placeholder="0" required />
+                        </div>
+                      </div>
+                      <div class="">
+                        <label class="form-label small fw-bold">Keterangan / Keperluan</label>
+                        <textarea class="form-control" id="keterangan" rows="3" placeholder="Contoh: Pembelian alat..." required></textarea>
                       </div>
                     </div>
-                    <div class="mb-3">
-                      <label class="form-label small fw-bold">Nominal Pengeluaran</label>
-                      <div class="input-group">
-                        <span class="input-group-text bg-light fw-bold">IDR</span>
-                        <input type="number" class="form-control form-selecet-sm" id="nominalInput" placeholder="0" required />
-                      </div>
+                    <div class="mx-3">
+                      <label class="form-label small fw-bold">Upload Bukti Nota (Gambar/PDF)</label>
+                      <input type="file" class="form-control" id="nota" accept="image/*,.pdf" required />
                     </div>
-                    <div class="">
-                      <label class="form-label small fw-bold">Keterangan / Keperluan</label>
-                      <textarea class="form-control" id="keterangan" rows="3" placeholder="Contoh: Pembelian alat..." required></textarea>
+                    <div class="d-flex justify-content-end gap-2 my-3 mx-3">
+                      <button type="reset" class="btn btn-outline-danger btn-sm px-4 rounded-pill">Reset</button>
+                      <button type="submit" class="btn btn-outline-secondary btn-sm shadow-sm rounded-pill">Kirim Pengajuan</button>
                     </div>
-                  </div>
-                  <div class="mx-3">
-                    <label class="form-label small fw-bold">Upload Bukti Nota (Gambar/PDF)</label>
-                    <input type="file" class="form-control" id="nota" accept="image/*,.pdf" required />
-                  </div>
-                  <div class="d-flex justify-content-end gap-2 my-3 mx-3">
-                    <button type="reset" class="btn btn-outline-danger btn-sm px-4 rounded-pill">Reset</button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm shadow-sm rounded-pill">Kirim Pengajuan</button>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>

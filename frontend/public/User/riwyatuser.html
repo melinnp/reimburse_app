@@ -72,7 +72,7 @@
           </div>
           <div class="modal-body pt-0">
             <div class="rounded-4 overflow-hidden mb-3 border">
-              <img src="../Admin/Gambar/bg1.jpeg" class="w-100" id="modalNotaImage" style="object-fit: cover; height: 200px" />
+              <img class="w-100" id="modalNotaImage" style="object-fit: cover; height: 200px" />
             </div>
 
             <div class="mb-3">
@@ -103,6 +103,64 @@
         </div>
       </div>
     </div>
+
+    <!-- modal edit -->
+    <!-- Modal Edit -->
+    <div class="modal fade" id="editModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+          <div class="modal-header border-bottom-0">
+            <h5 class="modal-title fw-bold">Edit Pengajuan</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body pt-0">
+            <input type="hidden" id="editId" />
+
+            <!-- Preview Nota Lama -->
+            <div class="rounded-4 overflow-hidden mb-3 border">
+              <img src="" class="w-100" id="editNotaPreview" style="object-fit: cover; height: 200px; display: none" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Jenis Pengeluaran</label>
+              <select class="form-select form-select-sm" id="editKategori" required>
+                <option value="">Pilih Jenis...</option>
+                <option value="Transport">Transport</option>
+                <option value="Kesehatan">Kesehatan</option>
+                <option value="Dinas">Perjalanan Dinas</option>
+                <option value="Alat Tulis">Alat Tulis Kantor</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Tanggal</label>
+              <input type="date" class="form-control form-control-sm" id="editTanggal" required />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Nominal Pengeluaran</label>
+              <input type="number" class="form-control form-control-sm" id="editNominal" required />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Keterangan</label>
+              <textarea class="form-control form-control-sm" id="editKeterangan" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Upload Nota Baru (Opsional)</label>
+              <input type="file" class="form-control form-control-sm" id="editNota" accept="image/*,.pdf" />
+              <small class="text-muted">Kosongkan jika tidak ingin mengganti nota</small>
+            </div>
+          </div>
+          <div class="modal-footer border-top-0">
+            <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+            <button type="button" class="btn btn-primary rounded-pill px-4" onclick="submitEdit()">Simpan Perubahan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="stylingjsuser/riwyatuser1.js"></script>
     <script src="../User/stylingjsuser/partials.js"></script>

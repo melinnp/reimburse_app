@@ -1,4 +1,12 @@
-// Tambahkan di riwayatUser.js
+// Tambahkan fungsi getStatusBadge
+function getStatusBadge(status) {
+  const badges = {
+    pending: '<span class="badge bg-warning text-dark rounded-pill px-3 py-2">Queue</span>',
+    approved: '<span class="badge bg-success rounded-pill px-3 py-2">Sudah Cair</span>',
+    rejected: '<span class="badge bg-danger rounded-pill px-3 py-2">Ditolak</span>',
+  };
+  return badges[status] || '<span class="badge bg-secondary rounded-pill px-3 py-2">Unknown</span>';
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   loadRiwayat();
@@ -35,13 +43,12 @@ async function loadRiwayat() {
 
     const rows = result.data
       .map((item) => {
-        const statusBadge = getStatusBadge(item.status);
         return `
         <tr>
           <td class="ps-4">#REQ-${item.id}</td>
           <td>${item.tanggal_format}</td>
           <td class="fw-bold">Rp ${item.nominal_format}</td>
-          <td>${statusBadge}</td>
+          <td>${getStatusBadge(item.status)}</td>
           <td class="text-center">
             <button 
               type="button" 
@@ -52,7 +59,7 @@ async function loadRiwayat() {
             <button 
               type="button" 
               class="btn btn-outline-primary btn-sm rounded-4 me-2"
-              onclick="deleteRequest(${item.id})"
+              onclick="openEditModal(${item.id})"
               ${item.status !== 'pending' ? 'disabled' : ''}>
               EDIT
             </button>
@@ -74,18 +81,6 @@ async function loadRiwayat() {
   }
 }
 
-// Fungsi untuk menampilkan badge status
-function getStatusBadge(status) {
-  const badges = {
-    pending: '<span class="badge bg-warning text-dark">Queue</span>',
-    approved: '<span class="badge bg-success">Sudah Cair</span>',
-    rejected: '<span class="badge bg-danger">Ditolak</span>',
-    paid: '<span class="badge bg-success">Sudah Cair</span>',
-  };
-  return badges[status] || '<span class="badge bg-secondary">Unknown</span>';
-}
-
-// Fungsi untuk menampilkan detail di modal
 // Fungsi untuk menampilkan detail di modal
 async function showDetail(id) {
   const token = localStorage.getItem('token');
@@ -125,10 +120,10 @@ async function showDetail(id) {
 
     if (data.status === 'rejected' && data.admin_note) {
       adminNoteWrapper.style.display = 'block';
-      adminNoteTextarea.value = data.admin_note;
+      adminNoteTextarea.textContent = data.admin_note;
     } else {
       adminNoteWrapper.style.display = 'none';
-      adminNoteTextarea.value = '';
+      adminNoteTextarea.textContent = '';
     }
 
     // Buka modal
@@ -140,7 +135,107 @@ async function showDetail(id) {
   }
 }
 
-// Fungsi untuk hapus request (opsional, hanya bisa hapus yang pending)
+// TAMBAHKAN FUNGSI INI - Edit Modal
+async function openEditModal(id) {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    // Ambil data dari API
+    const res = await fetch(`http://localhost:8000/api/employee/reimburse/${id}`, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
+      },
+    });
+
+    const result = await res.json();
+
+    if (!result.status) {
+      alert('Gagal memuat data');
+      return;
+    }
+
+    const data = result.data;
+
+    // Isi form edit dengan data yang ada
+    document.getElementById('editId').value = data.id;
+    document.getElementById('editKategori').value = data.kategori;
+    document.getElementById('editTanggal').value = data.tanggal_nota;
+    document.getElementById('editNominal').value = data.nominal;
+    document.getElementById('editKeterangan').value = data.keterangan;
+
+    // Tampilkan preview gambar nota lama
+    const previewImg = document.getElementById('editNotaPreview');
+    if (previewImg) {
+      previewImg.src = `http://localhost:8000/storage/nota/${data.nota_path}`;
+      previewImg.style.display = 'block';
+    }
+
+    // Buka modal edit
+    const modal = new bootstrap.Modal(document.getElementById('editModal'));
+    modal.show();
+  } catch (err) {
+    console.error('Open edit modal error:', err);
+    alert('Terjadi kesalahan saat memuat data');
+  }
+}
+
+// TAMBAHKAN FUNGSI INI - Submit Edit (menggunakan POST)
+async function submitEdit() {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  const id = document.getElementById('editId').value;
+
+  try {
+    const formData = new FormData();
+    formData.append('kategori', document.getElementById('editKategori').value);
+    formData.append('tanggal_nota', document.getElementById('editTanggal').value);
+    formData.append('nominal', document.getElementById('editNominal').value);
+    formData.append('keterangan', document.getElementById('editKeterangan').value);
+
+    // Jika ada file nota baru yang diupload
+    const notaFile = document.getElementById('editNota').files[0];
+    if (notaFile) {
+      formData.append('nota', notaFile);
+    }
+
+    // ✅ HAPUS LINE INI (tidak perlu method spoofing karena API pakai POST)
+    // formData.append('_method', 'PUT');
+
+    // ✅ UBAH METHOD JADI POST
+    const res = await fetch(`http://localhost:8000/api/employee/reimburse/${id}/update`, {
+      method: 'POST', // ✅ Pakai POST sesuai API Laravel
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
+      },
+      body: formData,
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      alert(result.message || 'Gagal mengupdate');
+      return;
+    }
+
+    alert('Pengajuan berhasil diupdate');
+
+    // Tutup modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+    modal.hide();
+
+    // Refresh tabel
+    loadRiwayat();
+  } catch (err) {
+    console.error('Submit edit error:', err);
+    alert('Terjadi kesalahan saat mengupdate');
+  }
+}
+
+// Fungsi untuk hapus request
 async function deleteRequest(id) {
   const token = localStorage.getItem('token');
   if (!token) return;
