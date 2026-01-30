@@ -13,6 +13,63 @@ function initOffcanvas() {
   });
 }
 
+// Filter & Pencarian
+function filterData() {
+  const statusFilter = document.getElementById('statusFilter');
+  const searchInput = document.getElementById('searchInput');
+  const tableBody = document.getElementById('claimTableBody');
+
+  if (!statusFilter || !searchInput || !tableBody) return;
+
+  const selectedStatus = statusFilter.value.toLowerCase();
+  const searchText = searchInput.value.toLowerCase().trim();
+  const rows = tableBody.getElementsByTagName('tr');
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    
+    // Skip jika row kosong atau "Belum ada riwayat" / "Memuat data..."
+    if (row.cells.length < 5) {
+      row.style.display = ''; // Tetap tampilkan row kosong/loading
+      continue;
+    }
+
+    // Ambil text dari kolom status (index 3)
+    const statusCell = row.cells[3];
+    const statusText = statusCell.innerText.toLowerCase().trim();
+    
+    // Ambil text dari seluruh row untuk search
+    const rowText = row.innerText.toLowerCase();
+
+    // Filter berdasarkan status
+    const matchesStatus = selectedStatus === 'all' || statusText.includes(selectedStatus);
+    
+    // Filter berdasarkan search input
+    const matchesSearch = searchText === '' || rowText.includes(searchText);
+
+    // Tampilkan row jika cocok dengan kedua filter
+    row.style.display = (matchesStatus && matchesSearch) ? '' : 'none';
+  }
+}
+
+// Event listeners untuk filter
+document.addEventListener('DOMContentLoaded', () => {
+  const statusFilter = document.getElementById('statusFilter');
+  const searchInput = document.getElementById('searchInput');
+  let searchDebounce;
+
+  if (statusFilter) {
+    statusFilter.addEventListener('change', filterData);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(filterData, 300); // Debounce 300ms
+    });
+  }
+});
+
 // Format angka dengan pemisah ribuan (titik)
 function formatNumber(n) {
   return n.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
