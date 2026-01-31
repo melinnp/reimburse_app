@@ -2,18 +2,18 @@ window.getStatusBadge = function (status) {
   switch (status) {
     case 'approved':
       return `
-        <span class="badge rounded-pill bg-success-subtle text-success border px-3">
-          Sudah Cair
+        <span class="badge rounded-pill btn btn-outline-success text-dark px-3">
+          Approved
         </span>`;
     case 'pending':
       return `
-        <span class="badge rounded-pill bg-warning text-dark px-3">
+        <span class="badge rounded-pill btn btn-outline-secondary  text-dark px-3">
           Queue
         </span>`;
     case 'rejected':
       return `
-        <span class="badge rounded-pill bg-danger-subtle text-danger border px-3">
-          Ditolak
+        <span class="badge rounded-pill btn btn-outline-danger text-dark px-3">
+          Rejected
         </span>`;
     default:
       return status;

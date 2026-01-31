@@ -19,24 +19,25 @@
 
       <div class="flex-grow-1 d-flex flex-column">
         <div id="layout2"></div>
-        <main class="main-content mx-1 rounded-4 cream" style="height: 560px;" id="main-content">
-          <div class="d-flex justify-content-center">
-            <div class="card w-75 mt-5 rounded-4 mx-2 ">
-                    <div class="card-body">
-                      <div class="row">
-        <main class="main-content flex-grow-1" id="main-content">
-          <div class="d-flex justify-content-between mt-4 mx-4">
-            <div class="input-group" style="width: 300px">
-              <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-              <input type="text" class="form-control" placeholder="Cari nama atau ID..." />
+        <main class="main-content mx-1 rounded-4 cream border shadow-sm" style="height: 560px" id="main-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="d-flex justify-content-between mt-4 mx-3">
+                  <div class="input-group" style="width: 300px">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Cari nama atau ID..." />
+                  </div>
+                  <button type="button" class="btn merah text-white px-3" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Create</button>
+                </div>
+              </div>
             </div>
-            <button type="button" style="background-color: rgb(4, 4, 70)" class="btn text-white px-3" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Create</button>
           </div>
 
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header" style="background-color: rgb(7, 7, 70)">
+                <div class="modal-header merah">
                   <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Create Employee</h1>
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -68,7 +69,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button id="btnSaveUser" type="button" class="btn btn-sm text-white" style="background-color: rgb(5, 5, 75)">Save</button>
+                  <button id="btnSaveUser" type="button" class="btn btn-sm text-white merah">Save</button>
                 </div>
               </div>
             </div>
@@ -76,8 +77,8 @@
 
           <div class="mx-4 mt-4">
             <div class="table-responsive">
-              <table class="table table-light rounded shadow-sm overflow-hidden align-middle">
-                <thead class="table-secondary">
+              <table class="table table-bordered rounded shadow-sm overflow-hidden align-middle">
+                <thead class="text-center">
                   <tr>
                     <th class="ps-3">No</th>
                     <th>Nama</th>
