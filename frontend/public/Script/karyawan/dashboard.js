@@ -1,27 +1,27 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   loadDashboard();
 });
 
 async function loadDashboard() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (!token) {
-    alert("Silahkan login ulang");
-    window.location.href = "/public/auth/login.html";
+    alert('Silahkan login ulang');
+    window.location.href = '/public/auth/login.html';
     return;
   }
 
   try {
-    const res = await fetch("http://localhost:8000/api/employee/reimburse", {
+    const res = await fetch('http://localhost:8000/api/employee/reimburse', {
       headers: {
-        Authorization: "Bearer " + token,
-        Accept: "application/json",
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
       },
     });
 
     const result = await res.json();
-    
+
     if (!result.status) {
-      console.error("API Error:", result.message);
+      console.error('API Error:', result.message);
       return;
     }
 
@@ -36,23 +36,23 @@ async function loadDashboard() {
 
     for (let i = 0; i < data.length; i++) {
       const s = data[i].status.toLowerCase();
-      if (s === "pending" || s === "queue") pending++;
-      else if (s === "approved") approved++;
-      else if (s === "rejected" || s === "reject") reject++;
+      if (s === 'pending' || s === 'queue') pending++;
+      else if (s === 'approved') approved++;
+      else if (s === 'rejected' || s === 'reject') reject++;
     }
 
     const selesai = approved + reject;
 
-    document.getElementById("statPending").innerText = pending;
-    document.getElementById("statApproved").innerText = approved;
-    document.getElementById("statReject").innerText = reject;
-    document.getElementById("statSelesai").innerText = selesai;
+    document.getElementById('statPending').innerText = pending;
+    document.getElementById('statApproved').innerText = approved;
+    document.getElementById('statReject').innerText = reject;
+    document.getElementById('statSelesai').innerText = selesai;
 
     // =====================
     // TABLE
     // =====================
-    const tbody = document.getElementById("reimburseTable");
-    
+    const tbody = document.getElementById('reimburseTable');
+
     if (data.length === 0) {
       tbody.innerHTML = `
         <tr>
@@ -64,19 +64,22 @@ async function loadDashboard() {
       return;
     }
 
-    const rows = data.map(item => `
+    const rows = data
+      .map(
+        (item) => `
       <tr class="text-center">
-        <td>${item.kategori || item.category || '-'}</td>
-        <td class="text-muted small">${formatTanggal(item.tanggal_nota || item.date || item.created_at)}</td>
-        <td>Rp ${formatRupiah(item.nominal || item.amount || 0)}</td>
-        <td>${getStatusBadge(item.status)}</td>
+        <td class="text-center">${item.kategori || item.category || '-'}</td>
+        <td class="text-center">${formatTanggal(item.tanggal_nota || item.date || item.created_at)}</td>
+        <td class="text-center">Rp ${formatRupiah(item.nominal || item.amount || 0)}</td>
+        <td class="text-center">${getStatusBadge(item.status)}</td>
       </tr>
-    `).join("");
+    `
+      )
+      .join('');
 
     tbody.innerHTML = rows;
-
   } catch (err) {
-    console.error("Dashboard error:", err);
-    alert("Gagal memuat data. Silakan coba lagi.");
+    console.error('Dashboard error:', err);
+    alert('Gagal memuat data. Silakan coba lagi.');
   }
 }

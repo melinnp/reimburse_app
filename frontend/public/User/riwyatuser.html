@@ -20,34 +20,28 @@
         <div id="layout2"></div>
 
         <main class="main-content flex-grow-1" id="main-content">
-          <div class="container-fluid px-2 py-3">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="card border-0 shadow-sm rounded-4 mx-1 cream overflow-hidden">
+            <div class="card-header cream py-3 border-bottom d-flex justify-content-between align-items-center">
+              <div class="d-flex gap-2">
+                <input type="text" id="searchInput" class="form-control form-control-sm rounded-pill px-3" placeholder="Cari klaim..." />
+                <select id="statusFilter" class="form-select form-select-sm bg-light rounded-pill px-3" style="width: 160px">
+                  <option value="all">Semua Status</option>
+                  <option value="Sudah Cair">Sudah Cair</option>
+                  <option value="Queue">Queue</option>
+                  <option value="Ditolak">Ditolak</option>
+                </select>
+              </div>
               <div class="badge bg-light text-muted border px-3 py-2 rounded-pill">Januari 2026</div>
             </div>
-
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-              <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-                <h6 class="m-0 fw-bold text-dark"><i class="bi bi-clipboard-data me-2"></i> Laporan Pengajuan</h6>
-
-                <div class="d-flex gap-2">
-                  <input type="text" id="searchInput" class="form-control form-control-sm rounded-pill px-3" placeholder="Cari klaim..." />
-                  <select id="statusFilter" class="form-select form-select-sm bg-light rounded-pill px-3" style="width: 160px">
-                    <option value="all">Semua Status</option>
-                    <option value="Sudah Cair">Sudah Cair</option>
-                    <option value="Queue">Queue</option>
-                    <option value="Ditolak">Ditolak</option>
-                  </select>
-                </div>
-              </div>
-
+            <div class="container-fluid px-3 pb-3">
               <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0 text-nowrap" id="claimTable">
+                <table class="table align-middle mb-0 text-nowrap" id="claimTable">
                   <thead class="table-light text-uppercase small">
                     <tr>
-                      <th class="ps-4">ID Transaksi</th>
-                      <th>Tanggal</th>
-                      <th>Nominal</th>
-                      <th>Status Akhir</th>
+                      <th class="text-center">ID Transaksi</th>
+                      <th class="text-center">Tanggal</th>
+                      <th class="text-center">Nominal</th>
+                      <th class="text-center">Status Akhir</th>
                       <th class="text-center">Aksi</th>
                     </tr>
                   </thead>

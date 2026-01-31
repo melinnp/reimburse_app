@@ -1,9 +1,9 @@
 // Tambahkan fungsi getStatusBadge
 function getStatusBadge(status) {
   const badges = {
-    pending: '<span class="badge bg-warning text-dark rounded-pill px-3 py-2">Queue</span>',
-    approved: '<span class="badge bg-success rounded-pill px-3 py-2">Sudah Cair</span>',
-    rejected: '<span class="badge bg-danger rounded-pill px-3 py-2">Ditolak</span>',
+    pending: '<span class="badge bg-warning text-white rounded-pill px-3 py-2">Queue</span>',
+    approved: '<span class="badge bg-success rounded-pill px-3 py-2">Approved</span>',
+    rejected: '<span class="badge merah rounded-pill px-3 py-2">Rejected</span>',
   };
   return badges[status] || '<span class="badge bg-secondary rounded-pill px-3 py-2">Unknown</span>';
 }
@@ -45,10 +45,10 @@ async function loadRiwayat() {
       .map((item) => {
         return `
         <tr>
-          <td class="ps-4">#REQ-${item.id}</td>
-          <td>${item.tanggal_format}</td>
-          <td class="fw-bold">Rp ${item.nominal_format}</td>
-          <td>${getStatusBadge(item.status)}</td>
+          <td class="text-center">#REQ-${item.id}</td>
+          <td class="text-center">${item.tanggal_format}</td>
+          <td class="text-center">Rp ${item.nominal_format}</td>
+          <td class="text-center">${getStatusBadge(item.status)}</td>
           <td class="text-center">
             <button 
               type="button" 
