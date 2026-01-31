@@ -20,7 +20,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     if (!response.ok) {
       //   document.getElementById('errorMsg').innerText = result.message;
-      alert(result.message || 'Login gagal');
+      showAlert('danger', result.message || 'Login gagal');
       return;
     }
 
