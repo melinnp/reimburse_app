@@ -13,7 +13,8 @@ class AdminController extends Controller
     {
         $data = ReimburseRequest::with('user:id,name,email')
             ->select('id', 'user_id', 'kategori', 'tanggal_nota', 'nominal', 'nota_path', 'status')
-            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->limit(10) // Ambil 10 data terbaru saja
             ->get();
 
         return response()->json([
@@ -188,26 +189,19 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        // total karyawan
-        $totalKaryawan = Users::where('role', 'karyawan')->count();
-
-        // total pengajuan (semua reimburse)
+        $totalKaryawan = Users::where('role', 'employee')->count();
+        $pending = ReimburseRequest::where('status', 'pending')->count();
         $totalPengajuan = ReimburseRequest::count();
-
-        // total nominal reimburse
-        $totalNominal = ReimburseRequest::sum('nominal');
-
-        // antrian (pending)
-        $pendingReimburse = ReimburseRequest::where('status', 'pending')->count();
+        $approved = ReimburseRequest::where('status', 'approved')->count(); // Tambahkan ini
 
         return response()->json([
             'status' => true,
             'data' => [
                 'total_karyawan' => $totalKaryawan,
+                'pending' => $pending,
                 'total_pengajuan' => $totalPengajuan,
-                'total_nominal' => $totalNominal,
-                'pending' => $pendingReimburse
-            ]
+                'approved' => $approved, // Tambahkan ini
+            ],
         ]);
     }
 }

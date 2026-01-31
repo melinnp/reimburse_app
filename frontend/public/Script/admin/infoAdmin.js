@@ -6,7 +6,7 @@ document.addEventListener("partials-loaded", function () {
     return;
   }
 
-  fetch("http://localhost:8000/api/employee/me", {
+  fetch("http://localhost:8000/api/admin/me", {
     headers: {
       Authorization: "Bearer " + token,
       Accept: "application/json"

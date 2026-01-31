@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const formData = new FormData();
-    formData.append("_method", "PUT");
     formData.append("username", newUsername);
     formData.append("email", newEmail);
 
@@ -120,33 +119,34 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("photo", photoInput.files[0]);
     }
 
+    // Ganti endpoint ke /update-profile (pure POST)
     fetch("http://localhost:8000/api/employee/me", {
         method: "POST",
         headers: {
-        Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: formData,
     })
         .then(res => {
-        if (!res.ok) {
+          if (!res.ok) {
             return res.json().then(err => Promise.reject(err));
-        }
-        return res.json();
+          }
+          return res.json();
         })
         .then(res => {
-        alert(res.message || "Profile updated");
-        
-        if (newPassword) {
+          alert(res.message || "Profile updated");
+          
+          if (newPassword) {
             alert("Password berhasil diubah. Silakan login kembali.");
             localStorage.removeItem("token");
             window.location.replace("/public/auth/login.html");
-        } else {
+          } else {
             bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
             window.location.reload();
-        }
+          }
         })
         .catch(err => {
-        alert(err.message || "Gagal update profile");
+          alert(err.message || "Gagal update profile");
         });
     };
 });

@@ -16,7 +16,7 @@ Route::middleware('auth:api')->group(function () {
 // Route Admin
 Route::middleware(['auth:api', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/me', [AdminController::class, 'me']); // Untuk melihat data admin yg sudah dilogin
-    Route::put('/me', [AdminController::class, 'updateProfile']); // Untuk mengupdate profile admin yg sudah dilogin
+    Route::post('/me', [AdminController::class, 'updateProfile']); // Untuk mengupdate profile admin yg sudah dilogin
     Route::get('/dashboard', [AdminController::class, 'dashboard']); // Untuk melihat dashboard admin
     Route::get('/reimburse', [AdminController::class, 'index']); // Untuk ambil seluruh data pengajuan yg ada
     Route::get('/employee', [AdminController::class, 'users']); // Untuk mengambil seluruh data karyawan yg sudah terdaftar
@@ -30,7 +30,7 @@ Route::middleware(['auth:api', 'role:admin'])->prefix('admin')->group(function (
 Route::middleware(['auth:api', 'role:karyawan'])->prefix('employee')->group(function () {
     Route::get('/reimburse', [EmployeeReimburseController::class, 'index']); // Untuk mengambil data data riwayat pengajuan yg sudah dibuat user
     Route::get('/me', [EmployeeReimburseController::class, 'me']); // Untuk melihat data user yg sudah dilogin
-    Route::put('/me', [EmployeeReimburseController::class, 'updateProfile']); // Untuk mengupdate profile user yg sudah dilogin
+    Route::post('/me', [EmployeeReimburseController::class, 'updateProfile']); // Untuk mengupdate profile user yg sudah dilogin
     Route::get('/reimburse/{id}', [EmployeeReimburseController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan yg sudah dibuat
     Route::post('/reimburse/create', [EmployeeReimburseController::class, 'store']); // Untuk membuat sebuah form pengajuan
     Route::delete('/reimburse/{id}/delete', [EmployeeReimburseController::class, 'delete']); // Untuk menghapus sebuah pengajuan

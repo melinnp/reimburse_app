@@ -55,7 +55,6 @@ class EmployeeReimburseController extends Controller
 
         if ($request->has('username')) {
             $user->username = $request->username;
-            $user->name = $request->username;
         }
 
         if ($request->has('email')) {
@@ -89,7 +88,7 @@ class EmployeeReimburseController extends Controller
             'message' => 'Profile berhasil diupdate',
             'data' => $user,
         ], 200);
-    }
+    }   
 
     public function show($id)
     {
