@@ -18,10 +18,8 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     const result = await response.json();
 
-    if (!response.ok) {
-      //   document.getElementById('errorMsg').innerText = result.message;
-      showAlert('danger', result.message || 'Login gagal');
-      return;
+    if (!res.ok) {
+      alert('Login Gagal! Email atau Password Salah');
     }
 
     // simpan token

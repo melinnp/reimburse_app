@@ -1,29 +1,26 @@
 let rejectRequestId = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   loadPendingApproval();
 });
 
 async function loadPendingApproval() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (!token) return;
 
   try {
-    const res = await fetch(
-      "http://localhost:8000/api/admin/reimburse",
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-        },
-      }
-    );
+    const res = await fetch('http://localhost:8000/api/admin/reimburse', {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
+      },
+    });
 
     const result = await res.json();
     if (!result.status) return;
 
-    const tbody = document.getElementById("approvalTable");
-    tbody.innerHTML = "";
+    const tbody = document.getElementById('approvalTable');
+    tbody.innerHTML = '';
 
     if (result.data.length === 0) {
       tbody.innerHTML = `
@@ -36,22 +33,24 @@ async function loadPendingApproval() {
       return;
     }
 
-    const rows = result.data.map(item => `
+    const rows = result.data
+      .map(
+        (item) => `
       <tr>
-        <td>#REQ-${item.id}</td>
-        <td>
+        <td class="text-center">#REQ-${item.id}</td>
+        <td class="text-center">
           <div class="fw-bold">${item.user.name}</div>
           <small class="text-muted">${item.user.email}</small>
         </td>
-        <td>
+        <td class="text-center">
           <span class="badge bg-info-subtle text-info border px-3">
             ${item.kategori}
           </span>
         </td>
-        <td class="fw-bold">
+        <td class="fw-bold text-center">
           Rp ${item.nominal_format}
         </td>
-        <td>
+        <td class="text-center">
           <button class="btn btn-sm btn-light border"
             onclick="openNotaModal('${item.nota_path}')">
             <i class="bi bi-eye"></i> Lihat
@@ -70,125 +69,136 @@ async function loadPendingApproval() {
           </button>
         </td>
       </tr>
-    `).join("");
+    `
+      )
+      .join('');
     tbody.innerHTML = rows;
-
   } catch (err) {
-    console.error("Load approval error:", err);
+    console.error('Load approval error:', err);
   }
 }
 
 // Fungsi untuk buka modal nota
 function openNotaModal(notaPath) {
-  const imgElement = document.getElementById("notaImage");
+  const imgElement = document.getElementById('notaImage');
   imgElement.src = `http://localhost:8000/storage/nota/${notaPath}`;
-  
-  const modal = new bootstrap.Modal(document.getElementById("notaModal"));
+
+  const modal = new bootstrap.Modal(document.getElementById('notaModal'));
   modal.show();
 }
 
 // Fungsi untuk approve
 async function approveRequest(id) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (!token) return;
 
-  if (!confirm("Yakin mau approve request ini?")) return;
+  if (!confirm('Yakin mau approve request ini?')) return;
 
   try {
-    const res = await fetch(
-      `http://localhost:8000/api/admin/reimburse/${id}/approve`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reason: "Disetujui oleh admin",
-        }),
-      }
-    );
+    const res = await fetch(`http://localhost:8000/api/admin/reimburse/${id}/approve`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        reason: 'Disetujui oleh admin',
+      }),
+    });
 
     const result = await res.json();
 
     if (!res.ok) {
-      alert(result.message || "Gagal approve");
+      alert(result.message || 'Gagal approve');
       return;
     }
 
-    alert("Request berhasil di-approve");
+    alert('Request berhasil di-approve');
     loadPendingApproval();
   } catch (err) {
-    console.error("Approve error:", err);
-    alert("Terjadi kesalahan saat approve");
+    console.error('Approve error:', err);
+    alert('Terjadi kesalahan saat approve');
   }
 }
 
 // Fungsi untuk buka modal reject
 function openRejectModal(id, name) {
   rejectRequestId = id; // Set ID di sini
-  
-  document.getElementById("rejectTargetName").innerText = name;
-  document.getElementById("rejectTargetID").innerText = `#REQ-${id}`;
-  document.getElementById("rejectReason").value = "";
-  document.getElementById("rejectReason").classList.remove("is-invalid");
 
-  const modal = new bootstrap.Modal(document.getElementById("rejectModal"));
+  document.getElementById('rejectTargetName').innerText = name;
+  document.getElementById('rejectTargetID').innerText = `#REQ-${id}`;
+  document.getElementById('rejectReason').value = '';
+  document.getElementById('rejectReason').classList.remove('is-invalid');
+
+  const modal = new bootstrap.Modal(document.getElementById('rejectModal'));
   modal.show();
 }
 
 // Event listener untuk tombol reject (hanya 1x)
-document.getElementById("btnConfirmReject").addEventListener("click", async function() {
-  const reason = document.getElementById("rejectReason").value.trim();
-  const token = localStorage.getItem("token");
+document.getElementById('btnConfirmReject').addEventListener('click', async function () {
+  const reason = document.getElementById('rejectReason').value.trim();
+  const token = localStorage.getItem('token');
 
   if (!reason) {
-    document.getElementById("rejectReason").classList.add("is-invalid");
+    document.getElementById('rejectReason').classList.add('is-invalid');
     return;
   }
 
   if (!rejectRequestId) {
-    alert("ID request tidak valid");
+    alert('ID request tidak valid');
     return;
   }
 
   try {
-    const res = await fetch(
-      `http://localhost:8000/api/admin/reimburse/${rejectRequestId}/reject`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ reason }),
-      }
-    );
+    const res = await fetch(`http://localhost:8000/api/admin/reimburse/${rejectRequestId}/reject`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ reason }),
+    });
 
     const result = await res.json();
 
     if (!res.ok) {
-      alert(result.message || "Gagal reject");
+      alert(result.message || 'Gagal reject');
       return;
     }
 
-    alert("Request berhasil di-reject");
+    alert('Request berhasil di-reject');
 
     // Tutup modal
-    const modalElement = document.getElementById("rejectModal");
+    const modalElement = document.getElementById('rejectModal');
     const modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
 
     // Refresh tabel
     loadPendingApproval();
-    
+
     // Reset ID
     rejectRequestId = null;
-    
   } catch (err) {
-    console.error("Reject error:", err);
-    alert("Terjadi kesalahan saat reject");
+    console.error('Reject error:', err);
+    alert('Terjadi kesalahan saat reject');
   }
+});
+// fungsi search
+document.getElementById('searchApproval').addEventListener('input', function () {
+  let keyword = this.value.toLowerCase();
+  let rows = document.querySelectorAll('#approvalTable tr');
+
+  console.log('Mencari:', keyword); 
+
+  rows.forEach((row) => {
+    let isiBaris = row.innerText.toLowerCase();
+
+    if (isiBaris.includes(keyword)) {
+      row.style.setProperty('display', '', 'important');
+    } else {
+      row.style.setProperty('display', 'none', 'important');
+    }
+  });
 });
