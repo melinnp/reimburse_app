@@ -18,7 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     const result = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       alert('Login Gagal! Email atau Password Salah');
     }
 
