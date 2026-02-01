@@ -25,7 +25,7 @@
               <div class="d-flex gap-2">
                 <input type="text" id="searchInput" class="form-control form-control-sm rounded-pill px-3" placeholder="Cari klaim..." />
                 <select id="statusFilter" class="form-select form-select-sm bg-light rounded-pill px-3" style="width: 160px">
-                  <option value="all">Semua Status</option>
+                  <option value="all">All Status</option>
                   <option value="Sudah Cair">Approved</option>
                   <option value="Queue">Queue</option>
                   <option value="Ditolak">Rejected</option>
@@ -39,10 +39,10 @@
                   <thead class="table-light text-uppercase small">
                     <tr>
                       <th class="text-center">ID Transaksi</th>
-                      <th class="text-center">Tanggal</th>
+                      <th class="text-center">Date</th>
                       <th class="text-center">Nominal</th>
-                      <th class="text-center">Status Akhir</th>
-                      <th class="text-center">Aksi</th>
+                      <th class="text-center">Final Status</th>
+                      <th class="text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody id="claimTableBody">
@@ -61,7 +61,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
           <div class="modal-header border-bottom-0">
-            <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Detail Pengajuan</h1>
+            <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Detail Reimburse</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body pt-0">
@@ -70,12 +70,12 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label small fw-bold text-muted">Jenis Pengeluaran</label>
+              <label class="form-label small fw-bold text-muted">Types of Expenses</label>
               <input type="text" class="form-control form-control-sm bg-light border-0" id="jenis" readonly />
             </div>
 
             <div class="mb-3">
-              <label class="form-label small fw-bold text-muted">Nominal Pengeluaran</label>
+              <label class="form-label small fw-bold text-muted">Expense Amount</label>
               <input type="text" class="form-control form-control-sm bg-light border-0" id="nominal" readonly />
             </div>
 
@@ -92,7 +92,7 @@
             </div>
           </div>
           <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
