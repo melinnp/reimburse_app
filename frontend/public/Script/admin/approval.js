@@ -3,7 +3,6 @@ let rejectRequestId = null;
 document.addEventListener('DOMContentLoaded', () => {
   loadPendingApproval();
 });
-
 async function loadPendingApproval() {
   const token = localStorage.getItem('token');
   if (!token) return;
@@ -22,10 +21,11 @@ async function loadPendingApproval() {
     const tbody = document.getElementById('approvalTable');
     tbody.innerHTML = '';
 
+    // Colspan jadi 7 karena ada kolom Status
     if (result.data.length === 0) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="6" class="text-center text-muted py-4">
+          <td colspan="7" class="text-center text-muted py-4">
             Tidak ada antrean persetujuan
           </td>
         </tr>
@@ -34,44 +34,68 @@ async function loadPendingApproval() {
     }
 
     const rows = result.data
-      .map(
-        (item) => `
-      <tr>
-        <td class="text-center">#REQ-${item.id}</td>
-        <td class="text-center">
-          <div class="fw-bold">${item.user.name}</div>
-          <small class="text-muted">${item.user.email}</small>
-        </td>
-        <td class="text-center">
-          <span class="badge bg-info-subtle text-info border px-3">
-            ${item.kategori}
-          </span>
-        </td>
-        <td class="fw-bold text-center">
-          Rp ${item.nominal_format}
-        </td>
-        <td class="text-center">
-          <button class="btn btn-sm btn-light border"
-            onclick="openNotaModal('${item.nota_path}')">
-            <i class="bi bi-eye"></i> Lihat
-          </button>
-        </td>
-        <td class="text-center">
-          <button
-            class="btn btn-sm btn-success px-3 me-2"
-            onclick="approveRequest(${item.id})">
-            <i class="bi bi-check-lg"></i> Approve
-          </button>
-          <button
-            class="btn btn-sm btn-danger px-3"
-            onclick="openRejectModal(${item.id}, '${item.user.name}')">
-            <i class="bi bi-x-lg"></i> Reject
-          </button>
-        </td>
-      </tr>
-    `
-      )
+      .map((item) => {
+        // --- 1. LOGIKA KOLOM STATUS (KEPUTUSAN ADMIN) ---
+        let statusBadge = '';
+        if (item.status === 'pending') {
+          statusBadge = `<span class="badge bg-warning text-dark px-3">Pending</span>`;
+        } else if (item.status === 'approved') {
+          statusBadge = `<span class="badge bg-success px-3">Approved</span>`;
+        } else {
+          statusBadge = `<span class="badge bg-danger px-3">Rejected</span>`;
+        }
+
+        // --- 2. LOGIKA DISABLE TOMBOL AKSI ---
+        // Jika status bukan pending (artinya sudah di-approve/reject), tombol jadi disabled
+        const isDisabled = item.status !== 'pending' ? 'disabled' : '';
+
+        return `
+        <tr class="align-middle"> <td class="text-center">#REQ-${item.id}</td>
+          
+          <td class="text-center">
+            <div class="fw-bold">${item.user.name}</div>
+            <small class="text-muted">${item.user.email}</small>
+          </td>
+          
+          <td class="text-center">
+            <span class="badge bg-info-subtle text-dark border px-3">
+              ${item.kategori}
+            </span>
+          </td>
+          
+          <td class="fw-bold text-center">
+            Rp ${item.nominal_format || item.nominal}
+          </td>
+          
+          <td class="text-center">
+            <button class="btn btn-sm btn-light border"
+              onclick="openNotaModal('${item.nota_path}')">
+              <i class="bi bi-eye"></i> Lihat
+            </button>
+          </td>
+          <td class="text-center">
+            <div class="d-flex justify-content-center gap-2"> <button
+                class="btn btn-sm btn-success px-3"
+                onclick="approveRequest(${item.id})"
+                ${isDisabled}>
+                <i class="bi bi-check-lg"></i> Approve
+              </button>
+              <button
+                class="btn btn-sm btn-danger px-3"
+                onclick="openRejectModal(${item.id}, '${item.user.name}')"
+                ${isDisabled}>
+                <i class="bi bi-x-lg"></i> Reject
+              </button>
+            </div>
+          </td>
+          <td class="text-center">
+            ${statusBadge}
+          </td>
+        </tr>
+      `;
+      })
       .join('');
+
     tbody.innerHTML = rows;
   } catch (err) {
     console.error('Load approval error:', err);
@@ -190,7 +214,7 @@ document.getElementById('searchApproval').addEventListener('input', function () 
   let keyword = this.value.toLowerCase();
   let rows = document.querySelectorAll('#approvalTable tr');
 
-  console.log('Mencari:', keyword); 
+  console.log('Mencari:', keyword);
 
   rows.forEach((row) => {
     let isiBaris = row.innerText.toLowerCase();
