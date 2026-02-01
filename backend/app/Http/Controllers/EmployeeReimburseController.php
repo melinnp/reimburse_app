@@ -7,6 +7,7 @@ use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+
 class EmployeeReimburseController extends Controller
 {
     public function index()
@@ -88,7 +89,7 @@ class EmployeeReimburseController extends Controller
             'message' => 'Profile berhasil diupdate',
             'data' => $user,
         ], 200);
-    }   
+    }
 
     public function show($id)
     {

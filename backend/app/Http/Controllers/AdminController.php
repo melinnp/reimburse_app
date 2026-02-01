@@ -204,4 +204,32 @@ class AdminController extends Controller
             ],
         ]);
     }
+    public function delete($id)
+    {
+        try {
+            // Cari user berdasarkan ID
+            $user = Users::findOrFail($id);
+
+            // Supaya admin tidak sengaja hapus dirinya sendiri
+            if ($user->id == auth('api')->id()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Anda tidak bisa menghapus akun sendiri!'
+                ], 403);
+            }
+
+            // Hapus data karyawan tersebut
+            $user->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Karyawan berhasil dihapus'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal menghapus: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }
