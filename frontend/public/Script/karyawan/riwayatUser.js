@@ -201,12 +201,8 @@ async function submitEdit() {
       formData.append('nota', notaFile);
     }
 
-    // ✅ HAPUS LINE INI (tidak perlu method spoofing karena API pakai POST)
-    // formData.append('_method', 'PUT');
-
-    // ✅ UBAH METHOD JADI POST
     const res = await fetch(`http://localhost:8000/api/employee/reimburse/${id}/update`, {
-      method: 'POST', // ✅ Pakai POST sesuai API Laravel
+      method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: 'application/json',
