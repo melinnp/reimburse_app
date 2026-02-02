@@ -2,8 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('token');
 
   if (!token) {
-    alert('Session habis, silakan login ulang');
-    window.location.href = '/public/auth/login.html';
+    showAlert('warning', 'Session habis, silakan login ulang');
+    setTimeout(() => {
+      window.location.href = '/public/Auth/login.html';
+    }, 2000);
     return;
   }
 
@@ -33,9 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('totalDiSetujui').textContent = data.approved || 0;
     })
     .catch(() => {
-      alert('Session habis / akses ditolak');
+      showAlert('warning', 'Session habis / akses ditolak');
       localStorage.removeItem('token');
-      window.location.href = '/public/auth/login.html';
+      setTimeout(() => {
+        window.location.href = '/public/Auth/login.html';
+      }, 2000);
     });
 
   // ===============================
@@ -74,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tr.innerHTML = `
             <td class="text-center">${item.user?.name || 'N/A'}</td>
             <td class="text-center">${item.kategori}</td>
-            <td class="text-center">Rp ${Number(item.nominal).toLocaleString('id-ID')}</td>
+            <td class="text-center">Rp ${item.nominal_format}</td>
             <td class="text-center">
               <span class="badge ${badgeClass}">
                 ${statusText}
@@ -95,8 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
       }
     })
-    .catch((err) => {
-      console.error(err);
-      alert('Gagal memuat data tabel');
+    .catch(() => {
+      showAlert('danger', 'Gagal memuat data tabel');
     });
 });

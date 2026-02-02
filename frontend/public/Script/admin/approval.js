@@ -5,7 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 async function loadPendingApproval() {
   const token = localStorage.getItem('token');
-  if (!token) return;
+  if (!token) {
+    showAlert("warning", "Silahkan login ulang");
+    setTimeout(() => {
+      window.location.href = "/public/Auth/login.html";
+    }, 2000);
+    return;
+  }
 
   try {
     const res = await fetch('http://localhost:8000/api/admin/reimburse', {
@@ -69,7 +75,7 @@ async function loadPendingApproval() {
           
           <td class="text-center">
             <button class="btn btn-sm btn-light border"
-              onclick="openNotaModal('${item.nota_path}')">
+              onclick="openNotaModal('${item.nota_url}')">
               <i class="bi bi-eye"></i> Lihat
             </button>
           </td>
@@ -97,15 +103,13 @@ async function loadPendingApproval() {
       .join('');
 
     tbody.innerHTML = rows;
-  } catch (err) {
-    console.error('Load approval error:', err);
-  }
+  } catch (_err) {}
 }
 
 // Fungsi untuk buka modal nota
-function openNotaModal(notaPath) {
+function openNotaModal(notaUrl) {
   const imgElement = document.getElementById('notaImage');
-  imgElement.src = `http://localhost:8000/storage/nota/${notaPath}`;
+  imgElement.src = notaUrl;
 
   const modal = new bootstrap.Modal(document.getElementById('notaModal'));
   modal.show();
@@ -116,7 +120,15 @@ async function approveRequest(id) {
   const token = localStorage.getItem('token');
   if (!token) return;
 
-  if (!confirm('Yakin mau approve request ini?')) return;
+  const confirmed = await showConfirmAlert(
+    'Konfirmasi Approve',
+    'Yakin mau approve request ini?',
+    'Ya, Approve',
+    'Batal',
+    'success'
+  );
+  
+  if (!confirmed) return;
 
   try {
     const res = await fetch(`http://localhost:8000/api/admin/reimburse/${id}/approve`, {
@@ -134,15 +146,14 @@ async function approveRequest(id) {
     const result = await res.json();
 
     if (!res.ok) {
-      alert(result.message || 'Gagal approve');
+      showAlert('danger', result.message || 'Gagal approve');
       return;
     }
 
-    alert('Request berhasil di-approve');
+    showAlert('success', 'Request berhasil di-approve');
     loadPendingApproval();
-  } catch (err) {
-    console.error('Approve error:', err);
-    alert('Terjadi kesalahan saat approve');
+  } catch (_err) {
+    showAlert('danger', 'Terjadi kesalahan saat approve');
   }
 }
 
@@ -170,9 +181,20 @@ document.getElementById('btnConfirmReject').addEventListener('click', async func
   }
 
   if (!rejectRequestId) {
-    alert('ID request tidak valid');
+    showAlert('warning', 'ID request tidak valid');
     return;
   }
+
+  // Konfirmasi sebelum reject
+  const confirmed = await showConfirmAlert(
+    'Konfirmasi Reject',
+    'Apakah Anda yakin ingin menolak pengajuan ini? Tindakan ini tidak dapat dibatalkan.',
+    'Ya, Reject',
+    'Batal',
+    'danger'
+  );
+
+  if (!confirmed) return;
 
   try {
     const res = await fetch(`http://localhost:8000/api/admin/reimburse/${rejectRequestId}/reject`, {
@@ -188,11 +210,11 @@ document.getElementById('btnConfirmReject').addEventListener('click', async func
     const result = await res.json();
 
     if (!res.ok) {
-      alert(result.message || 'Gagal reject');
+      showAlert('danger', result.message || 'Gagal reject');
       return;
     }
 
-    alert('Request berhasil di-reject');
+    showAlert('success', 'Request berhasil di-reject');
 
     // Tutup modal
     const modalElement = document.getElementById('rejectModal');
@@ -204,25 +226,7 @@ document.getElementById('btnConfirmReject').addEventListener('click', async func
 
     // Reset ID
     rejectRequestId = null;
-  } catch (err) {
-    console.error('Reject error:', err);
-    alert('Terjadi kesalahan saat reject');
+  } catch (_err) {
+    showAlert('danger', 'Terjadi kesalahan saat reject');
   }
-});
-// fungsi search
-document.getElementById('searchApproval').addEventListener('input', function () {
-  let keyword = this.value.toLowerCase();
-  let rows = document.querySelectorAll('#approvalTable tr');
-
-  console.log('Mencari:', keyword);
-
-  rows.forEach((row) => {
-    let isiBaris = row.innerText.toLowerCase();
-
-    if (isiBaris.includes(keyword)) {
-      row.style.setProperty('display', '', 'important');
-    } else {
-      row.style.setProperty('display', 'none', 'important');
-    }
-  });
 });

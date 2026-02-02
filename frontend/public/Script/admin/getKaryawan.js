@@ -1,10 +1,30 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
   loadEmployees();
+
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('keyup', function () {
+      const filter = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#employeeTable tr');
+      rows.forEach(function (row) {
+        const nama = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
+        const username = row.cells[2] ? row.cells[2].textContent.toLowerCase() : '';
+        const email = row.cells[3] ? row.cells[3].textContent.toLowerCase() : '';
+        row.style.display = (nama.includes(filter) || username.includes(filter) || email.includes(filter)) ? '' : 'none';
+      });
+    });
+  }
 });
 
 async function loadEmployees() {
   const token = localStorage.getItem('token');
-  if (!token) return;
+  if (!token) {
+    showAlert("warning", "Silahkan login ulang");
+    setTimeout(function () {
+      window.location.href = "/public/Auth/login.html";
+    }, 2000);
+    return;
+  }
 
   try {
     const res = await fetch('http://localhost:8000/api/admin/employee', {
@@ -18,6 +38,8 @@ async function loadEmployees() {
     if (!result.status) return;
 
     const tbody = document.getElementById('employeeTable');
+    if (!tbody) return;
+
     if (result.data.length === 0) {
       tbody.innerHTML = `
           <tr>
@@ -56,28 +78,20 @@ async function loadEmployees() {
       )
       .join('');
     tbody.innerHTML = rows;
-  } catch (error) {
-    console.error('Gagal load employees:', error);
-  }
-  document.getElementById('searchInput').addEventListener('keyup', function () {
-    let filter = this.value.toLowerCase();
-    let rows = document.querySelectorAll('#employeeTable tr');
-    rows.forEach((row) => {
-      let nama = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
-      let username = row.cells[2] ? row.cells[2].textContent.toLowerCase() : '';
-      let email = row.cells[3] ? row.cells[3].textContent.toLowerCase() : '';
-      if (nama.includes(filter) || username.includes(filter) || email.includes(filter)) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
-      }
-    });
-  });
+  } catch (_error) {}
 }
 async function deleteEmployee(id, name) {
   const token = localStorage.getItem('token');
 
-  if (!confirm(`Apakah Anda yakin ingin menghapus karyawan "${name}"?`)) return;
+  const confirmed = await showConfirmAlert(
+    'Konfirmasi Hapus Karyawan',
+    `Apakah Anda yakin ingin menghapus karyawan "${name}"? Tindakan ini tidak dapat dibatalkan.`,
+    'Ya, Hapus',
+    'Batal',
+    'danger'
+  );
+  
+  if (!confirmed) return;
 
   try {
     const res = await fetch(`http://localhost:8000/api/admin/employee/${id}`, {
@@ -91,13 +105,12 @@ async function deleteEmployee(id, name) {
     const result = await res.json();
 
     if (res.ok) {
-      alert('Karyawan berhasil dihapus!');
+      showAlert('success', 'Karyawan berhasil dihapus!');
       loadEmployees();
     } else {
-      alert(result.message || 'Gagal menghapus karyawan');
+      showAlert('danger', result.message || 'Gagal menghapus karyawan');
     }
-  } catch (error) {
-    console.error('Error delete:', error);
-    alert('Terjadi kesalahan koneksi saat menghapus');
+  } catch (_error) {
+    showAlert('danger', 'Terjadi kesalahan koneksi saat menghapus');
   }
 }

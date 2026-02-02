@@ -1,43 +1,85 @@
-//    searchbar (debounced to reduce reflows on fast typing)
-const searchInput = document.querySelector('input[placeholder="Cari nama atau ID..."]');
+// Search dan Filter Status
+const searchInput = document.querySelector('#searchInput'); // ✅ ID yang benar
+const statusFilter = document.querySelector('#statusFilter'); // ✅ Tambahkan selector untuk dropdown
 const tableBody = document.getElementById('approvalTable');
 
-function runApprovalFilter() {
+let currentStatusFilter = 'all';
+
+// Function untuk filter berdasarkan status dan search
+function applyFilters() {
   if (!searchInput || !tableBody) return;
-  const filter = searchInput.value.toLowerCase();
+  
+  const searchText = searchInput.value.toLowerCase();
   const rows = tableBody.getElementsByTagName('tr');
+  
   for (let i = 0; i < rows.length; i++) {
-    const nameColumn = rows[i].getElementsByTagName('td')[1];
-    if (nameColumn) {
-      const el = nameColumn.querySelector('.fw-bold');
-      const nameText = el ? (el.textContent || el.innerText || '').toLowerCase() : '';
-      rows[i].style.display = nameText.indexOf(filter) > -1 ? '' : 'none';
+    const row = rows[i];
+    
+    // Get ID dari kolom pertama
+    const idColumn = row.getElementsByTagName('td')[0];
+    const idText = idColumn ? (idColumn.textContent || '').toLowerCase() : '';
+    
+    // Get Employee name dari kolom kedua (untuk search yang lebih fleksibel)
+    const employeeColumn = row.getElementsByTagName('td')[1];
+    const employeeText = employeeColumn ? (employeeColumn.textContent || '').toLowerCase() : '';
+    
+    // Get status dari kolom terakhir
+    const statusColumn = row.getElementsByTagName('td')[6]; // Index 6 untuk kolom Status
+    const statusText = statusColumn ? (statusColumn.textContent || '').trim() : '';
+    
+    // Check search filter (cari di ID atau Employee)
+    const matchesSearch = idText.indexOf(searchText) > -1 || employeeText.indexOf(searchText) > -1;
+    
+    // Check status filter - sesuaikan dengan value di HTML
+    let matchesStatus = true;
+    if (currentStatusFilter !== 'all') {
+      // Mapping status dari dropdown ke text di badge
+      if (currentStatusFilter === 'Sudah Cair') {
+        matchesStatus = statusText.includes('Approved') || statusText.includes('Sudah Cair');
+      } else if (currentStatusFilter === 'Queue') {
+        matchesStatus = statusText.includes('Queue') || statusText.includes('Pending');
+      } else if (currentStatusFilter === 'Ditolak') {
+        matchesStatus = statusText.includes('Ditolak') || statusText.includes('Rejected');
+      }
     }
+    
+    // Show/hide row
+    row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
   }
 }
 
+// Event listener untuk search (debounced)
 if (searchInput && tableBody) {
   let debounceTimer;
   searchInput.addEventListener('keyup', function () {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(runApprovalFilter, 150);
+    debounceTimer = setTimeout(applyFilters, 150);
   });
 }
 
-function initOffcanvas() {
-  const offcanvasEl = document.getElementById('offcanvasScrolling');
-  const mainContent = document.getElementById('main-content');
-  const navbar = document.querySelector('.navbar');
-
-  if (!offcanvasEl || !mainContent || !navbar) return;
-
-  offcanvasEl.addEventListener('shown.bs.offcanvas', () => {
-    mainContent.style.marginLeft = '250px';
-    navbar.style.marginLeft = '250px';
-  });
-
-  offcanvasEl.addEventListener('hide.bs.offcanvas', () => {
-    mainContent.style.marginLeft = '0';
-    navbar.style.marginLeft = '0';
+// Event listener untuk status filter dropdown
+if (statusFilter) {
+  statusFilter.addEventListener('change', function() {
+    currentStatusFilter = this.value;
+    applyFilters();
   });
 }
+
+function renderCurrentMonth() {
+  const el = document.getElementById("currentDate");
+  if (!el) return;
+
+  const now = new Date();
+  const formatted = now.toLocaleDateString("id-ID", {
+    month: "long",
+    year: "numeric",
+  });
+
+  el.textContent =
+    formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
+// init
+document.addEventListener("DOMContentLoaded", () => {
+  renderCurrentMonth();
+});

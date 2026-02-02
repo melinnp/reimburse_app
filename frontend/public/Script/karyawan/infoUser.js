@@ -1,8 +1,10 @@
 document.addEventListener("partials-loaded", function () {
   const token = localStorage.getItem("token");
   if (!token) {
-    alert("Silahkan login ulang");
-    window.location.href = "/public/Auth/login.html";
+    showAlert('warning', 'Silakan login terlebih dahulu');
+    setTimeout(() => {
+      window.location.replace('/public/Auth/login.html');
+    }, 2000);
     return;
   }
 
@@ -18,7 +20,7 @@ document.addEventListener("partials-loaded", function () {
 
       // Navbar username
       const navUsername = document.getElementById("navUsername");
-      if (navUsername) navUsername.innerText = user.username;
+      if (navUsername) navUsername.innerText = user.role === 'karyawan' ? 'Employee' : user.role;
 
       // Profile section (sidebar)
       const profileUsername = document.getElementById("profileUsername");
@@ -35,5 +37,5 @@ document.addEventListener("partials-loaded", function () {
           : "../assets/default-user.png";
       }
     })
-    .catch(err => console.error("Gagal ambil user:", err));
+    .catch(() => {});
 });

@@ -11350,4 +11350,20 @@ fieldset:disabled .btn {
     display: none !important;
   }
 }
+
+.alert-overlay {
+  position: fixed;
+  inset: 0; /* top right bottom left = 0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: none; /* klik tembus kecuali alert */
+}
+
+.alert-overlay .alert {
+  pointer-events: auto;
+  min-width: 320px;
+  max-width: 90%;
+}
 /*# sourceMappingURL=bootstrap.min.css.map */

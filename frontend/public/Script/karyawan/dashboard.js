@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadDashboard() {
   const token = localStorage.getItem('token');
   if (!token) {
-    alert('Silahkan login ulang');
-    window.location.href = '/public/Auth/login.html';
+    showAlert('warning', 'Silahkan login ulang');
+    setTimeout(() => {
+      window.location.href = '/public/Auth/login.html';
+    }, 2000);
     return;
   }
 
@@ -20,10 +22,7 @@ async function loadDashboard() {
 
     const result = await res.json();
 
-    if (!result.status) {
-      console.error('API Error:', result.message);
-      return;
-    }
+    if (!result.status) return;
 
     const data = result.data;
 
@@ -78,8 +77,7 @@ async function loadDashboard() {
       .join('');
 
     tbody.innerHTML = rows;
-  } catch (err) {
-    console.error('Dashboard error:', err);
-    alert('Gagal memuat data. Silakan coba lagi.');
+  } catch (_err) {
+    showAlert('danger', 'Gagal memuat data. Silakan coba lagi.');
   }
 }

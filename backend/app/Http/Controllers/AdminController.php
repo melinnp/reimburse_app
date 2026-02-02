@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ReimburseRequest;
 use App\Models\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -12,7 +13,6 @@ class AdminController extends Controller
     public function index()
     {
         $data = ReimburseRequest::with('user:id,name,email')
-            ->select('id', 'user_id', 'kategori', 'tanggal_nota', 'nominal', 'nota_path', 'status')
             ->orderBy('created_at', 'desc')
             ->limit(10) // Ambil 10 data terbaru saja
             ->get();
@@ -65,7 +65,7 @@ class AdminController extends Controller
                 Storage::disk('local')->delete('profile/' . $user->photo);
             }
 
-            $filename = time() . '.' . $request->photo->extension();
+            $filename = time() . '_profile' . $request->photo->extension();
             $request->photo->storeAs(
                 'profile',
                 $filename,
@@ -189,7 +189,7 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $totalKaryawan = Users::where('role', 'employee')->count();
+        $totalKaryawan = Users::where('role', 'karyawan')->count();
         $pending = ReimburseRequest::where('status', 'pending')->count();
         $totalPengajuan = ReimburseRequest::count();
         $approved = ReimburseRequest::where('status', 'approved')->count(); // Tambahkan ini

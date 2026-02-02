@@ -13,23 +13,16 @@ class ReimburseRequest extends Model
         'mata_uang',
         'nominal',
         'keterangan',
-        'nota_path',
-        'status'
+        'nota',
+        'status',
+        'admin_note',
     ];
 
-    protected $appends = ['tanggal_format', 'nominal_format'];
-
-    // Request milik 1 user
-    public function user()
-    {
-        return $this->belongsTo(Users::class, 'user_id');
-    }
-
-    // Request punya 1 approval
-    public function approval()
-    {
-        return $this->hasOne(ReimburseApproval::class);
-    }
+    protected $appends = [
+        'nota_url',
+        'tanggal_format',
+        'nominal_format',
+    ];
 
     protected $casts = [
         'tanggal_nota' => 'date',
@@ -37,11 +30,26 @@ class ReimburseRequest extends Model
 
     public function getTanggalFormatAttribute()
     {
-        return $this->tanggal_nota->format('d/m/Y');
+        return $this->tanggal_nota
+            ? $this->tanggal_nota->format('d/m/Y')
+            : null;
     }
 
     public function getNominalFormatAttribute()
     {
         return number_format($this->nominal, 0, ',', '.');
+    }
+
+    public function getNotaUrlAttribute()
+    {
+        return $this->nota
+            ? asset('storage/nota/' . $this->nota)
+            : null;
+    }
+
+    // Relasi dengan User
+    public function user()
+    {
+        return $this->belongsTo(Users::class, 'user_id');
     }
 }

@@ -19,7 +19,8 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     const result = await response.json();
 
     if (!response.ok) {
-      alert('Login Gagal! Email atau Password Salah');
+      showAlert('danger', 'Login Gagal! Email atau Password Salah');
+      return;
     }
 
     // simpan token
@@ -35,12 +36,10 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     } else if (role === 'karyawan') {
       window.location.href = '../User/userdash.html';
     } else {
-      alert('Role tidak dikenali');
+      showAlert('warning', 'Role tidak dikenali');
     }
-  } catch (error) {
-    // document.getElementById('errorMsg').innerText = 'Server error';
-    alert('Login gagal');
-    console.error(error);
+  } catch (_error) {
+    showAlert('danger', 'Login gagal');
   }
 });
 const togglePassword = document.querySelector('#togglePassword');

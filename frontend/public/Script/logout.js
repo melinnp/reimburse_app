@@ -4,6 +4,17 @@ document.addEventListener("click", async function (e) {
 
   e.preventDefault();
 
+  // Konfirmasi sebelum logout
+  const confirmed = await showConfirmAlert(
+    "Konfirmasi Logout",
+    "Apakah Anda yakin ingin keluar dari akun ini?",
+    "Ya, Logout",
+    "Batal",
+    "warning"
+  );
+
+  if (!confirmed) return;
+
   const token = localStorage.getItem("token");
 
   try {
@@ -14,9 +25,7 @@ document.addEventListener("click", async function (e) {
         "Content-Type": "application/json",
       },
     });
-  } catch (err) {
-    console.log("Logout API gagal, lanjut hapus token");
-  }
+  } catch (_err) {}
 
   localStorage.clear();
   window.location.href = "../Auth/login.html";

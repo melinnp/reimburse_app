@@ -13,12 +13,14 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="stylingjs/cssoffcanvas.css" />
   </head>
-  <body>
+  <body data-page="Employees">
     <div class="app-layout d-flex min-vh-100">
       <div id="layout"></div>
 
       <div class="flex-grow-1 d-flex flex-column">
         <div id="layout2"></div>
+        <!-- Alert Box -->
+        <div id="alertBox" class="mx-3 mt-3"></div>
         <main class="main-content mx-1 rounded-4 cream border shadow-sm" style="height: 560px" id="main-content">
           <div class="container">
             <div class="row">
@@ -95,7 +97,10 @@
         </main>
       </div>
     </div>
+
+    <script src="../Script/checkAuth.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../Script/alert.js"></script>
     <script src="stylingjs/employees1.js"></script>
     <script src="../Admin/stylingjs/partials.js"></script>
     <script src="../Script/admin/infoAdmin.js"></script>

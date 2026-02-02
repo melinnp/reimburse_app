@@ -1,11 +1,9 @@
-(function checkAuthOnLoad() {
-    const token = localStorage.getItem('token'); // sesuaikan key
-  
-    // 1. Token gak ada
-    if (!token) {
-      alert('Session habis, silakan login ulang');
-      window.location.href = '/public/Auth/login.html';
-      return;
-    }
-  
-  });
+(function () {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    showAlert('warning', 'Silakan login terlebih dahulu');
+    setTimeout(function () {
+      window.location.replace('/public/Auth/login.html');
+    }, 2000);
+  }
+})();

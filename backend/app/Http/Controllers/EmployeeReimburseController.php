@@ -13,7 +13,6 @@ class EmployeeReimburseController extends Controller
     public function index()
     {
         $data = ReimburseRequest::where('user_id', auth('api')->id())
-            ->select('id', 'kategori', 'tanggal_nota', 'nominal', 'status')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -138,7 +137,7 @@ class EmployeeReimburseController extends Controller
             'mata_uang' => $request->mata_uang,
             'nominal' => $request->nominal,
             'keterangan' => $request->keterangan,
-            'nota_path' => $filename,
+            'nota' => $filename,
             'status' => 'pending'
         ]);
 
@@ -155,6 +154,11 @@ class EmployeeReimburseController extends Controller
         $request = ReimburseRequest::where('id', $id)
             ->where('user_id', $userId)
             ->firstOrFail();
+
+        // Hapus file nota jika ada
+        if ($request->nota) {
+            Storage::disk('local')->delete('nota/' . $request->nota);
+        }
 
         $request->delete();
 
@@ -187,6 +191,11 @@ class EmployeeReimburseController extends Controller
         $updatedData = $validated;
 
         if ($request->hasFile('nota')) {
+            // Hapus file lama jika ada
+            if ($data->nota) {
+                Storage::disk('local')->delete('nota/' . $data->nota);
+            }
+
             $file = $request->file('nota');
 
             $filename = time() . '_nota.' . $file->extension();
@@ -202,6 +211,7 @@ class EmployeeReimburseController extends Controller
         }
 
         $data->update($updatedData);
+        $data->refresh(); // Refresh untuk memastikan accessor attributes ter-update
 
         return response()->json([
             'message' => 'Data berhasil diupdate',

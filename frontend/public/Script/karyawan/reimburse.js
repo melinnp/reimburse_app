@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('pengajuanForm');
 
-  if (!form) {
-    console.error('Form tidak ditemukan');
-    return;
-  }
+  if (!form) return;
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -12,10 +9,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Silakan login ulang');
-      window.location.replace('/public/Auth/login.html');
+      showAlert('warning', 'Silakan login terlebih dahulu');
+      setTimeout(() => {
+        window.location.replace('/public/Auth/login.html');
+      }, 2000);
       return;
     }
+
+    // Konfirmasi sebelum submit
+    const confirmed = await showConfirmAlert(
+      'Konfirmasi Pengajuan',
+      'Apakah Anda yakin ingin mengirim pengajuan reimbursement ini?',
+      'Ya, Kirim',
+      'Batal',
+      'info'
+    );
+
+    if (!confirmed) return;
 
     try {
       // 1. AMBIL NILAI NOMINAL
@@ -26,16 +36,14 @@ document.addEventListener('DOMContentLoaded', function () {
       if (typeof parseNominalValue === 'function') {
         rawNominal = parseNominalValue(nominalInput);
       } else {
-        // Backup: Ambil angka saja kalau fungsi parse tidak ditemukan
         rawNominal = nominalInput.replace(/[^0-9]/g, '');
-        console.warn('Fungsi parseNominalValue belum ter-load, menggunakan backup regex.');
       }
 
       // 2. VALIDASI FILE NOTA
       const notaFileInput = document.getElementById('nota');
       const notaFile = notaFileInput.files[0];
       if (!notaFile) {
-        alert('Harap upload bukti nota');
+        showAlert('warning', 'Harap upload bukti nota');
         return;
       }
 
@@ -63,22 +71,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // 5. PENGECEKAN RESPON
       if (response.ok) {
-        alert('Pengajuan berhasil dikirim!');
+        showAlert('success', 'Pengajuan berhasil dikirim!');
         form.reset();
-        window.location.replace('../User/userdash.html');
+        setTimeout(() => {
+          window.location.replace('../User/userdash.html');
+        }, 2000);
       } else {
         // Tampilkan pesan error dari Laravel (misal: validasi gagal)
         if (result.errors) {
           // Kalau ada banyak error validasi, gabungkan pesannya
-          const errorMsg = Object.values(result.errors).flat().join('\n');
-          alert('Gagal: \n' + errorMsg);
+          const errorMsg = Object.values(result.errors).flat().join(', ');
+          showAlert('danger', 'Gagal: ' + errorMsg);
         } else {
-          alert(result.message || 'Gagal mengajukan');
+          showAlert('danger', result.message || 'Gagal mengajukan');
         }
       }
-    } catch (err) {
-      console.error('Detail Error:', err);
-      alert('Gagal mengirim data.');
+    } catch (_err) {
+      showAlert('danger', 'Gagal mengirim data. Silakan coba lagi.');
     }
   });
 });

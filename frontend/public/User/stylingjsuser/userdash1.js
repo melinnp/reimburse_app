@@ -67,7 +67,7 @@ if (form) {
     form.reset();
 
     // Notifikasi
-    alert('Pengajuan Anda telah berhasil dikirim ke Admin!');
+    showAlert('success', 'Pengajuan Anda telah berhasil dikirim ke Admin!');
   });
 }
 // Helper: Format Tanggal

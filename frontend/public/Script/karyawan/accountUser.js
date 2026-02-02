@@ -18,8 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const token = localStorage.getItem("token");
   if (!token) {
-    alert("Silahkan login ulang");
-    window.location.href = "/public/Auth/login.html";
+    showAlert("warning", "Silahkan login ulang");
+    setTimeout(() => {
+      window.location.href = "/public/Auth/login.html";
+    }, 2000);
     return;
   }
 
@@ -63,9 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
     .catch(() => {
-      alert("Session habis, silakan login ulang");
+      showAlert("warning", "Session habis, silakan login ulang");
       localStorage.removeItem("token");
-      window.location.href = "/public/Auth/login.html";
+      setTimeout(() => {
+        window.location.href = "/public/Auth/login.html";
+      }, 2000);
     });
 
   /* =====================
@@ -85,9 +89,27 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =====================
+     TOGGLE PASSWORD
+  ====================== */
+  window.togglePassword = () => {
+    const input = passwordInput;
+    const icon = document.getElementById("eyeIcon");
+    
+    if (!input || !icon) return;
+
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.replace("bi-eye-slash", "bi-eye");
+    }
+  };
+
+  /* =====================
      SAVE PROFILE
   ====================== */
-  window.saveProfile = () => {
+  window.saveProfile = async () => {
     const oldUsername = displayUsername.textContent;
     const oldEmail = displayEmail.textContent;
     
@@ -103,9 +125,28 @@ document.addEventListener("DOMContentLoaded", () => {
         newPhoto;
 
     if (!hasChanges) {
-        alert("Tidak ada data yang diubah");
+        showAlert("warning", "Tidak ada data yang diubah");
         return;
     }
+
+    // Konfirmasi sebelum update profile
+    let confirmMessage = "Apakah Anda yakin ingin menyimpan perubahan pada profile ini?";
+    let confirmType = "warning";
+    
+    if (newPassword) {
+      confirmMessage = "Apakah Anda yakin ingin mengubah password? Anda akan di-logout setelah perubahan password.";
+      confirmType = "danger";
+    }
+
+    const confirmed = await showConfirmAlert(
+      "Konfirmasi Update Profile",
+      confirmMessage,
+      "Ya, Simpan",
+      "Batal",
+      confirmType
+    );
+
+    if (!confirmed) return;
 
     const formData = new FormData();
     formData.append("username", newUsername);
@@ -134,19 +175,23 @@ document.addEventListener("DOMContentLoaded", () => {
           return res.json();
         })
         .then(res => {
-          alert(res.message || "Profile updated");
+          showAlert("success", res.message || "Profile updated");
           
           if (newPassword) {
-            alert("Password berhasil diubah. Silakan login kembali.");
+            showAlert("success", "Password berhasil diubah. Silakan login kembali.");
             localStorage.removeItem("token");
-            window.location.replace("/public/Auth/login.html");
+            setTimeout(() => {
+              window.location.replace("/public/Auth/login.html");
+            }, 2000);
           } else {
             bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
-            window.location.reload();
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
           }
         })
         .catch(err => {
-          alert(err.message || "Gagal update profile");
+          showAlert("danger", err.message || "Gagal update profile");
         });
     };
 });

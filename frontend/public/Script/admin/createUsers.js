@@ -6,7 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function createUser() {
   const token = localStorage.getItem("token");
-  if (!token) return;
+  if (!token) {
+    showAlert("warning", "Silahkan login ulang");
+    setTimeout(() => {
+      window.location.href = "/public/Auth/login.html";
+    }, 2000);
+    return;
+  }
 
   const data = {
     name: document.getElementById("name").value,
@@ -30,11 +36,11 @@ async function createUser() {
     const result = await res.json();
 
     if (!result.status) {
-      alert("Gagal membuat user");
+      showAlert("danger", "Gagal membuat user");
       return;
     }
 
-    alert("User berhasil dibuat");
+    showAlert("success", "User berhasil dibuat");
 
     // Tutup modal
     const modal = bootstrap.Modal.getInstance(
@@ -47,7 +53,5 @@ async function createUser() {
       loadEmployees();
     }
 
-  } catch (err) {
-    console.error("Create user error:", err);
-  }
+  } catch (_err) {}
 }

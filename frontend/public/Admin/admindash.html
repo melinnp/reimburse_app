@@ -13,12 +13,15 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="stylingjs/cssoffcanvas.css" />
   </head>
-  <body style="font-family: 'Poppins', sans-serif">
+  <body style="font-family: 'Poppins', sans-serif" data-page="Dashboard">
     <div class="app-layout d-flex min-vh-100">
       <div id="layout"></div>
 
       <div class="flex-grow-1 d-flex flex-column">
         <div id="layout2"></div>
+
+        <!-- Alert Box -->
+        <div id="alertBox" class="mx-3 mt-3"></div>
 
         <main class="main-content flex-grow-1" style="height: 510px" id="main-content">
           <div class="cream card rounded-4 mx-1">
@@ -90,7 +93,10 @@
         </main>
       </div>
     </div>
+
+    <script src="../Script/checkAuth.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../Script/alert.js"></script>
     <script src="stylingjs/index1.js"></script>
     <script src="../Admin/stylingjs/partials.js"></script>
     <script src="../Script/admin/infoAdmin.js"></script>

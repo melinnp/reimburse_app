@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('mata_uang', 3);
             $table->decimal('nominal', 15, 2);
             $table->text('keterangan');
-            $table->string('nota_path');
+            $table->string('nota');
             $table->enum('status', ['pending', 'approved', 'rejected'])
                 ->default('pending');
             $table->text('admin_note')->nullable();

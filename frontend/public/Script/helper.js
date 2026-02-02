@@ -20,7 +20,7 @@ window.getStatusBadge = function (status) {
   }
 };
 
-function openNotaModal(path) {
+function openNotaModal(notaUrl) {
   const img = document.getElementById('notaImage');
   img.src = '';
   img.alt = 'Loading...';
@@ -29,32 +29,15 @@ function openNotaModal(path) {
     img.alt = 'Gagal memuat gambar';
   };
 
-  img.src = `http://localhost:8000/storage/nota/${path}`;
-
-  new bootstrap.Modal(document.getElementById('notaModal')).show();
-}
-
-function approveRequest(id) {
-  console.log('Approve:', id);
-  // nanti POST ke /approve
-}
-
-function openRejectModal(id, name) {
-  document.getElementById('rejectTargetName').innerText = name;
-  document.getElementById('rejectTargetID').innerText = `REQ-${id}`;
-
-  document.getElementById('btnConfirmReject').onclick = () => rejectRequest(id);
-
-  new bootstrap.Modal(document.getElementById('rejectModal')).show();
-}
-
-function rejectRequest(id) {
-  const reason = document.getElementById('rejectReason').value;
-  if (!reason) {
-    document.getElementById('rejectReason').classList.add('is-invalid');
-    return;
+  // Jika notaUrl sudah full URL, gunakan langsung
+  // Jika hanya filename, construct URL
+  if (notaUrl && notaUrl.startsWith('http')) {
+    img.src = notaUrl;
+  } else if (notaUrl) {
+    img.src = `http://localhost:8000/storage/nota/${notaUrl}`;
+  } else {
+    img.alt = 'Nota tidak tersedia';
   }
 
-  console.log('Reject:', id, reason);
-  // nanti POST ke /reject
+  new bootstrap.Modal(document.getElementById('notaModal')).show();
 }

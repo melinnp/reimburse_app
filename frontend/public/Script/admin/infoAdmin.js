@@ -1,8 +1,10 @@
 document.addEventListener("partials-loaded", function () {
   const token = localStorage.getItem("token");
   if (!token) {
-    alert("Silahkan login ulang");
-    window.location.href = "/public/Auth/login.html";
+    showAlert("warning", "Silahkan login ulang");
+    setTimeout(() => {
+      window.location.href = "/public/Auth/login.html";
+    }, 2000);
     return;
   }
 
@@ -18,7 +20,7 @@ document.addEventListener("partials-loaded", function () {
 
       // Navbar username
       const navUsername = document.getElementById("navUsername");
-      if (navUsername) navUsername.innerText = user.username;
+      if (navUsername) navUsername.innerText = user.role === 'admin' ? 'Admin' : user.role;
 
       // Profile section (sidebar)
       const profileUsername = document.getElementById("profileUsername");
@@ -27,13 +29,19 @@ document.addEventListener("partials-loaded", function () {
       const profileEmail = document.getElementById("profileEmail");
       if (profileEmail) profileEmail.innerText = user.email;
 
-      // Foto
+      // Foto - pastikan elemen ada dan set src dengan benar
       const userPhoto = document.getElementById("userPhoto");
       if (userPhoto) {
-        userPhoto.src = user.photo
-          ? `http://localhost:8000/storage/profile/${user.photo}`
-          : "../assets/default-user.png";
+        if (user.photo) {
+          userPhoto.src = `http://localhost:8000/storage/profile/${user.photo}`;
+          userPhoto.onerror = function() {
+            // Fallback jika foto tidak ditemukan
+            this.src = "../assets/default-user.png";
+          };
+        } else {
+          userPhoto.src = "../assets/default-user.png";
+        }
       }
     })
-    .catch(err => console.error("Gagal ambil user:", err));
+    .catch(() => {});
 });
