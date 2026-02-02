@@ -14,7 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadRiwayat() {
   const token = localStorage.getItem('token');
-  if (!token) return;
+  if (!token) {
+    alert('Silakan login ulang');
+    window.location.replace('/public/auth/login.html');
+    return;
+  }
 
   try {
     const res = await fetch('http://localhost:8000/api/employee/reimburse', {
