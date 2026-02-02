@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
         $data = ReimburseRequest::with('user:id,name,email')
             ->orderBy('created_at', 'desc')
-            ->limit(10) // Ambil 10 data terbaru saja
+            ->limit(10)
             ->get();
 
         return response()->json([
@@ -37,8 +37,6 @@ class AdminController extends Controller
     {
         $user = auth('api')->user();
 
-        // \Log::info('User authenticated:', ['user_id' => $user->id]);
-        // \Log::info('Request data:', $request->all());
 
         $request->validate([
             'username' => 'sometimes|required|string|unique:users,username,' . $user->id,
@@ -76,7 +74,6 @@ class AdminController extends Controller
 
         $user->save();
 
-        // \Log::info('User after save:', $user->toArray());
 
         return response()->json([
             'status' => true,
@@ -189,18 +186,22 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        // Optimize: Use single query with conditional aggregation
+        $stats = ReimburseRequest::selectRaw('
+            COUNT(*) as total_pengajuan,
+            SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as pending,
+            SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as approved
+        ', ['pending', 'approved'])->first();
+
         $totalKaryawan = Users::where('role', 'karyawan')->count();
-        $pending = ReimburseRequest::where('status', 'pending')->count();
-        $totalPengajuan = ReimburseRequest::count();
-        $approved = ReimburseRequest::where('status', 'approved')->count(); // Tambahkan ini
 
         return response()->json([
             'status' => true,
             'data' => [
                 'total_karyawan' => $totalKaryawan,
-                'pending' => $pending,
-                'total_pengajuan' => $totalPengajuan,
-                'approved' => $approved, // Tambahkan ini
+                'pending' => (int) $stats->pending,
+                'total_pengajuan' => (int) $stats->total_pengajuan,
+                'approved' => (int) $stats->approved,
             ],
         ]);
     }

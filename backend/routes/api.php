@@ -37,15 +37,3 @@ Route::middleware(['auth:api', 'role:karyawan'])->prefix('employee')->group(func
     Route::delete('/reimburse/{id}/delete', [EmployeeReimburseController::class, 'delete']); // Untuk menghapus sebuah pengajuan
     Route::post('/reimburse/{id}/update', [EmployeeReimburseController::class, 'update']); // Untuk update pengajuan
 });
-
-// Dummy route dgn implementasi middleware
-// Route::middleware(['auth:api', 'role:admin'])->group(function () {
-//     Route::post('/reimburse', [ReimburseController::class, 'reimburse']); // Untuk submit pengajuan
-//     Route::get('/reimburse/me', [ReimburseController::class, 'myReimburse']); // Untuk melihat pengajuan yang sudah di submit
-// });
-
-// Route::middleware(['auth:api', 'role:karyawan'])->group(function () {
-//     Route::post('/reimburse/{id}/rejected', [ApprovalController::class, 'approve']);
-//     Route::post('/reimburse/{id}/approved', [ApprovalController::class, 'reject']);
-//     Route::get('/reimburse/me', [ApprovalController::class, 'showApproval']);
-// });

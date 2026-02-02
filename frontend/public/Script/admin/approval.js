@@ -106,14 +106,7 @@ async function loadPendingApproval() {
   } catch (_err) {}
 }
 
-// Fungsi untuk buka modal nota
-function openNotaModal(notaUrl) {
-  const imgElement = document.getElementById('notaImage');
-  imgElement.src = notaUrl;
-
-  const modal = new bootstrap.Modal(document.getElementById('notaModal'));
-  modal.show();
-}
+// openNotaModal is defined in helper.js - removed duplicate
 
 // Fungsi untuk approve
 async function approveRequest(id) {

@@ -87,17 +87,4 @@ function formatRupiah(number) {
   return new Intl.NumberFormat('id-ID').format(number);
 }
 
-// Helper: Status Badge
-function getStatusBadge(status) {
-  const s = status.toLowerCase();
-  
-  if (s === "pending" || s === "queue") {
-    return '<span class="badge rounded-pill text-dark cream">Queue</span>';
-  } else if (s === "approved") {
-    return '<span class="badge rounded-pill text-white bg-success">Approved</span>';
-  } else if (s === "rejected" || s === "reject") {
-    return '<span class="badge rounded-pill text-white bg-danger">Rejected</span>';
-  }
-  
-  return '<span class="badge rounded-pill bg-secondary text-white">' + status + '</span>';
-}
+// getStatusBadge is defined globally in helper.js - removed duplicate

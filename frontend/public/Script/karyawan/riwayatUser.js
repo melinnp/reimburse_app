@@ -1,12 +1,4 @@
-// Tambahkan fungsi getStatusBadge
-function getStatusBadge(status) {
-  const badges = {
-    pending: '<span class="badge bg-warning text-dark rounded-pill px-3 py-2">Queue</span>',
-    approved: '<span class="badge bg-success rounded-pill px-3 py-2">Approved</span>',
-    rejected: '<span class="badge merah rounded-pill px-3 py-2">Rejected</span>',
-  };
-  return badges[status] || '<span class="badge bg-secondary rounded-pill px-3 py-2">Unknown</span>';
-}
+// getStatusBadge is defined globally in helper.js - removed duplicate
 
 // TAMBAHKAN FUNGSI HELPER INI
 function convertToDateInputFormat(dateString) {

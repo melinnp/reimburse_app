@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\ApprovalController;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 

@@ -43,8 +43,6 @@ class EmployeeReimburseController extends Controller
             ], 404);
         }
 
-        // \Log::info('User authenticated:', ['user_id' => $user->id]);
-        // \Log::info('Request data:', $request->all());
 
         $request->validate([
             'username' => 'sometimes|required|string|unique:users,username,' . $user->id,
@@ -81,7 +79,6 @@ class EmployeeReimburseController extends Controller
 
         $user->save();
 
-        // \Log::info('User after save:', $user->toArray());
 
         return response()->json([
             'status' => true,
@@ -170,11 +167,6 @@ class EmployeeReimburseController extends Controller
 
     public function update(Request $request, $id)
     {
-        \Log::info('Request update reimburse', [
-            'request' => $request->all(),
-            'files' => $request->file()
-        ]);
-
         $data = ReimburseRequest::where('id', $id)
             ->where('user_id', auth('api')->id())
             ->firstOrFail();
