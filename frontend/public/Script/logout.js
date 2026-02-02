@@ -19,5 +19,5 @@ document.addEventListener("click", async function (e) {
   }
 
   localStorage.clear();
-  window.location.href = "../auth/login.html";
+  window.location.href = "../Auth/login.html";
 });

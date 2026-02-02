@@ -31,9 +31,9 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     // redirect berdasarkan role
     if (role === 'admin') {
-      window.location.href = '../admin/admindash.html';
+      window.location.href = '../Admin/admindash.html';
     } else if (role === 'karyawan') {
-      window.location.href = '../user/userdash.html';
+      window.location.href = '../User/userdash.html';
     } else {
       alert('Role tidak dikenali');
     }

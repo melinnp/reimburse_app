@@ -2,11 +2,11 @@ document.addEventListener("partials-loaded", function () {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Silahkan login ulang");
-    window.location.href = "/public/auth/login.html";
+    window.location.href = "/public/Auth/login.html";
     return;
   }
 
-  fetch("http://localhost:8000/api/admin/me", {
+  fetch("http://localhost:8000/api/employee/me", {
     headers: {
       Authorization: "Bearer " + token,
       Accept: "application/json"

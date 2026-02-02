@@ -6,7 +6,7 @@ async function loadDashboard() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Silahkan login ulang');
-    window.location.href = '/public/auth/login.html';
+    window.location.href = '/public/Auth/login.html';
     return;
   }
 

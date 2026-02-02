@@ -16,7 +16,7 @@ async function loadRiwayat() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Silakan login ulang');
-    window.location.replace('/public/auth/login.html');
+    window.location.replace('/public/Auth/login.html');
     return;
   }
 

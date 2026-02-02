@@ -48,30 +48,33 @@
       opacity: 0.8;
     }
   </style>
+
   <div class="border-bottom p-2 d-flex justify-content-center align-items-center gap-1">
     <img src="../Admin/Gambar/CK.png" class="logoc rounded-circle" />
     <h5 class="header text-white fw-bold fs-3">Claimly</h5>
   </div>
+
   <span class="px-2 mt-4 mb-2 ms-2 mb-0 d-block text-white">MENU</span>
   <ul class="list-unstyled flex-grow-1">
     <li>
-      <a href="userdash.html" class="px-3 py-2 d-block text-decoration-none text-white"> <i class="bi bi-columns-gap me-2 text-white"></i> Dashboard </a>
+      <a href="admindash.html" class="px-3 py-2 d-block text-decoration-none text-white"> <i class="bi bi-columns-gap me-2 text-white"></i> Dashboard </a>
     </li>
     <li>
-      <a href="riwyatuser.html" class="px-3 py-3 d-block text-decoration-none text-white"> <i class="bi bi-file-earmark-text me-2 text-white"></i> Riwayat Saya </a>
+      <a href="employees.html" class="px-3 py-2 d-block text-decoration-none text-white"> <i class="bi bi-file-earmark-text me-2 text-white"></i> Employees </a>
     </li>
     <li>
-      <a href="pengajuan.html" class="px-3 py-2 d-block text-decoration-none text-white"><i class="bi bi-cloud-upload me-2 text-white"></i> Pengajuan </a>
+      <a href="approval.html" class="px-3 py-2 d-block text-decoration-none text-white"> <i class="bi bi-cloud-upload me-2 text-white"></i> Approval </a>
     </li>
-    <span class="px-2 mt-3 ms-2 mb-0 d-block text-white">GENERAL</span>
+
+    <span class="px-2 mt-4 ms-2 mb-0 d-block text-white">GENERAL</span>
     <li>
-      <a href="account.html" class="px-3 py-3 d-block text-decoration-none text-white"> <i class="bi bi-person-bounding-box me-2 text-white"></i> Account </a>
+      <a href="account.html" class="px-3 py-2 d-block text-decoration-none text-white"> <i class="bi bi-person-bounding-box me-2 text-white"></i> Account</a>
     </li>
   </ul>
 
   <div class="p-3 border-top text-white d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center">
-      <img id="userPhoto" src="" class="rounded-circle" style="width: 35px; height: 35px; object-fit: cover" />
+      <img id="userPhoto" src="" class="rounded-circle" style="width: 35px; height: 35px; object-fit: cover; background-color: #eee" />
       <div class="ms-2">
         <div class="fw-bold small" id="profileUsername"></div>
         <div style="font-size: 0.7rem; opacity: 0.7" id="profileEmail"></div>
@@ -90,8 +93,9 @@
     </div>
   </div>
 
-  <script src="../script/karyawan/infoUser.js"></script>
-  <script src="../script/logout.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../Script/admin/infoAdmin.js"></script>
+  <script src="../Script/logout.js"></script>
   <link rel="stylesheet" href="../Admin/stylingjs/cssoffcanvas.css" />
   <link rel="stylesheet" href="../User/stylingjsuser/warna.css" />
 </div>
