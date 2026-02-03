@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard - Approval Reimbursement</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/views/Admin/stylingjs/cssoffcanvas.css" />
+  </head>
+  <body data-page="Approval">
+    <div class="app-layout d-flex min-vh-100">
+      <div id="layout"></div>
+      <div class="flex-grow-1 d-flex flex-column">
+        <div id="layout2"></div>
+        <!-- Alert Box -->
+        <div id="alertBox" class="mx-3 mt-3"></div>
+        <main class="main-content mx-1 rounded-4 cream shadow border" style="height: 560px" id="main-content">
+          <div class="container-fluid">
+            
+            <!-- Tambahkan filter status di sini -->
+            <div class="card shadow-sm rounded-4 border-0">
+              <!-- HEADER -->
+              <div class="card-header cream py-3 border-bottom d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-2">
+                  <input type="text" id="searchInput" class="form-control form-control-sm px-3" placeholder="Search for claims..." />
+                  <select id="statusFilter" class="form-select form-select-sm bg-light px-3" style="width: 160px">
+                    <option value="all">All Status</option>
+                    <option value="Sudah Cair">Approved</option>
+                    <option value="Queue">Pending</option>
+                    <option value="Ditolak">Rejected</option>
+                  </select>
+                </div>
+                <div
+                  id="currentDate"
+                  class="badge bg-light text-muted border px-3 py-2 rounded-pill"
+                ></div>
+              </div>
+            
+              <!-- BODY -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover align-middle mb-0">
+                    <thead class="text-center bg-light">
+                      <tr>
+                        <th>ID</th>
+                        <th>Employee</th>
+                        <th>Category</th>
+                        <th>Nominal</th>
+                        <th>Proof</th>
+                        <th class="text-center">Action</th>
+                        <th class="text-center">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="approvalTable"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>            
+
+                <div class="modal fade" id="notaModal" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content border-0 shadow">
+                      <div class="modal-header">
+                        <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-image me-2"></i>Bukti Reimbursement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                        <img id="notaImage" src="" alt="Bukti Reimbursement" class="img-fluid rounded border" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal fade" id="rejectModal" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow">
+                      <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle me-2"></i>Tolak Pengajuan</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Anda akan menolak pengajuan dari <span id="rejectTargetName" class="fw-bold"></span> (<span id="rejectTargetID" class="text-muted"></span>).</p>
+                        <div class="mb-3">
+                          <label class="form-label fw-bold small">Alasan Penolakan</label>
+                          <textarea id="rejectReason" class="form-control" rows="4" placeholder="Contoh: Nota tidak terbaca..."></textarea>
+                          <div class="invalid-feedback">Alasan harus diisi!</div>
+                        </div>
+                      </div>
+                      <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancelled</button>
+                        <button type="button" class="btn btn-danger px-4" id="btnConfirmReject">Submit Rejection</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/script/alert.js"></script>
+    <script src="/script/helper.js"></script>
+    <script src="/script/config.js"></script>
+    <script src="/script/checkAuth.js"></script>
+    <script src="/views/Admin/stylingjs/approval1.js"></script>
+    <script src="/views/Admin/stylingjs/partials.js"></script>
+    <script src="/script/admin/infoAdmin.js"></script>
+    <script src="/script/logout.js"></script>
+    <script src="/script/admin/approval.js"></script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>User Dashboard - Reimbursement Sekolah</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/views/User/stylingjsuser/cssofuser.css" />
+    <link rel="stylesheet" href="/views/Admin/stylingjs/cssoffcanvas.css" />
+  </head>
+  <body data-page="Dashboard">
+    <div class="app-layout d-flex min-vh-100">
+      <div id="layout"></div>
+
+      <div class="flex-grow-1 d-flex flex-column">
+        <div id="layout2"></div>
+
+        <!-- Alert Box -->
+        <div id="alertBox" class="mx-3 mt-3"></div>
+
+        <main class="main-content flex-grow-1" id="main-content">
+          <div class="cream card rounded-4 mx-1">
+            <div class="card-body">
+              <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                  <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body rounded-4">
+                      <p class="mb-1 small fw-bold text-center">BEING PROCESSED</p>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-hourglass-split fs-4 me-3"></i>
+                        <h3 class="fw-bold text-center mb-0" id="statPending">0</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body rounded-4">
+                      <p class="mb-1 small fw-bold text-center">APPROVED</p>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-check-circle fs-4 me-3"></i>
+                        <h3 class="fw-bold text-center mb-0" id="statApproved">0</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body rounded-4">
+                      <p class="mb-1 small text-center fw-bold">REJECT</p>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-x-circle 9 fs-4 me-3"></i>
+                        <h3 class="fw-bold mb-0 text-center" id="statReject">0</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body rounded-4">
+                      <p class="mb-1 small text-center fw-bold">TOTAL COMPLETED</p>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <i class="bi bi-hourglass-bottom fs-4 me-3"></i>
+                        <h3 class="fw-bold mb-0 text-center" id="statSelesai">0</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card rounded-4 overflow-hidden">
+                <div class="py-3 d-flex justify-content-start align-items-center">
+                  <i class="bi bi-clock fs-6 pe-2 ps-3"></i>
+                  <h6 class="mb-0 fw-bold">My Reimbursement Queue</h6>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered align-middle mb-0">
+                    <thead>
+                      <tr class="text-center">
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Nominal</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reimburseTable"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/script/alert.js"></script>
+    <script src="/script/helper.js"></script>
+    <script src="/script/config.js"></script>
+    <script src="/script/checkAuth.js"></script>
+    <script src="/views/User/stylingjsuser/userdash1.js"></script>
+    <script src="/views/User/stylingjsuser/partials.js"></script>
+    <script src="/script/karyawan/infoUser.js"></script>
+    <script src="/script/logout.js"></script>
+    <script src="/script/karyawan/dashboard.js"></script>
+    <link rel="stylesheet" href="/views/User/stylingjsuser/warna.css" />
+  </body>
+</html>

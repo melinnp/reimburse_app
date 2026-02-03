@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap Dashboard - Employees</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/views/Admin/stylingjs/cssoffcanvas.css" />
+  </head>
+  <body data-page="Employees">
+    <div class="app-layout d-flex min-vh-100">
+      <div id="layout"></div>
+
+      <div class="flex-grow-1 d-flex flex-column">
+        <div id="layout2"></div>
+        <!-- Alert Box -->
+        <div id="alertBox" class="mx-3 mt-3"></div>
+        <main class="main-content mx-1 rounded-4 cream border shadow-sm" style="height: 560px" id="main-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="d-flex justify-content-between mt-4 mx-3">
+                  <div class="input-group" style="width: 300px">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Cari nama atau ID..." />
+                  </div>
+                  <button type="button" class="btn merah text-white px-3" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Create</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header merah">
+                  <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Create Employee</h1>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row mb-3">
+                    <div class="col-3"><label class="form-label">Name</label></div>
+                    <div class="col-9"><input type="text" id="name" class="form-control form-control-sm" placeholder="Ketik Nama.." /></div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3"><label class="form-label">Username</label></div>
+                    <div class="col-9"><input type="text" id="username" class="form-control form-control-sm" placeholder="Ketik Username.." /></div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3"><label class="form-label">Email</label></div>
+                    <div class="col-9"><input type="text" id="email" class="form-control form-control-sm" placeholder="Ketik Email.." /></div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3"><label class="form-label">Role</label></div>
+                    <div class="col-9">
+                      <select id="role" class="form-select form-select-sm">
+                        <option value="">Select Role..</option>
+                        <option value="karyawan">Employee</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3"><label class="form-label">Password</label></div>
+                    <div class="col-9"><input type="password" id="password" class="form-control form-control-sm" placeholder="Ketik Password.." /></div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button id="btnSaveUser" type="button" class="btn btn-sm text-white merah">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mx-4 mt-4">
+            <div class="table-responsive">
+              <table class="table table-bordered rounded shadow-sm overflow-hidden align-middle">
+                <thead class="text-center">
+                  <tr>
+                    <th class="ps-3">No</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="employeeTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/script/alert.js"></script>
+    <script src="/script/helper.js"></script>
+    <script src="/script/config.js"></script>
+    <script src="/script/checkAuth.js"></script>
+    <script src="/views/Admin/stylingjs/employees1.js"></script>
+    <script src="/views/Admin/stylingjs/partials.js"></script>
+    <script src="/script/admin/infoAdmin.js"></script>
+    <script src="/script/admin/getKaryawan.js"></script>
+    <script src="/script/logout.js"></script>
+    <script src="/script/admin/createUsers.js"></script>
+  </body>
+</html>

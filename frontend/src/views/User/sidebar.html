@@ -1,0 +1,95 @@
+<div class="merah d-flex flex-column min-vh-100 rounded-4 my-3 mx-2" style="width: 220px">
+  <style>
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .merah {
+      animation: slideIn 0.5s ease-out forwards;
+      transition: all 0.3s ease;
+    }
+
+    .merah a,
+    .merah i,
+    .merah img {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .merah ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding-left: 20px !important;
+      border-radius: 0 20px 20px 0;
+    }
+
+    .merah ul li a:hover i {
+      transform: scale(1.2);
+      color: #eb0808 !important;
+    }
+
+    #userPhoto:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .merah a:active {
+      transform: scale(0.95);
+    }
+
+    .merah span.text-white {
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+  </style>
+  <div class="border-bottom p-2 d-flex justify-content-center align-items-center gap-1">
+    <img src="/views/Admin/Gambar/CK.png" class="logoc rounded-circle" />
+    <h5 class="header text-white fw-bold fs-3">Claimly</h5>
+  </div>
+  <span class="px-2 mt-4 mb-2 ms-2 mb-0 d-block text-white">MENU</span>
+  <ul class="list-unstyled flex-grow-1">
+    <li>
+      <a href="#/user/dashboard" class="px-3 py-2 d-block text-decoration-none text-white"> <i class="bi bi-columns-gap me-2 text-white"></i> Dashboard </a>
+    </li>
+    <li>
+      <a href="#/user/history" class="px-3 py-3 d-block text-decoration-none text-white"> <i class="bi bi-file-earmark-text me-2 text-white"></i> My History </a>
+    </li>
+    <li>
+      <a href="#/user/submission" class="px-3 py-2 d-block text-decoration-none text-white"><i class="bi bi-cloud-upload me-2 text-white"></i> Submission </a>
+    </li>
+    <span class="px-2 mt-3 ms-2 mb-0 d-block text-white">GENERAL</span>
+    <li>
+      <a href="#/user/account" class="px-3 py-3 d-block text-decoration-none text-white"> <i class="bi bi-person-bounding-box me-2 text-white"></i> Account </a>
+    </li>
+  </ul>
+
+  <div class="p-3 border-top text-white d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <img id="userPhoto" src="" class="rounded-circle" style="width: 35px; height: 35px; object-fit: cover" />
+      <div class="ms-2">
+        <div class="fw-bold small" id="profileUsername"></div>
+        <div style="font-size: 0.7rem; opacity: 0.7" id="profileEmail"></div>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <a href="#" class="text-white" data-bs-toggle="dropdown">
+        <i class="bi bi-three-dots-vertical"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li>
+          <a class="dropdown-item small" id="btnLogout" style="cursor: pointer"> <i class="bi bi-box-arrow-right me-2"></i>Logout </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="/views/Admin/stylingjs/cssoffcanvas.css" />
+  <link rel="stylesheet" href="/views/User/stylingjsuser/warna.css" />
+</div>
