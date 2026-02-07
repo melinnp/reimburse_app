@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="stylingjs/cssoffcanvas.css" />
   </head>
@@ -22,7 +23,6 @@
         <div id="alertBox" class="mx-3"></div>
         <main class="main-content mx-1 rounded-4 cream shadow border" style="height: 560px" id="main-content">
           <div class="container-fluid">
-            
             <!-- Tambahkan filter status di sini -->
             <div class="card shadow-sm rounded-4 border-0">
               <!-- HEADER -->
@@ -36,12 +36,9 @@
                     <option value="Ditolak">Rejected</option>
                   </select>
                 </div>
-                <div
-                  id="currentDate"
-                  class="badge bg-light text-muted border px-3 py-2 rounded-pill"
-                ></div>
+                <div id="currentDate" class="badge bg-light text-muted border px-3 py-2 rounded-pill"></div>
               </div>
-            
+
               <!-- BODY -->
               <div class="card-body p-0">
                 <div class="table-responsive">
@@ -61,42 +58,101 @@
                   </table>
                 </div>
               </div>
-            </div>            
+            </div>
 
-                <div class="modal fade" id="notaModal" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content border-0 shadow">
-                      <div class="modal-header">
-                        <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-image me-2"></i>Bukti Reimbursement</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div class="modal fade" id="notaModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow">
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-image me-2"></i>Bukti Reimbursement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    <img id="notaImage" src="" alt="Bukti Reimbursement" class="img-fluid rounded border" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="rejectModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                  <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle me-2"></i>Tolak Pengajuan</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Anda akan menolak pengajuan dari <span id="rejectTargetName" class="fw-bold"></span> (<span id="rejectTargetID" class="text-muted"></span>).</p>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold small">Alasan Penolakan</label>
+                      <textarea id="rejectReason" class="form-control" rows="4" placeholder="Contoh: Nota tidak terbaca..."></textarea>
+                      <div class="invalid-feedback">Alasan harus diisi!</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancelled</button>
+                    <button type="button" class="btn btn-danger px-4" id="btnConfirmReject">Submit Rejection</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="border-radius: 15px">
+                  <div class="modal-header border-0 pb-0">
+                    <div class="d-flex align-items-center">
+                      <img src="../Admin/Gambar/logoiii.png" class="rounded-circle" style="width: 35px; height: 35px" />
+                      <span class="fs-3 ms-2 header" style="color: rgb(73, 5, 5)">Claimly</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body px-4">
+                    <span class="mt-2 d-inline-block mb-3 fw-medium text-muted">Select Payment Option</span>
+
+                    <div class="row g-3 mb-4">
+                      <div class="col-md-12">
+                        <label class="card p-2 d-flex flex-row justify-content-between align-items-center cursor-pointer border-secondary-subtle">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentOption" id="bca" checked />
+                            <span class="ms-2">BCA</span>
+                          </div>
+                          <img src="../Admin/Gambar/bca.png" style="height: 35px" />
+                        </label>
                       </div>
-                      <div class="modal-body text-center">
-                        <img id="notaImage" src="" alt="Bukti Reimbursement" class="img-fluid rounded border" />
+                    </div>
+
+                    <hr class="text-secondary opacity-25" />
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label small fw-bold">Nama Pemilik Rekening</label>
+                        <input type="text" class="form-control" id="accName" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small fw-bold">Nomor Rekening</label>
+                        <input type="text" class="form-control" id="accNumber" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small fw-bold">Nominal Transfer</label>
+                        <div class="input-group">
+                          <span class="input-group-text">Rp</span>
+                          <input type="text" class="form-control" id="amount" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small fw-bold">Tanggal Transfer</label>
+                        <input type="date" class="form-control" id="transferDate" />
+                      </div>
+                      <div class="col-md-12">
+                        <label class="form-label small fw-bold">Keterangan </label>
+                        <textarea class="form-control" id="notes" rows="3" placeholder="Tambahkan catatan di sini..."></textarea>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="modal fade" id="rejectModal" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content border-0 shadow">
-                      <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle me-2"></i>Tolak Pengajuan</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p>Anda akan menolak pengajuan dari <span id="rejectTargetName" class="fw-bold"></span> (<span id="rejectTargetID" class="text-muted"></span>).</p>
-                        <div class="mb-3">
-                          <label class="form-label fw-bold small">Alasan Penolakan</label>
-                          <textarea id="rejectReason" class="form-control" rows="4" placeholder="Contoh: Nota tidak terbaca..."></textarea>
-                          <div class="invalid-feedback">Alasan harus diisi!</div>
-                        </div>
-                      </div>
-                      <div class="modal-footer border-0">
-                        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancelled</button>
-                        <button type="button" class="btn btn-danger px-4" id="btnConfirmReject">Submit Rejection</button>
-                      </div>
-                    </div>
+                  <div class="modal-footer border-0 pt-4">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary px-4" style="background-color: rgb(73, 5, 5); border: none">Pay Now</button>
                   </div>
                 </div>
               </div>

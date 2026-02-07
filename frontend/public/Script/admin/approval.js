@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadPendingApproval() {
   const token = localStorage.getItem('token');
   if (!token) {
-    showAlert("warning", "Silahkan login ulang");
+    showAlert('warning', 'Silahkan login ulang');
     setTimeout(() => {
-      window.location.href = "/public/Auth/login.html";
+      window.location.href = '/public/Auth/login.html';
     }, 2000);
     return;
   }
@@ -44,7 +44,7 @@ async function loadPendingApproval() {
         // --- 1. LOGIKA KOLOM STATUS (KEPUTUSAN ADMIN) ---
         let statusBadge = '';
         if (item.status === 'pending') {
-          statusBadge = `<span class="badge bg-warning text-dark px-3">Pending</span>`;
+          statusBadge = `<span class="badge bg-warning text-dark px-2 py-2">Pending</span>`;
         } else if (item.status === 'approved') {
           statusBadge = `<span class="badge bg-success px-3">Approved</span>`;
         } else {
@@ -81,22 +81,29 @@ async function loadPendingApproval() {
           </td>
           <td class="text-center">
             <div class="d-flex justify-content-center gap-2"> <button
-                class="btn btn-sm btn-success px-3"
+                class="btn btn-sm btn-outline-success  px-2"
                 onclick="approveRequest(${item.id})"
                 ${isDisabled}>
                 <i class="bi bi-check-lg"></i> Approve
               </button>
               <button
-                class="btn btn-sm btn-danger px-3"
+                class="btn btn-sm btn-outline-danger px-2 "
                 onclick="openRejectModal(${item.id}, '${item.user.name}')"
                 ${isDisabled}>
                 <i class="bi bi-x-lg"></i> Reject
               </button>
             </div>
           </td>
-          <td class="text-center">
-            ${statusBadge}
-          </td>
+        <td class="text-center">
+          ${statusBadge}
+          <button 
+              class="btn btn-sm btn-outline-secondary px-2" 
+              data-bs-toggle="modal" 
+              data-bs-target="#paymentModal">
+              Payment
+          </button>
+        </td>
+         
         </tr>
       `;
       })
@@ -113,14 +120,8 @@ async function approveRequest(id) {
   const token = localStorage.getItem('token');
   if (!token) return;
 
-  const confirmed = await showConfirmAlert(
-    'Konfirmasi Approve',
-    'Yakin mau approve request ini?',
-    'Ya, Approve',
-    'Batal',
-    'success'
-  );
-  
+  const confirmed = await showConfirmAlert('Konfirmasi Approve', 'Yakin mau approve request ini?', 'Ya, Approve', 'Batal', 'success');
+
   if (!confirmed) return;
 
   try {
@@ -179,13 +180,7 @@ document.getElementById('btnConfirmReject').addEventListener('click', async func
   }
 
   // Konfirmasi sebelum reject
-  const confirmed = await showConfirmAlert(
-    'Konfirmasi Reject',
-    'Apakah Anda yakin ingin menolak pengajuan ini? Tindakan ini tidak dapat dibatalkan.',
-    'Ya, Reject',
-    'Batal',
-    'danger'
-  );
+  const confirmed = await showConfirmAlert('Konfirmasi Reject', 'Apakah Anda yakin ingin menolak pengajuan ini? Tindakan ini tidak dapat dibatalkan.', 'Ya, Reject', 'Batal', 'danger');
 
   if (!confirmed) return;
 
@@ -223,3 +218,14 @@ document.getElementById('btnConfirmReject').addEventListener('click', async func
     showAlert('danger', 'Terjadi kesalahan saat reject');
   }
 });
+function setTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}-${month}-${day}`;
+  document.getElementById('transferDate').value = formattedDate;
+}
+
+document.addEventListener('DOMContentLoaded', setTodayDate);
