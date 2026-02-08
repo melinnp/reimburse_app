@@ -11,6 +11,7 @@ class ReimburseRequest extends Model
         'kategori',
         'tanggal_nota',
         'mata_uang',
+        'nomor_rekening',
         'nominal',
         'keterangan',
         'nota',
