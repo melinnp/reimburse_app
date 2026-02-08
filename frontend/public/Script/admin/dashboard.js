@@ -25,14 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
     .then((res) => {
       const data = res.data;
 
-      document.getElementById('totalKaryawan').textContent = data.total_karyawan || 0;
+      // Queue (pending)
+      document.getElementById('totalQueue').textContent = data.pending || 0;
 
-      document.getElementById('pendingReimburse').textContent = data.pending || 0;
+      // Rejected
+      document.getElementById('totalRejected').textContent = data.rejected || 0;
 
-      document.getElementById('totalPengajuan').textContent = data.total_pengajuan || 0;
+      // Approved
+      document.getElementById('totalApproved').textContent = data.approved || 0;
 
-      // Tambahkan ini untuk total disetujui
-      document.getElementById('totalDiSetujui').textContent = data.approved || 0;
+      // Completed (paid)
+      document.getElementById('totalCompleted').textContent = data.paid || 0;
     })
     .catch(() => {
       showAlert('warning', 'Session habis / akses ditolak');
@@ -60,18 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
       tbody.innerHTML = ''; // hapus dummy row
 
       res.data.forEach((item) => {
-        let badgeClass = 'bg-secondary';
-        let statusText = item.status;
-
+        // STATUS BADGE
+        let statusBadge = '';
         if (item.status === 'pending') {
-          badgeClass = 'bg-warning text-dark';
-          statusText = 'Queue';
+          statusBadge = `<span class="badge bg-warning text-dark">Pending</span>`;
         } else if (item.status === 'approved') {
-          badgeClass = 'bg-success';
-          statusText = 'Approved';
-        } else if (item.status === 'rejected') {
-          badgeClass = 'bg-danger';
-          statusText = 'Rejected';
+          statusBadge = `<span class="badge bg-success">Approved</span>`;
+        } else if (item.status === 'paid') {
+          statusBadge = `<span class="badge bg-primary">Paid</span>`;
+        } else {
+          statusBadge = `<span class="badge bg-danger">Rejected</span>`;
         }
 
         const tr = document.createElement('tr');
@@ -79,11 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td class="text-center">${item.user?.name || 'N/A'}</td>
             <td class="text-center">${item.kategori}</td>
             <td class="text-center">Rp ${item.nominal_format}</td>
-            <td class="text-center">
-              <span class="badge ${badgeClass}">
-                ${statusText}
-              </span>
-            </td>
+            <td class="text-center">${statusBadge}</td>
           `;
 
         tbody.appendChild(tr);

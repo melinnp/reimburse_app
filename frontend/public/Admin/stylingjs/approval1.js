@@ -40,6 +40,8 @@ function applyFilters() {
         matchesStatus = statusText.includes('Queue') || statusText.includes('Pending');
       } else if (currentStatusFilter === 'Ditolak') {
         matchesStatus = statusText.includes('Ditolak') || statusText.includes('Rejected');
+      } else if (currentStatusFilter === 'Paid') {
+        matchesStatus = statusText.includes('Paid') || statusText.includes('Dibayar');
       }
     }
     

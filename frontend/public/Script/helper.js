@@ -5,16 +5,25 @@ window.getStatusBadge = function (status) {
         <span class="badge rounded-pill btn btn-outline-success text-dark px-3">
           Approved
         </span>`;
+
     case 'pending':
       return `
-        <span class="badge rounded-pill btn btn-outline-secondary  text-dark px-3">
+        <span class="badge rounded-pill btn btn-outline-secondary text-dark px-3">
           Queue
         </span>`;
+
     case 'rejected':
       return `
         <span class="badge rounded-pill btn btn-outline-danger text-dark px-3">
           Rejected
         </span>`;
+
+    case 'paid':
+      return `
+        <span class="badge rounded-pill btn btn-outline-primary text-dark px-3">
+          Paid
+        </span>`;
+
     default:
       return status;
   }

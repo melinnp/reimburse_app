@@ -32,15 +32,23 @@ async function loadDashboard() {
     let pending = 0;
     let approved = 0;
     let reject = 0;
+    let paid = 0;
 
     for (let i = 0; i < data.length; i++) {
       const s = data[i].status.toLowerCase();
-      if (s === 'pending' || s === 'queue') pending++;
-      else if (s === 'approved') approved++;
-      else if (s === 'rejected' || s === 'reject') reject++;
-    }
+    
+      if (s === 'pending' || s === 'queue') {
+        pending++;
+      } else if (s === 'approved') {
+        approved++;
+      } else if (s === 'rejected' || s === 'reject') {
+        reject++;
+      } else if (s === 'paid') {
+        paid++;
+      }
+    }    
 
-    const selesai = approved + reject;
+    const selesai = paid;
 
     document.getElementById('statPending').innerText = pending;
     document.getElementById('statApproved').innerText = approved;

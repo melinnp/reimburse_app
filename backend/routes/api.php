@@ -25,6 +25,7 @@ Route::middleware(['auth:api', 'role:admin'])->prefix('admin')->group(function (
     Route::get('/reimburse/{id}', [AdminController::class, 'show']); // Untuk melihat detail dri sebuah pengajuan
     Route::post('/reimburse/{id}/approve', [AdminController::class, 'approve']); // Untuk melakukan approve terhadap sebuah pengajuan
     Route::post('/reimburse/{id}/reject', [AdminController::class, 'reject']); // Untuk melakukan reject terhadap sebuah pengajuan
+    Route::post('/reimburse/{id}/pay', [AdminController::class, 'pay']); // Untuk melakukan pembayaran
 });
 
 // Route Karyawan

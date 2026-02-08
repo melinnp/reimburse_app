@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('nominal', 15, 2);
             $table->text('keterangan');
             $table->string('nota');
-            $table->enum('status', ['pending', 'approved', 'rejected'])
+            $table->enum('status', ['pending', 'approved', 'rejected', 'paid'])
                 ->default('pending');
             $table->text('admin_note')->nullable();
             $table->timestamps();

@@ -19,6 +19,9 @@
       <div class="flex-grow-1 d-flex flex-column">
         <div id="layout2"></div>
 
+        <!-- Alert Box -->
+        <div id="alertBox" class="mx-3 mt-3"></div>
+
         <main class="main-content flex-grow-1" id="main-content">
           <div class="card border-0 shadow-sm rounded-4 mx-1 cream overflow-hidden">
             <div class="card-header cream py-3 border-bottom d-flex justify-content-between align-items-center">
@@ -31,7 +34,7 @@
                   <option value="Ditolak">Rejected</option>
                 </select>
               </div>
-              <div class="badge bg-light text-muted border px-3 py-2 rounded-pill">Januari 2026</div>
+              <div class="badge bg-light text-muted border px-3 py-2 rounded-pill">Februari 2026</div>
             </div>
             <div class="container-fluid px-3 pb-3">
               <div class="table-responsive">
@@ -64,9 +67,14 @@
             <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Detail Reimburse</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <div class="text-end mb-2">
+            <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="viewFullImage()">
+              <i class="bi bi-eye"></i> View Full
+            </button>
+          </div>          
           <div class="modal-body pt-0">
             <div class="rounded-4 overflow-hidden mb-3 border">
-              <img class="w-100" id="modalNotaImage" style="object-fit: cover; height: 200px" />
+              <img class="w-100" id="modalNotaImage" style="object-fit: contain; max-height: 200px; background:#f8f9fa" />
             </div>
 
             <div class="mb-3">
@@ -80,6 +88,16 @@
             </div>
 
             <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Account Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm bg-light border-0"
+                id="detailRekening"
+                readonly
+              />
+            </div>            
+
+            <div class="mb-3">
               <label class="form-label small fw-bold text-muted">Information</label>
               <textarea class="form-control form-control-sm bg-light border-0" id="ket" rows="2" readonly></textarea>
             </div>
@@ -90,9 +108,45 @@
                 <p id="adminNote" class="small mb-0"></p>
               </div>
             </div>
+
+            <div id="paymentInfoWrapper" style="display:none">
+              <hr />
+              <h6 class="fw-bold mb-2">Payment Information</h6>
+            
+              <div class="mb-2">
+                <label class="form-label small fw-bold text-muted">Paid By</label>
+                <input type="text" class="form-control form-control-sm bg-light border-0" id="paidBy" readonly />
+              </div>
+            
+              <div class="mb-2">
+                <label class="form-label small fw-bold text-muted">Transfer Date</label>
+                <input type="text" class="form-control form-control-sm bg-light border-0" id="paidDate" readonly />
+              </div>
+            
+              <div class="mb-2">
+                <label class="form-label small fw-bold text-muted">Paid Amount</label>
+                <input type="text" class="form-control form-control-sm bg-light border-0" id="paidAmount" readonly />
+              </div>
+            
+              <div class="mb-2">
+                <label class="form-label small fw-bold text-muted">Payment Note</label>
+                <textarea class="form-control form-control-sm bg-light border-0" id="paymentNote" rows="2" readonly></textarea>
+              </div>
+            </div>            
           </div>
           <div class="modal-footer border-top-0">
             <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Full Image -->
+    <div class="modal fade" id="fullImageModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-dark border-0">
+          <div class="modal-body text-center p-2">
+            <img id="fullImagePreview" class="img-fluid rounded-3" style="max-height: 92vh;">
           </div>
         </div>
       </div>
@@ -102,8 +156,6 @@
     <div class="modal fade" id="editModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
-          <!-- Alert Box -->
-        <div id="alertBox" class="mx-3 mt-3"></div>
           <div class="modal-header border-bottom-0">
             <h5 class="modal-title fw-bold">Edit Submission</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -131,6 +183,16 @@
               <label class="form-label small fw-bold text-muted">Date</label>
               <input type="date" class="form-control form-control-sm" id="editTanggal" required />
             </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Account Number</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="editRekening"
+                required
+              />
+            </div>            
 
             <div class="mb-3">
               <label class="form-label small fw-bold text-muted">Nominal Expenditure</label>

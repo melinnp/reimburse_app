@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const formData = new FormData();
       formData.append('kategori', document.getElementById('kategori').value);
       formData.append('tanggal_nota', document.getElementById('tanggal').value);
+      formData.append('nomor_rekening', document.getElementById('num').value);
       formData.append('mata_uang', 'IDR');
       formData.append('nominal', rawNominal);
       formData.append('keterangan', document.getElementById('keterangan').value);

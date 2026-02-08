@@ -1,22 +1,6 @@
-// getStatusBadge is defined globally in helper.js - removed duplicate
-
-// TAMBAHKAN FUNGSI HELPER INI
-function convertToDateInputFormat(dateString) {
-  if (!dateString) return '';
-  
-  // Jika sudah format yyyy-mm-dd, langsung return
-  if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
-    return dateString;
-  }
-  
-  // Jika format dd-mm-yyyy atau dd/mm/yyyy
-  const parts = dateString.split(/[-\/]/);
-  if (parts.length === 3) {
-    const [day, month, year] = parts;
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-  }
-  
-  return '';
+// getStatusBadge is defined globally in helper.js - removed duplikat
+function formatRupiah(value) {
+  return 'Rp ' + Number(value).toLocaleString('id-ID');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -118,6 +102,26 @@ async function showDetail(id) {
 
     const data = result.data;
 
+    const paymentWrapper = document.getElementById('paymentInfoWrapper');
+
+    if (data.status === 'paid' && data.payment) {
+      paymentWrapper.style.display = 'block';
+
+      document.getElementById('paidBy').value =
+        data.payment.admin.name || '-';
+
+      document.getElementById('paidDate').value =
+        data.payment.transfer_date || '-';
+
+      document.getElementById('paidAmount').value =
+        formatRupiah(data.payment.amount);
+
+      document.getElementById('paymentNote').value =
+        data.payment.notes || '-';
+    } else {
+      paymentWrapper.style.display = 'none';
+    }
+
     // Update gambar nota
     const imgElement = document.getElementById('modalNotaImage');
     if (imgElement) {
@@ -135,7 +139,8 @@ async function showDetail(id) {
 
     // Update form fields
     document.getElementById('jenis').value = data.kategori || '-';
-    document.getElementById('nominal').value = `Rp ${data.nominal_format}` || '-';
+    document.getElementById('nominal').value = formatRupiah(data.nominal) || '-';
+    document.getElementById('detailRekening').value = data.nomor_rekening || '-';
     document.getElementById('ket').value = data.keterangan || '-';
 
     // Admin note
@@ -191,8 +196,9 @@ async function openEditModal(id) {
     // Isi form
     document.getElementById('editId').value = data.id;
     document.getElementById('editKategori').value = data.kategori || '';
-    document.getElementById('editTanggal').value = convertToDateInputFormat(data.tanggal_nota);
-    document.getElementById('editNominal').value = data.nominal || '';
+    document.getElementById('editRekening').value = data.nomor_rekening || '';
+    document.getElementById('editTanggal').value = data.tanggal_iso || '';
+    document.getElementById('editNominal').value = data.nominal_format || '';
     document.getElementById('editKeterangan').value = data.keterangan || '';
 
     // Preview gambar
@@ -271,6 +277,7 @@ async function submitEdit() {
     const formData = new FormData();
     formData.append('kategori', document.getElementById('editKategori').value);
     formData.append('tanggal_nota', document.getElementById('editTanggal').value);
+    formData.append('nomor_rekening', document.getElementById('editRekening').value);
     formData.append('nominal', document.getElementById('editNominal').value);
     formData.append('keterangan', document.getElementById('editKeterangan').value);
 
@@ -345,4 +352,18 @@ async function deleteRequest(id) {
   } catch (_err) {
     showAlert('danger', 'Terjadi kesalahan saat menghapus');
   }
+}
+function viewFullImage() {
+  const img = document.getElementById("modalNotaImage");
+  const fullImg = document.getElementById("fullImagePreview");
+
+  if (!img || !img.src) return;
+
+  fullImg.src = img.src;
+
+  const modal = new bootstrap.Modal(
+    document.getElementById("fullImageModal")
+  );
+
+  modal.show();
 }

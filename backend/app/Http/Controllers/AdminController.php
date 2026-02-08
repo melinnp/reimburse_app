@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReimburseRequest;
+use App\Models\ReimbursePayment;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -186,25 +188,27 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        // Optimize: Use single query with conditional aggregation
-        $stats = ReimburseRequest::selectRaw('
-            COUNT(*) as total_pengajuan,
-            SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as pending,
-            SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as approved
-        ', ['pending', 'approved'])->first();
+    // Optimize: Use single query with conditional aggregation for all statuses
+    $stats = ReimburseRequest::selectRaw('
+        COUNT(*) as total_pengajuan,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as pending,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as approved,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as rejected,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as paid
+    ', ['pending', 'approved', 'rejected', 'paid'])->first();
 
-        $totalKaryawan = Users::where('role', 'karyawan')->count();
-
-        return response()->json([
-            'status' => true,
-            'data' => [
-                'total_karyawan' => $totalKaryawan,
-                'pending' => (int) $stats->pending,
-                'total_pengajuan' => (int) $stats->total_pengajuan,
-                'approved' => (int) $stats->approved,
-            ],
-        ]);
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'pending' => (int) $stats->pending,
+            'approved' => (int) $stats->approved,
+            'rejected' => (int) $stats->rejected,
+            'paid' => (int) $stats->paid,
+            'total_pengajuan' => (int) $stats->total_pengajuan,
+        ],
+    ]);
     }
+
     public function delete($id)
     {
         try {
@@ -232,5 +236,50 @@ class AdminController extends Controller
                 'message' => 'Gagal menghapus: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function pay(Request $request, $id)
+    {
+        $request->validate([
+            'bank_name'      => 'required|string',
+            'account_name'   => 'required|string',
+            'account_number' => 'required|string',
+            'amount'         => 'required|numeric|min:1',
+            'transfer_date'  => 'required|date',
+            'notes'          => 'nullable|string',
+        ]);
+
+        $reimburse = ReimburseRequest::findOrFail($id);
+
+        // ❌ Guard
+        if ($reimburse->status !== 'approved') {
+            return response()->json([
+                'status' => false,
+                'message' => 'Reimbursement belum di-approve'
+            ], 400);
+        }
+
+        DB::transaction(function () use ($request, $reimburse) {
+
+            ReimbursePayment::create([
+                'reimburse_request_id' => $reimburse->id,
+                'bank_name'            => $request->bank_name,
+                'account_name'         => $request->account_name,
+                'account_number'       => $request->account_number,
+                'amount'               => $request->amount,
+                'transfer_date'        => $request->transfer_date,
+                'notes'                => $request->notes,
+                'paid_by'              => auth('api')->id(),
+            ]);
+
+            $reimburse->update([
+                'status' => 'paid'
+            ]);
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Pembayaran berhasil dicatat'
+        ]);
     }
 }

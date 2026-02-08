@@ -23,6 +23,7 @@ class ReimburseRequest extends Model
         'nota_url',
         'tanggal_format',
         'nominal_format',
+        'tanggal_iso',
     ];
 
     protected $casts = [
@@ -33,6 +34,13 @@ class ReimburseRequest extends Model
     {
         return $this->tanggal_nota
             ? $this->tanggal_nota->format('d/m/Y')
+            : null;
+    }
+
+    public function getTanggalIsoAttribute()
+    {
+        return $this->tanggal_nota
+            ? $this->tanggal_nota->format('Y-m-d')
             : null;
     }
 
@@ -52,5 +60,10 @@ class ReimburseRequest extends Model
     public function user()
     {
         return $this->belongsTo(Users::class, 'user_id');
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(ReimbursePayment::class);
     }
 }

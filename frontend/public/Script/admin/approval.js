@@ -1,4 +1,5 @@
 let rejectRequestId = null;
+let currentPaymentRequestId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   loadPendingApproval();
@@ -40,74 +41,86 @@ async function loadPendingApproval() {
     }
 
     const rows = result.data
-      .map((item) => {
-        // --- 1. LOGIKA KOLOM STATUS (KEPUTUSAN ADMIN) ---
-        let statusBadge = '';
-        if (item.status === 'pending') {
-          statusBadge = `<span class="badge bg-warning text-dark px-2 py-2">Pending</span>`;
-        } else if (item.status === 'approved') {
-          statusBadge = `<span class="badge bg-success px-3">Approved</span>`;
-        } else {
-          statusBadge = `<span class="badge bg-danger px-3">Rejected</span>`;
-        }
+    .map((item) => {
 
-        // --- 2. LOGIKA DISABLE TOMBOL AKSI ---
-        // Jika status bukan pending (artinya sudah di-approve/reject), tombol jadi disabled
-        const isDisabled = item.status !== 'pending' ? 'disabled' : '';
+      // STATUS BADGE
+      let statusBadge = '';
+      if (item.status === 'pending') {
+        statusBadge = `<span class="badge bg-warning text-dark">Pending</span>`;
+      } else if (item.status === 'approved') {
+        statusBadge = `<span class="badge bg-success">Approved</span>`;
+      } else if (item.status === 'paid') {
+        statusBadge = `<span class="badge bg-primary">Paid</span>`;
+      } else {
+        statusBadge = `<span class="badge bg-danger">Rejected</span>`;
+      }
 
-        return `
-        <tr class="align-middle"> <td class="text-center">#REQ-${item.id}</td>
-          
+      // ACTION BUTTON
+      let actionButtons = `
+        <button
+          class="btn btn-sm btn-outline-success px-2"
+          onclick="approveRequest(${item.id})"
+          ${item.status !== 'pending' ? 'disabled' : ''}>
+          <i class="bi bi-check-lg"></i> Approve
+        </button>
+
+        <button
+          class="btn btn-sm btn-outline-danger px-2"
+          onclick="openRejectModal(${item.id}, '${item.user.name}')"
+          ${item.status !== 'pending' ? 'disabled' : ''}>
+          <i class="bi bi-x-lg"></i> Reject
+        </button>
+      `;
+
+      // 🔥 PAYMENT HANYA JIKA APPROVED
+      if (item.status === 'approved') {
+        actionButtons += `
+          <button
+            class="btn btn-sm btn-outline-secondary px-2"
+            onclick="openPaymentModal(
+              ${item.id},
+              '${item.user.name}',
+              '${item.nomor_rekening}',
+              ${item.nominal}
+            )">
+            Payment
+          </button>
+        `;
+      }
+
+      return `
+        <tr class="align-middle">
+          <td class="text-center">#REQ-${item.id}</td>
+
           <td class="text-center">
             <div class="fw-bold">${item.user.name}</div>
             <small class="text-muted">${item.user.email}</small>
           </td>
-          
-          <td class="text-center">
-            <span class="badge bg-info-subtle text-dark border px-3">
-              ${item.kategori}
-            </span>
-          </td>
-          
+
+          <td class="text-center">${item.kategori}</td>
+
           <td class="fw-bold text-center">
             Rp ${item.nominal_format || item.nominal}
           </td>
-          
+
           <td class="text-center">
             <button class="btn btn-sm btn-light border"
               onclick="openNotaModal('${item.nota_url}')">
               <i class="bi bi-eye"></i> Lihat
             </button>
           </td>
+
           <td class="text-center">
-            <div class="d-flex justify-content-center gap-2"> <button
-                class="btn btn-sm btn-outline-success  px-2"
-                onclick="approveRequest(${item.id})"
-                ${isDisabled}>
-                <i class="bi bi-check-lg"></i> Approve
-              </button>
-              <button
-                class="btn btn-sm btn-outline-danger px-2 "
-                onclick="openRejectModal(${item.id}, '${item.user.name}')"
-                ${isDisabled}>
-                <i class="bi bi-x-lg"></i> Reject
-              </button>
+            <div class="d-flex justify-content-center gap-2">
+              ${actionButtons}
             </div>
           </td>
-        <td class="text-center">
-          ${statusBadge}
-          <button 
-              class="btn btn-sm btn-outline-secondary px-2" 
-              data-bs-toggle="modal" 
-              data-bs-target="#paymentModal">
-              Payment
-          </button>
-        </td>
-         
+
+          <td class="text-center">${statusBadge}</td>
         </tr>
       `;
-      })
-      .join('');
+    })
+    .join('');
 
     tbody.innerHTML = rows;
   } catch (_err) {}
@@ -161,6 +174,22 @@ function openRejectModal(id, name) {
   document.getElementById('rejectReason').classList.remove('is-invalid');
 
   const modal = new bootstrap.Modal(document.getElementById('rejectModal'));
+  modal.show();
+}
+
+function openPaymentModal(id, accountName, accountNumber, nominal) {
+  currentPaymentRequestId = id;
+
+  document.getElementById('accName').value = accountName;
+  document.getElementById('accNumber').value = accountNumber;
+  document.getElementById('amount').value = nominal;
+
+  // auto set tanggal hari ini
+  setTodayDate();
+
+  const modal = new bootstrap.Modal(
+    document.getElementById('paymentModal')
+  );
   modal.show();
 }
 
@@ -229,3 +258,64 @@ function setTodayDate() {
 }
 
 document.addEventListener('DOMContentLoaded', setTodayDate);
+
+document.querySelector('#paymentModal .btn-primary')
+  .addEventListener('click', async () => {
+
+    if (!currentPaymentRequestId) {
+      showAlert('warning', 'Request tidak valid');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+
+    const payload = {
+      bank_name: document.querySelector(
+        'input[name="paymentOption"]:checked'
+      ).id,
+      account_name: accName.value.trim(),
+      account_number: accNumber.value.trim(),
+      amount: amount.value.replace(/\D/g, ''),
+      transfer_date: transferDate.value,
+      notes: notes.value.trim(),
+    };
+
+    const confirmed = await showConfirmAlert(
+      'Konfirmasi Pembayaran',
+      'Yakin ingin memproses pembayaran ini?',
+      'Ya, Bayar',
+      'Batal',
+      'warning'
+    );
+
+    if (!confirmed) return;
+
+    const res = await fetch(
+      `http://localhost:8000/api/admin/reimburse/${currentPaymentRequestId}/pay`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + token,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      showAlert('danger', result.message || 'Gagal pembayaran');
+      return;
+    }
+
+    showAlert('success', 'Pembayaran berhasil');
+
+    bootstrap.Modal
+      .getInstance(document.getElementById('paymentModal'))
+      .hide();
+
+    currentPaymentRequestId = null;
+    loadPendingApproval();
+  });

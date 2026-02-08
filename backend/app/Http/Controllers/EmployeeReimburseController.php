@@ -91,7 +91,10 @@ class EmployeeReimburseController extends Controller
     {
         $userId = auth('api')->id();
 
-        $request = ReimburseRequest::where('id', $id)
+        $request = ReimburseRequest::with([
+                'payment.admin:id,name'
+            ])
+            ->where('id', $id)
             ->where('user_id', $userId)
             ->first();
 
@@ -113,6 +116,7 @@ class EmployeeReimburseController extends Controller
         $request->validate([
             'kategori' => 'required|string',
             'tanggal_nota' => 'required|date',
+            'nomor_rekening' => 'required|string',
             'mata_uang' => 'required|in:IDR,USD',
             'nominal' => 'required|numeric|min:1',
             'keterangan' => 'required|string',
@@ -131,6 +135,7 @@ class EmployeeReimburseController extends Controller
             'user_id' => auth('api')->id(),
             'kategori' => $request->kategori,
             'tanggal_nota' => $request->tanggal_nota,
+            'nomor_rekening' => $request->nomor_rekening,
             'mata_uang' => $request->mata_uang,
             'nominal' => $request->nominal,
             'keterangan' => $request->keterangan,
@@ -172,12 +177,13 @@ class EmployeeReimburseController extends Controller
             ->firstOrFail();
 
         $validated = $request->validate([
-            'kategori'      => 'sometimes|string',
-            'tanggal_nota'  => 'sometimes|date',
-            'mata_uang'     => 'sometimes|in:IDR,USD',
-            'nominal'       => 'sometimes|numeric|min:1',
-            'keterangan'    => 'sometimes|string',
-            'nota'          => 'sometimes|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'kategori'          => 'sometimes|string',
+            'tanggal_nota'      => 'sometimes|date',
+            'nomor_rekening'    => 'sometimes|string',
+            'mata_uang'         => 'sometimes|in:IDR,USD',
+            'nominal'           => 'sometimes|numeric|min:1',
+            'keterangan'        => 'sometimes|string',
+            'nota'              => 'sometimes|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $updatedData = $validated;
