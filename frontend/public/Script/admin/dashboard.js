@@ -8,10 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
     return;
   }
-
-  // ===============================
-  // FETCH DASHBOARD SUMMARY
-  // ===============================
   fetch('http://localhost:8000/api/admin/dashboard', {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -45,9 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 2000);
     });
 
-  // ===============================
-  // FETCH TABLE REIMBURSE
-  // ===============================
   fetch('http://localhost:8000/api/admin/reimburse', {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -60,19 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then((res) => {
       const tbody = document.querySelector('table tbody');
-      tbody.innerHTML = ''; // hapus dummy row
+      tbody.innerHTML = '';
 
       res.data.forEach((item) => {
         // STATUS BADGE
         let statusBadge = '';
         if (item.status === 'pending') {
-          statusBadge = `<span class="badge bg-warning text-dark">Pending</span>`;
+          statusBadge = `<span class="badge border border-warning text-warning">Pending</span>`;
         } else if (item.status === 'approved') {
-          statusBadge = `<span class="badge bg-success">Approved</span>`;
+          statusBadge = `<span class="badge border border-success text-success">Approved</span>`;
         } else if (item.status === 'paid') {
-          statusBadge = `<span class="badge bg-primary">Paid</span>`;
+          statusBadge = `<span class="badge border border-primary text-primary">Paid</span>`;
         } else {
-          statusBadge = `<span class="badge bg-danger">Rejected</span>`;
+          statusBadge = `<span class="badge border border-danger text-danger">Rejected</span>`;
         }
 
         const tr = document.createElement('tr');

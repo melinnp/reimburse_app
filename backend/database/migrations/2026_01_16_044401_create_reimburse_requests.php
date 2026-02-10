@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('kategori');
             $table->date('tanggal_nota');
             $table->string('mata_uang', 3);
-            $table->string('nomor_rekening');
+            $table->string('nomor_rekening');,
             $table->decimal('nominal', 15, 2);
             $table->text('keterangan');
             $table->string('nota');
