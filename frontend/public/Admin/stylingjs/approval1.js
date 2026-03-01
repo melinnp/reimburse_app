@@ -1,6 +1,6 @@
 // Search dan Filter Status
-const searchInput = document.querySelector('#searchInput'); // ✅ ID yang benar
-const statusFilter = document.querySelector('#statusFilter'); // ✅ Tambahkan selector untuk dropdown
+const searchInput = document.querySelector('#searchInput');
+const statusFilter = document.querySelector('#statusFilter');
 const tableBody = document.getElementById('approvalTable');
 
 let currentStatusFilter = 'all';
@@ -8,28 +8,28 @@ let currentStatusFilter = 'all';
 // Function untuk filter berdasarkan status dan search
 function applyFilters() {
   if (!searchInput || !tableBody) return;
-  
+
   const searchText = searchInput.value.toLowerCase();
   const rows = tableBody.getElementsByTagName('tr');
-  
+
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    
+
     // Get ID dari kolom pertama
     const idColumn = row.getElementsByTagName('td')[0];
     const idText = idColumn ? (idColumn.textContent || '').toLowerCase() : '';
-    
+
     // Get Employee name dari kolom kedua (untuk search yang lebih fleksibel)
     const employeeColumn = row.getElementsByTagName('td')[1];
     const employeeText = employeeColumn ? (employeeColumn.textContent || '').toLowerCase() : '';
-    
+
     // Get status dari kolom terakhir
     const statusColumn = row.getElementsByTagName('td')[6]; // Index 6 untuk kolom Status
     const statusText = statusColumn ? (statusColumn.textContent || '').trim() : '';
-    
+
     // Check search filter (cari di ID atau Employee)
     const matchesSearch = idText.indexOf(searchText) > -1 || employeeText.indexOf(searchText) > -1;
-    
+
     // Check status filter - sesuaikan dengan value di HTML
     let matchesStatus = true;
     if (currentStatusFilter !== 'all') {
@@ -44,9 +44,9 @@ function applyFilters() {
         matchesStatus = statusText.includes('Paid') || statusText.includes('Dibayar');
       }
     }
-    
+
     // Show/hide row
-    row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+    row.style.display = matchesSearch && matchesStatus ? '' : 'none';
   }
 }
 
@@ -61,27 +61,26 @@ if (searchInput && tableBody) {
 
 // Event listener untuk status filter dropdown
 if (statusFilter) {
-  statusFilter.addEventListener('change', function() {
+  statusFilter.addEventListener('change', function () {
     currentStatusFilter = this.value;
     applyFilters();
   });
 }
 
 function renderCurrentMonth() {
-  const el = document.getElementById("currentDate");
+  const el = document.getElementById('currentDate');
   if (!el) return;
 
   const now = new Date();
-  const formatted = now.toLocaleDateString("id-ID", {
-    month: "long",
-    year: "numeric",
+  const formatted = now.toLocaleDateString('id-ID', {
+    month: 'long',
+    year: 'numeric',
   });
 
-  el.textContent =
-    formatted.charAt(0).toUpperCase() + formatted.slice(1);
+  el.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
 // init
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   renderCurrentMonth();
 });

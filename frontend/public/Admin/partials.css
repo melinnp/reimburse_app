@@ -1,52 +1,52 @@
 :root {
-    --primary-dark: rgb(4, 4, 70);
-    --accent-color: #00d4ff;
-    --hover-bg: rgba(255, 255, 255, 0.1);
+  --primary-dark: rgb(4, 4, 70);
+  --accent-color: #00d4ff;
+  --hover-bg: rgba(255, 255, 255, 0.1);
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
 }
 
 .nav-link-custom {
-    display: flex;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border-left: 4px solid transparent;
-    font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+  font-size: 0.95rem;
 }
 
 .nav-link-custom:hover {
-    background-color: var(--hover-bg);
-    color: white;
-    border-left: 4px solid var(--accent-color);
-    padding-left: 1.5rem !important;
+  background-color: var(--hover-bg);
+  color: white;
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1.5rem !important;
 }
 
 .nav-active {
-    background-color: var(--hover-bg) !important;
-    color: var(--accent-color) !important;
-    border-left: 4px solid var(--accent-color) !important; 
-    font-weight: 600;
+  background-color: var(--hover-bg) !important;
+  color: var(--accent-color) !important;
+  border-left: 4px solid var(--accent-color) !important;
+  font-weight: 600;
 }
 
 .offcanvas {
-    box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .user-profile-section {
-    background: rgba(0, 0, 0, 0.2);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navbar-brand {
-    letter-spacing: 1px;
-    font-weight: 700;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 .cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
