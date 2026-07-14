@@ -23,7 +23,7 @@ body {
 
 .card {
   max-width: 700px;
-  height: 330px;
+  min-height: 330px;
   width: 100%;
 }
 .logo-claimly {
@@ -38,4 +38,14 @@ body {
   height: 100%;
   object-fit: cover;
 }
+.demo-account {
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px dashed rgba(70, 4, 4, 0.4);
+  color: rgb(70, 4, 4);
+  font-family: 'DM Serif Display', cursive;
+  padding: 0.5rem 0.75rem;
+}
 
+.demo-account span {
+  font-size: 0.8rem;
+}

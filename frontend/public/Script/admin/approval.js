@@ -15,7 +15,7 @@ async function loadPendingApproval() {
   }
 
   try {
-    const res = await fetch('http://localhost:8000/api/admin/reimburse', {
+    const res = await fetch(`${API_BASE}/admin/reimburse`, {
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: 'application/json',
@@ -138,7 +138,7 @@ async function approveRequest(id) {
   if (!confirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:8000/api/admin/reimburse/${id}/approve`, {
+    const res = await fetch(`${API_BASE}/admin/reimburse/${id}/approve`, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -214,7 +214,7 @@ document.getElementById('btnConfirmReject').addEventListener('click', async func
   if (!confirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:8000/api/admin/reimburse/${rejectRequestId}/reject`, {
+    const res = await fetch(`${API_BASE}/admin/reimburse/${rejectRequestId}/reject`, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -291,7 +291,7 @@ document.querySelector('#paymentModal .btn-primary')
     if (!confirmed) return;
 
     const res = await fetch(
-      `http://localhost:8000/api/admin/reimburse/${currentPaymentRequestId}/pay`,
+      `${API_BASE}/admin/reimburse/${currentPaymentRequestId}/pay`,
       {
         method: 'POST',
         headers: {

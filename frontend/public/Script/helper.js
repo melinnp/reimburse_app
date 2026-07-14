@@ -43,7 +43,7 @@ function openNotaModal(notaUrl) {
   if (notaUrl && notaUrl.startsWith('http')) {
     img.src = notaUrl;
   } else if (notaUrl) {
-    img.src = `http://localhost:8000/storage/nota/${notaUrl}`;
+    img.src = `${STORAGE_BASE}/nota/${notaUrl}`;
   } else {
     img.alt = 'Nota tidak tersedia';
   }

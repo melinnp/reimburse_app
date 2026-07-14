@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
       formData.append('nota', notaFile);
 
       // 4. KIRIM DATA KE API
-      const response = await fetch('http://localhost:8000/api/employee/reimburse/create', {
+      const response = await fetch(`${API_BASE}/employee/reimburse/create`, {
         method: 'POST',
         headers: {
           Authorization: 'Bearer ' + token,

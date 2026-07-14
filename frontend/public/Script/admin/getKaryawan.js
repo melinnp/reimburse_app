@@ -27,7 +27,7 @@ async function loadEmployees() {
   }
 
   try {
-    const res = await fetch('http://localhost:8000/api/admin/employee', {
+    const res = await fetch(`${API_BASE}/admin/employee`, {
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: 'application/json',
@@ -94,7 +94,7 @@ async function deleteEmployee(id, name) {
   if (!confirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:8000/api/admin/employee/${id}`, {
+    const res = await fetch(`${API_BASE}/admin/employee/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + token,

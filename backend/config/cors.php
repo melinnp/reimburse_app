@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'http://localhost:3000',
+        'https://reimburse-app.tansys.my.id',
         'http://127.0.0.1:3000',
     ],
 

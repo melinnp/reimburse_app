@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =====================
      FETCH USER PROFILE
   ====================== */
-  fetch("http://localhost:8000/api/employee/me", {
+  fetch(`${API_BASE}/employee/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       emailInput.value = user.email;
 
       if (user.photo) {
-        const imgUrl = `http://localhost:8000/storage/profile/${user.photo}`;
+        const imgUrl = `${STORAGE_BASE}/profile/${user.photo}`;
         
         displayAvatarImg.src = imgUrl;
         displayAvatarImg.style.display = "block";
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Ganti endpoint ke /update-profile (pure POST)
-    fetch("http://localhost:8000/api/employee/me", {
+    fetch(`${API_BASE}/employee/me`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

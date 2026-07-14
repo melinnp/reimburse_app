@@ -8,7 +8,7 @@ document.addEventListener("partials-loaded", function () {
     return;
   }
 
-  fetch("http://localhost:8000/api/admin/me", {
+  fetch(`${API_BASE}/admin/me`, {
     headers: {
       Authorization: "Bearer " + token,
       Accept: "application/json"
@@ -33,7 +33,7 @@ document.addEventListener("partials-loaded", function () {
       const userPhoto = document.getElementById("userPhoto");
       if (userPhoto) {
         if (user.photo) {
-          userPhoto.src = `http://localhost:8000/storage/profile/${user.photo}`;
+          userPhoto.src = `${STORAGE_BASE}/profile/${user.photo}`;
           userPhoto.onerror = function() {
             // Fallback jika foto tidak ditemukan
             this.src = "../assets/default-user.png";

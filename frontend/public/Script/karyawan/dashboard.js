@@ -13,7 +13,7 @@ async function loadDashboard() {
   }
 
   try {
-    const res = await fetch('http://localhost:8000/api/employee/reimburse', {
+    const res = await fetch(`${API_BASE}/employee/reimburse`, {
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: 'application/json',

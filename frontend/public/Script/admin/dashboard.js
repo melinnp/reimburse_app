@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
     return;
   }
-  fetch('http://localhost:8000/api/admin/dashboard', {
+  fetch(`${API_BASE}/admin/dashboard`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 2000);
     });
 
-  fetch('http://localhost:8000/api/admin/reimburse', {
+  fetch(`${API_BASE}/admin/reimburse`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',

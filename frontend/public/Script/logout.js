@@ -18,7 +18,7 @@ document.addEventListener("click", async function (e) {
   const token = localStorage.getItem("token");
 
   try {
-    await fetch("http://localhost:8000/api/logout", {
+    await fetch(`${API_BASE}/logout`, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,

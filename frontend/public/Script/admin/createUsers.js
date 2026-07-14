@@ -23,7 +23,7 @@ async function createUser() {
   };
 
   try {
-    const res = await fetch("http://localhost:8000/api/admin/employee/create", {
+    const res = await fetch(`${API_BASE}/admin/employee/create`, {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + token,

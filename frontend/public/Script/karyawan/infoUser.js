@@ -8,7 +8,7 @@ document.addEventListener("partials-loaded", function () {
     return;
   }
 
-  fetch("http://localhost:8000/api/employee/me", {
+  fetch(`${API_BASE}/employee/me`, {
     headers: {
       Authorization: "Bearer " + token,
       Accept: "application/json"
@@ -33,7 +33,7 @@ document.addEventListener("partials-loaded", function () {
       const userPhoto = document.getElementById("userPhoto");
       if (userPhoto) {
         userPhoto.src = user.photo
-          ? `http://localhost:8000/storage/profile/${user.photo}`
+          ? `${STORAGE_BASE}/profile/${user.photo}`
           : "../assets/default-user.png";
       }
     })

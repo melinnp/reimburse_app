@@ -1,0 +1,120 @@
+services:
+
+  # ────────────────────────────────────────────────────────────
+  # MySQL 8.0 — primary database
+  # Not exposed publicly; only reachable inside the app-internal
+  # network by the backend and queue-worker containers.
+  # ────────────────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-reimburse_v1}
+      MYSQL_USER: ${DB_USERNAME:-reimburse}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-internal
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost",
+             "-u", "${DB_USERNAME:-reimburse}", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ────────────────────────────────────────────────────────────
+  # Laravel Backend — Apache + PHP 8.2
+  # Joins proxy-tier so Nginx Proxy Manager can route to it.
+  # Also joins app-internal so it can reach the DB.
+  # ────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./backend/.env.production
+    volumes:
+      # Persistent storage for uploaded files (nota receipts & profile photos)
+      - storage_data:/var/www/html/storage/app
+    networks:
+      - app-internal
+      - proxy-tier
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ────────────────────────────────────────────────────────────
+  # Queue Worker — processes database-backed jobs
+  # QUEUE_CONNECTION=database means jobs live in the `jobs` table.
+  # This container keeps polling so the main app stays responsive.
+  # ────────────────────────────────────────────────────────────
+  queue-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./backend/.env.production
+    # Override the default CMD — run the queue listener instead of Apache
+    command: ["php", "artisan", "queue:work",
+              "--sleep=3", "--tries=3", "--max-time=3600"]
+    volumes:
+      - storage_data:/var/www/html/storage/app
+    networks:
+      - app-internal
+    depends_on:
+      db:
+        condition: service_healthy
+    # No healthcheck port — monitor via process exit code
+
+  # ────────────────────────────────────────────────────────────
+  # Frontend — static HTML/JS/CSS served by nginx-alpine
+  # Joins proxy-tier so NPM can route the frontend domain to it.
+  # ────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - proxy-tier
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+# ────────────────────────────────────────────────────────────
+# Volumes
+# ────────────────────────────────────────────────────────────
+volumes:
+  # MySQL data — survives container restarts/upgrades
+  db_data:
+    name: reimburse_db_data
+
+  # Laravel local-disk storage (nota receipts + profile photos)
+  # Shared between `backend` and `queue-worker` so jobs that
+  # process uploaded files can read/write the same files.
+  storage_data:
+    name: reimburse_storage_data
+
+# ────────────────────────────────────────────────────────────
+# Networks
+# ────────────────────────────────────────────────────────────
+networks:
+  # Internal network — DB is NOT reachable from outside Docker
+  app-internal:
+    internal: true
+
+  # External network managed by Nginx Proxy Manager
+  proxy-tier:
+    external: true

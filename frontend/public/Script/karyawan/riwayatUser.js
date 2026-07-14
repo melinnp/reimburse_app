@@ -18,7 +18,7 @@ async function loadRiwayat() {
   }
 
   try {
-    const res = await fetch('http://localhost:8000/api/employee/reimburse', {
+    const res = await fetch(`${API_BASE}/employee/reimburse`, {
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: 'application/json',
@@ -86,7 +86,7 @@ async function showDetail(id) {
   if (!token) return;
 
   try {
-    const res = await fetch(`http://localhost:8000/api/employee/reimburse/${id}`, {
+    const res = await fetch(`${API_BASE}/employee/reimburse/${id}`, {
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: 'application/json',
@@ -128,7 +128,7 @@ async function showDetail(id) {
       if (data.nota_url) {
         imgElement.src = data.nota_url + '?t=' + new Date().getTime();
       } else if (data.nota) {
-        imgElement.src = `http://localhost:8000/storage/nota/${data.nota}?t=${new Date().getTime()}`;
+        imgElement.src = `${STORAGE_BASE}/nota/${data.nota}?t=${new Date().getTime()}`;
       } else {
         imgElement.src = 'https://via.placeholder.com/400x200?text=No+Image';
       }
@@ -172,7 +172,7 @@ async function openEditModal(id) {
   }
 
   try {
-    const res = await fetch(`http://localhost:8000/api/employee/reimburse/${id}`, {
+    const res = await fetch(`${API_BASE}/employee/reimburse/${id}`, {
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: 'application/json',
@@ -208,7 +208,7 @@ async function openEditModal(id) {
         previewImg.src = data.nota_url + '?t=' + new Date().getTime();
         previewImg.style.display = 'block';
       } else if (data.nota) {
-        previewImg.src = `http://localhost:8000/storage/nota/${data.nota}?t=${new Date().getTime()}`;
+        previewImg.src = `${STORAGE_BASE}/nota/${data.nota}?t=${new Date().getTime()}`;
         previewImg.style.display = 'block';
       } else {
         previewImg.style.display = 'none';
@@ -287,7 +287,7 @@ async function submitEdit() {
       formData.append('nota', notaFile);
     }
 
-    const res = await fetch(`http://localhost:8000/api/employee/reimburse/${id}/update`, {
+    const res = await fetch(`${API_BASE}/employee/reimburse/${id}/update`, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -332,7 +332,7 @@ async function deleteRequest(id) {
   if (!confirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:8000/api/employee/reimburse/${id}/delete`, {
+    const res = await fetch(`${API_BASE}/employee/reimburse/${id}/delete`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + token,
