@@ -22,14 +22,24 @@
         <!-- Alert Box -->
         <div id="alertBox" class="mx-3"></div>
         <main class="main-content mx-1 rounded-4 cream shadow border" style="height: 560px" id="main-content">
-          <div class="container-fluid">
-            <!-- Tambahkan filter status di sini -->
-            <div class="card shadow-sm rounded-4 border-0">
-              <!-- HEADER -->
-              <div class="card-header cream py-3 border-bottom d-flex justify-content-between align-items-center">
-                <div class="d-flex gap-2">
-                  <input type="text" id="searchInput" class="form-control form-control-sm px-3" placeholder="Search for claims..." />
-                  <select id="statusFilter" class="form-select form-select-sm bg-light px-3" style="width: 160px">
+          <div class="container-fluid p-4">
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h4 class="fw-bold text-dark mb-0">Claim Approval Center</h4>
+                <p class="text-muted small mb-0">Verify and process employee reimbursement</p>
+              </div>
+              <div id="currentDate" class="badge bg-white text-muted border px-3 py-2 rounded-pill shadow-sm small fw-normal">Februari 2024</div>
+            </div>
+            <!-- BODY -->
+            <div class="card rounded-4 overflow-hidden border-0 shadow-sm">
+              <div class="card-header bg-white d-flex justify-content-end p-3">
+                <div class="d-flex align-items-center gap-2">
+                  <div style="width: 200px">
+                    <input type="text" id="searchInput" class="form-control form-control-sm px-3 shadow-sm" placeholder="Search..." />
+                  </div>
+
+                  <select id="statusFilter" class="form-select form-select-sm bg-light px-3 shadow-sm" style="width: 140px">
                     <option value="all">All Status</option>
                     <option value="Sudah Cair">Approved</option>
                     <option value="Queue">Pending</option>
@@ -37,39 +47,37 @@
                     <option value="Paid">Paid</option>
                   </select>
                 </div>
-                <div class="badge bg-light text-muted border px-3 py-2 rounded-pill" id="currentMonthBadge">Februari 2026</div>
-              </div>
 
-              <!-- BODY -->
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table table-bordered table-hover align-middle mb-0">
-                    <thead class="text-center bg-light">
-                      <tr>
-                        <th>ID</th>
-                        <th>Employee</th>
-                        <th>Category</th>
-                        <th>Nominal</th>
-                        <th>Proof</th>
-                        <th class="text-center">Action</th>
-                        <th class="text-center">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="approvalTable"></tbody>
-                  </table>
-                </div>
+                <div class="badge bg-light text-muted border px-3 py-2 rounded-pill" id="currentMonthBadge">Februari 2026</div>
+
+              </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle mb-0">
+                  <thead class="text-center bg-light">
+                    <tr>
+                      <th class="text-white" style="background-color: rgb(105, 4, 4)">ID</th>
+                      <th class="text-white" style="background-color: rgb(105, 4, 4)">Employee</th>
+                      <th class="text-white" style="background-color: rgb(105, 4, 4)">Category</th>
+                      <th class="text-white" style="background-color: rgb(105, 4, 4)">Nominal</th>
+                      <th class="text-white" style="background-color: rgb(105, 4, 4)">Proof</th>
+                      <th class="text-white" style="background-color: rgb(105, 4, 4)">Action</th>
+                      <th class="text-white" style="background-color: rgb(105, 4, 4)">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="approvalTable"></tbody>
+                </table>
               </div>
             </div>
 
             <div class="modal fade" id="notaModal" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0 shadow">
                   <div class="modal-header">
                     <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-image me-2"></i>Bukti Reimbursement</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                   </div>
                   <div class="modal-body text-center">
-                    <img id="notaImage" src="" alt="Bukti Reimbursement" class="img-fluid rounded border" />
+                    <img id="notaImage"  src="" alt="Bukti Reimbursement" class="img-fluid rounded border" style="max-height: 450px;" />
                   </div>
                 </div>
               </div>

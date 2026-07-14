@@ -41,3 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initialize offcanvas jika ada
   initOffcanvas();
 });
+document.getElementById('nota').onchange = function (evt) {
+  const [file] = this.files;
+  const preview = document.getElementById('imgPreview');
+  const placeholder = document.getElementById('placeholderPreview');
+
+  if (file && file.type.startsWith('image/')) {
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove('d-none'); // Munculkan gambar
+    placeholder.classList.add('d-none'); // Sembunyikan placeholder
+  } else {
+    preview.classList.add('d-none');
+    placeholder.classList.remove('d-none');
+  }
+};

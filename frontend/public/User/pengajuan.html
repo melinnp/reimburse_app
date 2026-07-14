@@ -25,50 +25,72 @@
 
         <main class="main-content mx-1 rounded-4 cream" style="height: 560px" id="main-content">
           <div class="d-flex justify-content-center">
-            <div class="card w-75 mt-5 rounded-4 mx-3">
+            <div class="card w-75 mt-5 rounded-4 mx-auto border-0 shadow-sm overflow-hidden" style="background-color: white">
+              <div style="height: 8px; background-color: rgb(105, 4, 4)"></div>
+
               <form id="pengajuanForm">
-                <div class="card-body">
-                  <div class="row mb-2">
-                    <div class="col-md-6">
-                      <label for="tanggal" class="form-label fw-bold">Submission date</label>
-                      <input type="date" class="form-control" id="tanggal" name="tanggal" required />
+                <div class="card-body p-2">
+                  <div class="row g-4">
+                    <div class="col-md-7">
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label for="tanggal" class="form-label small fw-bold text-muted">SUBMISSION DATE</label>
+                          <input type="date" class="form-control rounded-3" id="tanggal" name="tanggal" required />
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label small fw-bold text-muted">TYPES OF EXPENSES</label>
+                          <select class="form-select rounded-3" id="kategori" required>
+                            <option value="">Select Type...</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Kesehatan">Kesehatan</option>
+                            <option value="Dinas">Perjalanan Dinas</option>
+                            <option value="Alat Tulis">Alat Tulis Kantor</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label class="form-label small fw-bold text-muted">ACCOUNT NUMBER</label>
+                          <input type="text" class="form-control rounded-3" id="num" name="num" placeholder="Enter number.." required />
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label small fw-bold text-muted">NOMINAL EXPENDITURE</label>
+                          <div class="input-group">
+                            <span class="input-group-text border-0 fw-bold" style="background-color: rgb(247, 243, 224); color: rgb(105, 4, 4)">IDR</span>
+                            <input type="text" class="form-control" id="nominalInput" placeholder="0" required />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">DESCRIPTION / REQUIREMENTS</label>
+                        <textarea class="form-control rounded-3" id="keterangan" rows="3" placeholder="Example: Pembelian alat..." required></textarea>
+                      </div>
+
+                      <div class="mb-0">
+                        <label class="form-label small fw-bold text-muted">UPLOAD PROOF (IMAGE/PDF)</label>
+                        <input type="file" class="form-control rounded-3 shadow-sm" id="nota" accept="image/*,.pdf" required />
+                      </div>
                     </div>
-                    <div class="col-md-6">
-                      <label class="form-label small fw-bold">Types of Expenses</label>
-                      <select class="form-select form-selecet-sm" id="kategori" required>
-                        <option value="">Select Type...</option>
-                        <option value="Transport">Transport</option>
-                        <option value="Kesehatan">Kesehatan</option>
-                        <option value="Dinas">Perjalanan Dinas</option>
-                        <option value="Alat Tulis">Alat Tulis Kantor</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row mb-2">
-                    <div class="col-md-6">
-                      <label class="form-label small fw-bold">Account number</label>
-                      <input type="text" class="form-control" id="num" name="num" required />
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label small fw-bold">Nominal Expenditure</label>
-                      <div class="input-group">
-                        <span class="input-group-text bg-light fw-bold">IDR</span>
-                        <input type="text" class="form-control form-selecet-sm" id="nominalInput" placeholder="0" required />
+
+                    <div class="col-md-5 d-flex flex-column">
+                      <label class="form-label small fw-bold text-muted text-center">DOCUMENT PREVIEW</label>
+                      <div class="flex-grow-1 d-flex align-items-center justify-content-center rounded-4 border-2 shadow-sm" style="background-color: rgb(247, 243, 224); border: 2px dashed #ddd; min-height: 250px; position: relative">
+                        <div id="placeholderPreview" class="text-center p-3">
+                          <i class="bi bi-image text-muted" style="font-size: 3rem"></i>
+                          <p class="small text-muted mb-0 d-block">Preview bukti nota</p>
+                        </div>
+
+                        <img id="imgPreview" src="#" alt="Preview" class="img-fluid rounded-3 d-none" style="max-height: 300px; object-fit: contain; z-index: 2" />
                       </div>
                     </div>
                   </div>
-                  <div class="">
-                    <label class="form-label small fw-bold">Description / Requirements</label>
-                    <textarea class="form-control" id="keterangan" rows="3" placeholder="Example: Pembelian alat..." required></textarea>
-                  </div>
                 </div>
-                <div class="mx-3">
-                  <label class="form-label small fw-bold">Upload Proof of Note(Picture/PDF)</label>
-                  <input type="file" class="form-control" id="nota" accept="image/*,.pdf" required />
-                </div>
-                <div class="d-flex justify-content-end gap-2 my-3 mx-3">
-                  <button type="reset" class="btn btn-outline-danger btn-sm px-4 rounded-pill">Reset</button>
-                  <button type="submit" class="btn btn-outline-secondary btn-sm shadow-sm rounded-pill">Send Submission</button>
+
+                <div class="card-footer bg-white border-0 d-flex justify-content-end gap-2 pb-4 px-4">
+                  <button type="reset" class="btn btn-outline-danger btn-sm px-4 rounded-pill fw-bold">Reset</button>
+                  <button type="submit" class="btn btn-sm px-4 rounded-pill shadow-sm text-white fw-bold" style="background-color: rgb(105, 4, 4)">Send Submission <i class="bi bi-send-fill ms-1"></i></button>
                 </div>
               </form>
             </div>

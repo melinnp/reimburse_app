@@ -18,12 +18,16 @@
 
       <div class="flex-grow-1 d-flex flex-column">
         <div id="layout2"></div>
-
-        <!-- Alert Box -->
-        <div id="alertBox" class="mx-3 mt-3"></div>
-
         <main class="main-content flex-grow-1" id="main-content">
-          <div class="card border-0 shadow-sm rounded-4 mx-1 cream overflow-hidden">
+          <div class="d-flex align-items-center p-3">
+            <div>
+              <h4 class="fw-bold text-dark mb-0">Reimbursement Archives</h4>
+              <p class="text-muted small">Review your past reimbursement records.</p>
+            </div>
+          </div>
+          <!-- Alert Box -->
+          <div id="alertBox" class="mx-3"></div>
+          <div class="card border-0 shadow-sm rounded-4 mx-2 cream overflow-hidden" style="height: 460px">
             <div class="card-header cream py-3 border-bottom d-flex justify-content-between align-items-center">
               <div class="d-flex gap-2">
                 <input type="text" id="searchInput" class="form-control form-control-sm rounded-pill px-3" placeholder="Search for claims..." />
@@ -41,11 +45,11 @@
                 <table class="table align-middle mb-0 text-nowrap" id="claimTable">
                   <thead class="table-light text-uppercase small">
                     <tr>
-                      <th class="text-center">ID Transaksi</th>
-                      <th class="text-center">Date</th>
-                      <th class="text-center">Nominal</th>
-                      <th class="text-center">Final Status</th>
-                      <th class="text-center">Action</th>
+                      <th class="text-white text-center" style="background-color: rgb(105, 4, 4)">ID Transaksi</th>
+                      <th class="text-white text-center" style="background-color: rgb(105, 4, 4)">Date</th>
+                      <th class="text-white text-center" style="background-color: rgb(105, 4, 4)">Nominal</th>
+                      <th class="text-white text-center" style="background-color: rgb(105, 4, 4)">Final Status</th>
+                      <th class="text-white text-center" style="background-color: rgb(105, 4, 4)">Action</th>
                     </tr>
                   </thead>
                   <tbody id="claimTableBody">
@@ -67,14 +71,12 @@
             <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Detail Reimburse</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="text-end mb-2">
-            <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="viewFullImage()">
-              <i class="bi bi-eye"></i> View Full
-            </button>
-          </div>          
+          <div class="text-end mb-2 me-4">
+            <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="viewFullImage()"><i class="bi bi-eye"></i> View Full</button>
+          </div>
           <div class="modal-body pt-0">
             <div class="rounded-4 overflow-hidden mb-3 border">
-              <img class="w-100" id="modalNotaImage" style="object-fit: contain; max-height: 200px; background:#f8f9fa" />
+              <img class="w-100" id="modalNotaImage" style="object-fit: contain; max-height: 200px; background: #f8f9fa" />
             </div>
 
             <div class="mb-3">
@@ -89,13 +91,8 @@
 
             <div class="mb-3">
               <label class="form-label small fw-bold text-muted">Account Number</label>
-              <input
-                type="text"
-                class="form-control form-control-sm bg-light border-0"
-                id="detailRekening"
-                readonly
-              />
-            </div>            
+              <input type="text" class="form-control form-control-sm bg-light border-0" id="detailRekening" readonly />
+            </div>
 
             <div class="mb-3">
               <label class="form-label small fw-bold text-muted">Information</label>
@@ -109,30 +106,30 @@
               </div>
             </div>
 
-            <div id="paymentInfoWrapper" style="display:none">
+            <div id="paymentInfoWrapper" style="display: none">
               <hr />
               <h6 class="fw-bold mb-2">Payment Information</h6>
-            
+
               <div class="mb-2">
                 <label class="form-label small fw-bold text-muted">Paid By</label>
                 <input type="text" class="form-control form-control-sm bg-light border-0" id="paidBy" readonly />
               </div>
-            
+
               <div class="mb-2">
                 <label class="form-label small fw-bold text-muted">Transfer Date</label>
                 <input type="text" class="form-control form-control-sm bg-light border-0" id="paidDate" readonly />
               </div>
-            
+
               <div class="mb-2">
                 <label class="form-label small fw-bold text-muted">Paid Amount</label>
                 <input type="text" class="form-control form-control-sm bg-light border-0" id="paidAmount" readonly />
               </div>
-            
+
               <div class="mb-2">
                 <label class="form-label small fw-bold text-muted">Payment Note</label>
                 <textarea class="form-control form-control-sm bg-light border-0" id="paymentNote" rows="2" readonly></textarea>
               </div>
-            </div>            
+            </div>
           </div>
           <div class="modal-footer border-top-0">
             <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
@@ -146,7 +143,7 @@
       <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content bg-dark border-0">
           <div class="modal-body text-center p-2">
-            <img id="fullImagePreview" class="img-fluid rounded-3" style="max-height: 92vh;">
+            <img id="fullImagePreview" class="img-fluid rounded-3" style="max-height: 92vh" />
           </div>
         </div>
       </div>
@@ -186,13 +183,8 @@
 
             <div class="mb-3">
               <label class="form-label small fw-bold text-muted">Account Number</label>
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                id="editRekening"
-                required
-              />
-            </div>            
+              <input type="text" class="form-control form-control-sm" id="editRekening" required />
+            </div>
 
             <div class="mb-3">
               <label class="form-label small fw-bold text-muted">Nominal Expenditure</label>

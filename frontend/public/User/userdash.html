@@ -21,53 +21,66 @@
         <div id="layout2"></div>
 
         <!-- Alert Box -->
-        <div id="alertBox" class="mx-3
-        "></div>
+        <div id="alertBox" class="mx-3"></div>
 
         <main class="main-content flex-grow-1" id="main-content">
-          <div class="cream card rounded-4 mx-1">
+          <div class="d-flex align-items-center p-3">
+            <div>
+              <h4 class="fw-bold text-dark mb-0">Reimbursement Summary</h4>
+              <p class="text-muted small">Track your submitted claims and stay updated on their approval status.</p>
+            </div>
+          </div>
+          <div class="cream card rounded-4 mx-1" style="height: 460px">
             <div class="card-body">
               <div class="row g-4 mb-4">
-                <div class="col-md-3">
-                  <div class="card border-0 rounded-4 shadow-sm">
-                    <div class="card-body rounded-4">
-                      <p class="mb-1 small fw-bold text-center">BEING PROCESSED</p>
-                      <div class="d-flex justify-content-center align-items-center">
-                        <i class="bi bi-hourglass-split fs-4 me-3"></i>
-                        <h3 class="fw-bold text-center mb-0" id="statPending">0</h3>
+                <div class="col-md-3 animate-reveal" style="animation-delay: 0.2s">
+                  <div class="card shadow rounded-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                      <div>
+                        <p class="mb-0 fw-bold small text-muted" style="letter-spacing: 1px">Process</p>
+                        <h3 class="fw-bold mb-0" id="statPending" style="color: rgb(105, 4, 4)">0</h3>
+                      </div>
+                      <div class="rounded-2 px-2 d-flex align-items-center justify-content-center shadow-sm" style="background-color: rgb(235, 227, 192)">
+                        <i class="bi bi-hourglass-split fs-4" style="color: rgb(105, 4, 4)"></i>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <div class="card border-0 rounded-4 shadow-sm">
-                    <div class="card-body rounded-4">
-                      <p class="mb-1 small fw-bold text-center">APPROVED</p>
-                      <div class="d-flex justify-content-center align-items-center">
-                        <i class="bi bi-check-circle fs-4 me-3"></i>
-                        <h3 class="fw-bold text-center mb-0" id="statApproved">0</h3>
+                  <div class="card stat-card shadow rounded-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                      <div>
+                        <p class="mb-0 fw-bold small text-muted" style="letter-spacing: 1px">Approved</p>
+                        <h3 class="fw-bold mb-0" id="statApproved">0</h3>
+                      </div>
+                      <div class="rounded-2 px-2 d-flex align-items-center justify-content-center shadow-sm" style="background-color: rgb(193, 240, 193)">
+                        <i class="bi bi-check2-circle fs-4" style="color: rgb(1, 53, 31)"></i>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <div class="card border-0 rounded-4 shadow-sm">
-                    <div class="card-body rounded-4">
-                      <p class="mb-1 small text-center fw-bold">REJECT</p>
-                      <div class="d-flex justify-content-center align-items-center">
-                        <i class="bi bi-x-circle 9 fs-4 me-3"></i>
-                        <h3 class="fw-bold mb-0 text-center" id="statReject">0</h3>
+                  <div class="card stat-card shadow rounded-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                      <div>
+                        <p class="mb-0 fw-bold small text-muted" style="letter-spacing: 1px">Reject</p>
+                        <h3 class="fw-bold mb-0 text-danger" id="statReject">0</h3>
+                      </div>
+                      <div class="rounded-2 px-2 d-flex align-items-center justify-content-center shadow-sm" style="background-color: rgb(255, 216, 231)">
+                        <i class="bi bi-x-circle fs-4 text-danger"></i>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <div class="card border-0 rounded-4 shadow-sm">
-                    <div class="card-body rounded-4">
-                      <p class="mb-1 small text-center fw-bold">TOTAL COMPLETED</p>
-                      <div class="d-flex justify-content-center align-items-center">
-                        <i class="bi bi-hourglass-bottom fs-4 me-3"></i>
-                        <h3 class="fw-bold mb-0 text-center" id="statSelesai">0</h3>
+                  <div class="card stat-card shadow rounded-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                      <div>
+                        <p class="mb-0 fw-bold small text-muted" style="letter-spacing: 1px">Completed</p>
+                        <h3 class="fw-bold mb-0" id="statSelesai" style="color: rgb(105, 4, 4)">0</h3>
+                      </div>
+                      <div class="rounded-2 px-2 d-flex align-items-center justify-content-center shadow-sm" style="background-color: rgb(243, 240, 225)">
+                        <i class="bi bi-check-all fs-4" style="color: rgb(105, 4, 4)"></i>
                       </div>
                     </div>
                   </div>
@@ -82,10 +95,10 @@
                   <table class="table table-bordered align-middle mb-0">
                     <thead>
                       <tr class="text-center">
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Nominal</th>
-                        <th>Status</th>
+                        <th class="text-white" style="background-color: rgb(105, 4, 4)">Category</th>
+                        <th class="text-white" style="background-color: rgb(105, 4, 4)">Date</th>
+                        <th class="text-white" style="background-color: rgb(105, 4, 4)">Nominal</th>
+                        <th class="text-white" style="background-color: rgb(105, 4, 4)">Status</th>
                       </tr>
                     </thead>
                     <tbody id="reimburseTable"></tbody>
