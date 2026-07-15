@@ -15,7 +15,7 @@ This application digitizes the reimbursement workflow into a simple web-based sy
 
 ## Live Demo
 
-🌐 https://reimburse-app.tansys.my.id/Auth/login.html
+🌐 https://reimburse-app.tansys.my.id/
 
 ## Tech Stack
 
